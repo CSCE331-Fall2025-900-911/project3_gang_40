@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/CSCE331-Fall2025-900-911/project3_gang_40/issues"
   },
-  "homepage": "https://github.com/CSCE331-Fall2025-900-911/project3_gang_40#readme"
+  "homepage": "https://github.com/CSCE331-Fall2025-900-911/project3_gang_40#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
 }
