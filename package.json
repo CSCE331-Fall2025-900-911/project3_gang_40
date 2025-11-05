@@ -19,7 +19,6 @@
   },
   "homepage": "https://github.com/CSCE331-Fall2025-900-911/project3_gang_40#readme",
   "dependencies": {
-    "express": "^5.1.0",
-    "pg": "^8.16.3"
+    "express": "^5.1.0"
   }
 }
