@@ -1,27 +1,27 @@
-// const http = require('http');
-// const hostname = '127.0.0.1';
-// const port = 3000;
+const http = require('http');
+const hostname = '127.0.0.1';
+const port = 3000;
 
-// // Create a server object and pass an arrow function
-// const server = http.createServer((req, res) => {
-//     res.statusCode = 200;
-//     res.setHeader('Content-Type', 'text/plain');
-//     res.end('Hello World');
-// });
+// Create a server object and pass an arrow function
+const server = http.createServer((req, res) => {
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/plain');
+    res.end('Hello World');
+});
 
-// // Let the server listen on 127.0.0.1:3000
-// server.listen(port, hostname, () => {
-//     console.log(`Server running at http://${hostname}:${port}/`);
-// });
+// Let the server listen on 127.0.0.1:3000
+server.listen(port, hostname, () => {
+    console.log(`Server running at http://${hostname}:${port}/`);
+});
 
-const express = require('express')
-const app = express()
-const port = process.env.PORT || 4000 
+// const express = require('express')
+// const app = express()
+// const port = process.env.PORT || 4000 
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+// app.get('/', (req, res) => {
+//   res.send('Hello World!')
+// })
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+// app.listen(port, () => {
+//   console.log(`Example app listening on port ${port}`)
+// })
