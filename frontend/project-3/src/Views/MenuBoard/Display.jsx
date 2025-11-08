@@ -1,6 +1,6 @@
 import React from "react";
 import MenuItem from "./MenuItem";
-import berryLychee from "../../../public/assets/images/berry_lynchee.png"
+import berryLychee from "../../../public/assets/images/berry_lychee.png"
 
 function Display() {
     return (
