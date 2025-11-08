@@ -15,20 +15,17 @@ function App() {
           </div>
         ) : (
           <div>
+            <h1>
+              Hello World!!!
+            </h1>
+
+            <Display/>
+
             <button onClick={() => setShowCashier(true)}>
               Go to Cashier
             </button>
           </div>
         )}
-        
-      <div>
-         <h1>
-           Hello World!!!
-         </h1>
-
-         <Display/>
-      </div>
-      
     </>
   )
 }
