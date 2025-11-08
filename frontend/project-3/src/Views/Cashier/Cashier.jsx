@@ -4,14 +4,8 @@ import './Cashier.css'
 function Cashier({ onBack }) {
   const drinks = ['Classic Pearl Milk Tea', 'Honey Pearl Milk Tea', 'Coffee Creama', 'Coffee Milk Tea w/ Coffee Jelly']
   const [cart, setCart] = useState([])
-
-  // adds drink to cart
-  const addToCart = (drink) => {
-    setCart((prevCart) => ({
-      ...prevCart,
-      [drink]: (prevCart[drink] || 0) + 1,
-    }))
-  }
+  const [tempDrink, setTempDrink] = useState('');
+  const [tempQty, setTempQty] = useState(1);
 
   // removes drink from cart
   const removeFromCart = (drink) => {
@@ -39,12 +33,38 @@ function Cashier({ onBack }) {
               <button
                 key = {drink}
                 className='drink-btn'
-                onClick={() => addToCart(drink)}
+                onClick={() => setTempDrink(drink)}
               >
                 {drink}
               </button>
             ))}
           </div>
+          <h2>Choose Quantity</h2>
+          <select
+            value={tempQty}
+            onChange={(e) => setTempQty(Number(e.target.value))}
+          >
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+          <br />
+          <p>Selected: {tempDrink} (Qty: {tempQty})</p>
+          <button
+            onClick={() => {
+              if (!tempDrink) return;
+              setCart((prevCart) => ({
+                ...prevCart,
+                [tempDrink]: (prevCart[tempDrink] || 0) + tempQty,
+              }));
+              setTempDrink('');
+              setTempQty(1);
+            }}
+          >
+            Add to Cart
+          </button>
         </div>
 
         {/* right side of screen */}
