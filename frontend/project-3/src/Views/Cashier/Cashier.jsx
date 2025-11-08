@@ -57,6 +57,7 @@ function Cashier({ onBack }) {
   return (
       <div className='cashier-container'>
 
+        {/* nav bar on far left */}
         <nav className='sidebar'>
           <h2>Menu</h2>
           <ul>
@@ -77,33 +78,7 @@ function Cashier({ onBack }) {
                 {drink}
               </button>
             ))}
-          </div>
-          <h2>Choose Quantity</h2>
-          <select
-            value={tempQty}
-            onChange={(e) => setTempQty(Number(e.target.value))}
-          >
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-          </select>
-          <br />
-          <p>Selected: {tempDrink} (Qty: {tempQty})</p>
-          <button
-            onClick={() => {
-              if (!tempDrink) return;
-              setCart((prevCart) => ({
-                ...prevCart,
-                [tempDrink]: (prevCart[tempDrink] || 0) + tempQty,
-              }));
-              setTempDrink('');
-              setTempQty(1);
-            }}
-          >
-            Add to Cart
-          </button>
+          </div>    
         </div>
 
         {/* right side of screen */}
