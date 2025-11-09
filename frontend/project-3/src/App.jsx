@@ -16,7 +16,7 @@ function App() {
         ) : (
           <div>
             <h1>
-              Main
+              Menu
             </h1>
 
             {/* <Display/> */}
