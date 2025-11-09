@@ -16,10 +16,10 @@ function App() {
         ) : (
           <div>
             <h1>
-              Hello World!!!
+              Main
             </h1>
 
-            <Display/>
+            {/* <Display/> */}
 
             <button onClick={() => setShowCashier(true)}>
               Go to Cashier

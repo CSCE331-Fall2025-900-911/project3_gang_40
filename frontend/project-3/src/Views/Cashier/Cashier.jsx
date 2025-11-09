@@ -9,17 +9,22 @@ function Cashier({ onBack }) {
   const [selectedDrink, setSelectedDrink] = useState(null);
   // set default drink modification values
   const [modifications, setModifications] = useState({
-    size: 'Medium', sweetness: 'Normal (100%)', ice: 'Regular', topping: null, quantity: '1'
+    size_id: 2, sweetness: 'Normal (100%)', ice: 'Regular', topping: null, quantity: '1'
   });
+  const [sizes, setSizes] = useState([]);
+  // checks if adding a new drink or editing one
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingIndex, setEditingIndex] = useState(null);
+  // employee switcher
+  const [employees, setEmployees] = useState([])
+  const [currentEmployee, setCurrentEmployee] = useState(null)
+  const [showEmployeeModal, setShowEmployeeModal] = useState(false)
 
   // populate drinks from database
   useEffect(() => {
     fetch('http://localhost:5000/api/drinks')
       .then(res => res.json())
-      .then(data => {
-        console.log('Fetched drinks:', data);
-        setDrinks(data);
-      })
+      .then(data => setDrinks(data))
       .catch(err => console.error('Error fetching drinks:', err))
   }, []);
 
@@ -27,26 +32,88 @@ function Cashier({ onBack }) {
   useEffect(() => {
     fetch('http://localhost:5000/api/toppings')
       .then(res => res.json())
-      .then(data => {
-        console.log('Fetched toppings:', data);
-        setToppings(data);
-      })
+      .then(data => setToppings(data))
       .catch(err => console.error('Error fetching toppings:', err))
   }, []);
 
+  // gets drink sizes from database
+  useEffect(() => {
+    fetch('http://localhost:5000/api/drink-sizes')
+      .then(res => res.json())
+      .then(data => setSizes(data))
+      .catch(err => console.error('Error fetching sizes:', err));
+  }, []);
+
+  // fetch employees when opening employee modal
+  const openEmployeeModal = () => {
+    setShowEmployeeModal(true) 
+    if (employees.length === 0) {
+      fetch('http://localhost:5000/api/employees/cashiers')
+        .then(res => res.json())
+        .then(data => setEmployees(data))
+        .catch(err => console.error('Error fetching employees:', err))
+    }
+  }
+
+  // close employee modal
+  const closeEmployeeModal = () => setShowEmployeeModal(false)
+
+  // select employee from modal
+  const handleEmployeeSelect = (employee) => {
+    setCurrentEmployee(employee)
+    closeEmployeeModal()
+  }
+
+  // keeps employee signed in with page refresh
+  useEffect(() => {
+    const saved = localStorage.getItem('currentEmployee')
+    if (saved) setCurrentEmployee(JSON.parse(saved))
+  }, [])
+
+  useEffect(() => {
+    if (currentEmployee) {
+      localStorage.setItem('currentEmployee', JSON.stringify(currentEmployee))
+    }
+  }, [currentEmployee])
+
   // open modal for drink customization
-  const openModal = (drink) => {
+  const openModal = (drink, existingDrink = null, index = null) => {
     if (toppings.length === 0) {
       console.warn('Toppings not loaded yet');
       return;
     }
     const noTopping = toppings.find(t => t.topping_name === 'No Toppings') || null;
-    setSelectedDrink(drink);
-    setModifications({size: 'Medium', sweetness: 'Normal (100%)', ice: 'Regular', topping: noTopping, quantity: 1});
+
+    // edits drink in cart
+    if (existingDrink) {
+      setSelectedDrink(drink)
+      setModifications(existingDrink.modifications)
+      setIsEditing(true)
+      setEditingIndex(index)
+    } 
+    // adds a new drink to cart
+    else {
+      setSelectedDrink(drink)
+      setModifications({size_id: 2, sweetness: 'Normal (100%)', ice: 'Regular', topping: noTopping, quantity: 1});
+      setIsEditing(false)
+      setEditingIndex(null)
+    }
   };
 
   // close modal
   const closeModal = () => setSelectedDrink(null);
+
+  // saves edits to cart
+  const saveEdits = () => {
+    setCart(prev => {
+      const updated = [...prev];
+      updated[editingIndex] = {
+        ...updated[editingIndex], modifications: modifications
+      };
+      return updated;
+    });
+    closeModal();
+  }
 
   // adds drink to cart
   const addToCart = () => {
@@ -58,20 +125,83 @@ function Cashier({ onBack }) {
     closeModal();
   }
 
-  // removes drink from cart
+  // removes one drink at a time
   const removeFromCart = (index) => {
-    setCart(prev => prev.filter((_, i) => i !== index));
+    setCart(prev => {
+      const newCart = [...prev];
+      const item = newCart[index];
+
+      if (item.modifications.quantity > 1) {
+        newCart[index] = {
+          ...item, modifications: {...item.modifications, quantity: item.modifications.quantity - 1}
+        };
+      } else {
+        newCart.splice(index, 1);
+      }
+      return newCart;
+    });
   };
+
+  // adds another drink to cart
+  const addAnotherDrink = (index) => {
+    setCart(prev => {
+      const newCart = [...prev];
+      const item = newCart[index];
+
+      newCart[index] = {
+        ...item, modifications: {...item.modifications, quantity: item.modifications.quantity + 1}
+      };
+      return newCart
+    });
+  }
 
   // clears entire cart
   const clearCart = () => setCart([])
+
+  // sumits order to database
+  const submitOrder = async () => {
+    if (!currentEmployee) {
+      alert('Employee not selected');
+      return;
+    }
+    if (cart.length === 0) {
+      alert('Cart is empty');
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:5000/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          cart,
+          employee_id: currentEmployee.employee_id,
+          customer_id: Math.floor(Math.random() * 200) + 1,
+          payment_method: 'Card', // will be a button to choose later
+          tax: 1.0825
+        })
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        alert(`Order submitted successfully. Sales ID: ${data.salesId}`);
+        clearCart();
+      } else {
+        alert(`Failed to submit order: ${data.message}`);
+      }
+    } catch (err) {
+      console.error('Error submitting order:', err);
+      alert('Error submitting order');
+    }
+  };
 
     // Calculate total
   const totalPrice = cart.reduce((sum, item) => {
     const base = Number(item.drink.base_price);
     const toppingPrice = Number(item.modifications.topping?.extra_cost || 0);
+    const sizeExtra = Number(sizes.find(s => s.size_id === item.modifications.size_id)?.extra_cost || 0);
     const quantity = Number(item.modifications.quantity);
-    return sum + (base + toppingPrice) * quantity;
+    return sum + (base + toppingPrice + sizeExtra) * quantity;
   }, 0);
 
   return (
@@ -79,11 +209,29 @@ function Cashier({ onBack }) {
 
         {/* nav bar on far left */}
         <nav className='sidebar'>
-          <h2>Menu</h2>
-          <ul>
-            <li><button onClick={onBack}>Exit</button></li>
-            {/* to add more nav spots later */}
-          </ul>
+          {/* top half of nav bar */}
+          <div>
+            <h2>Menu</h2>
+            <ul>
+              <li><button onClick={onBack}>Exit</button></li>
+              <li><button onClick={openEmployeeModal}>Change Employee</button></li>
+              {/* to add more nav spots later */}
+            </ul>
+          </div>
+          
+          {/* bottom half of nav bar */}
+          {/* shows current employee */}
+          {currentEmployee ? (
+            <div style={{ fontsize: '0.9em', color: '#eee' }}>
+              Signed in as: <br />
+              <strong>{currentEmployee.first_name} {currentEmployee.last_name}</strong>
+              <br />({currentEmployee.role})
+            </div>
+          ) : (
+            <div style={{ fontsize: '0.9em', color: '#eee' }}>
+              No employee signed in
+            </div>
+          )}
         </nav>
 
         {/* drink menu */}
@@ -114,20 +262,27 @@ function Cashier({ onBack }) {
           <h2>Cart</h2>
           {cart.length === 0 ? <p>No Drinks Yet</p> : (
             <ul>
-              {cart.map((item, idx) => (
-              <li key={idx}>
-                <span>
-                  {item.modifications.quantity} x {item.drink.drink_name} (
-                  {item.modifications.size}, {item.modifications.sweetness}, {item.modifications.ice}
-                  {item.modifications.topping ? ` + ${item.modifications.topping.topping_name}` : ''})&nbsp;
-                  ${( (Number(item.drink.base_price) + Number(item.modifications.topping?.extra_cost || 0)) * item.modifications.quantity).toFixed(2)}
-                  &nbsp;&nbsp;
-                </span>
-                <button className='remove-btn' onClick={() => removeFromCart(idx)}>
-                  X
-                </button>
-              </li>
-              ))}
+              {cart.map((item, idx) => {
+                // get size name from size id
+                const size = sizes.find(s => s.size_id === item.modifications.size_id) || { size_name: 'Unknown', extra_cost: 0 };
+                const itemPrice = (Number(item.drink.base_price) + Number(item.modifications.topping?.extra_cost || 0) + Number(size.extra_cost)) * Number(item.modifications.quantity);
+                const sizeName = size.size_name;
+                
+                return (
+                  <li key={idx}>
+                    <span>
+                      {item.modifications.quantity} x {item.drink.drink_name} <br />
+                      ({sizeName}, {item.modifications.sweetness}, {item.modifications.ice}
+                      {item.modifications.topping ? ` + ${item.modifications.topping.topping_name}` : ''}) <br />
+                      ${itemPrice.toFixed(2)}
+                      &nbsp;&nbsp;
+                    </span>
+                    <button className='remove-btn' onClick={() => removeFromCart(idx)}>-</button>
+                    <button className='add-btn' onClick={() => addAnotherDrink(idx)}>+</button>
+                    <button className='edit-btn' onClick={() => openModal(item.drink, item, idx)}>Edit</button>
+                  </li>
+                );
+              })}
             </ul>
           )}
 
@@ -144,6 +299,9 @@ function Cashier({ onBack }) {
               <button className='clear-btn' onClick={clearCart}>
                 Clear Cart
               </button>
+              <button className='submit-btn' onClick={submitOrder}>
+                Submit Order
+              </button>
             </div>  
         </div>
 
@@ -157,12 +315,14 @@ function Cashier({ onBack }) {
               <div className="modal-section">
                 <label>Size:</label>
                 <select
-                  value={modifications.size}
-                  onChange={e => setModifications(prev => ({ ...prev, size: e.target.value }))}
+                  value={modifications.size_id}
+                  onChange={e => setModifications(prev => ({ ...prev, size_id: parseInt(e.target.value) }))}
                 >
-                  <option>Small</option>
-                  <option>Medium</option>
-                  <option>Large</option>
+                  {sizes.map(s => (
+                    <option key={s.size_id} value={s.size_id}>
+                      {s.size_name}
+                    </option>
+                  ))}
                 </select>
               </div>
 
@@ -239,14 +399,44 @@ function Cashier({ onBack }) {
               </div>
 
               <div className="modal-actions">
-                <button onClick={addToCart}>Add to Cart</button>
+                {isEditing ? (
+                  <button onClick={saveEdits}>Save Changes</button>
+                ) : (
+                  <button onClick={addToCart}>Add to Cart</button>
+                )}
                 <button onClick={closeModal}>Cancel</button>
               </div>
             </div>
 
           </div>
-        )}              
-        </div>
+        )} 
+
+        {/* employee switcher modal */}
+        {showEmployeeModal && (
+          <div className='modal-backdrop' onClick={closeEmployeeModal}>
+            <div className='modal' onClick={e => e.stopPropagation()}>
+              <h3>Select Employee</h3>
+              {employees.length > 0 ? (
+                <ul>
+                  {employees.map(employee => (
+                    <li key={employee.employee_id} style={{ marginBottom: '8px' }}>
+                      <button
+                        onClick={() => handleEmployeeSelect(employee)}
+                        style={{width: '100%', padding: '8px', borderRadius: '8px', cursor: 'pointer' }}>
+                          {employee.first_name} {employee.last_name} - {employee.role}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p>Loading employees...</p>
+              )}
+              <button onClick={closeEmployeeModal} style = {{width: '100px', height: '30px', cursor: 'pointer'}}>Cancel</button>
+            </div>
+          </div>
+
+        )}
+      </div>
   )
 }
 
