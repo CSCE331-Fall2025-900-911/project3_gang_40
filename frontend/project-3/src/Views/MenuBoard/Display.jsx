@@ -1,6 +1,7 @@
 import React from "react";
 import MenuItem from "./MenuItem";
-import berryLychee from "../../../public/assets/images/berry_lychee.png"
+import berryLychee from "/assets/images/berry_lychee.png"
+import classicPearl from "/assets/images/classic_pearl_milk_tea.png"
 
 function Display() {
     return (
@@ -13,8 +14,8 @@ function Display() {
                 toppings: "je"}}
             />
             <MenuItem 
-                menu = {{name: "",
-                imgUrl: "je",
+                menu = {{name: "Classic Pearl Milk Tea",
+                imgUrl: classicPearl,
                 toppings: "jej"}}
             />
             

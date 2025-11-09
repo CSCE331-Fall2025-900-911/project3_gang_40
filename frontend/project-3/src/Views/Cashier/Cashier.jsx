@@ -5,6 +5,12 @@ function Cashier({ onBack }) {
   // create empty list for drinks and toppings
   const [drinks, setDrinks] = useState([])
   const [toppings, setToppings] = useState([])
+  const [cart, setCart] = useState([])
+  const [selectedDrink, setSelectedDrink] = useState(null);
+  // set default drink modification values
+  const [modifications, setModifications] = useState({
+    size: 'Medium', sweetness: 'Normal (100%)', ice: 'Regular', topping: null, quantity: '1'
+  });
 
   // populate drinks from database
   useEffect(() => {
@@ -23,23 +29,20 @@ function Cashier({ onBack }) {
       .then(res => res.json())
       .then(data => {
         console.log('Fetched toppings:', data);
-        const names = data.map(t => t.topping_name);
-        setToppings(names);
+        setToppings(data);
       })
       .catch(err => console.error('Error fetching toppings:', err))
   }, []);
 
-  const [cart, setCart] = useState([])
-  const [selectedDrink, setSelectedDrink] = useState(null);
-  // set default drink modification values
-  const [modifications, setModifications] = useState({
-    size: 'Medium', sweetness: 'Normal (100%)', ice: 'Regular', topping: 'No Toppings', quantity: '1'
-  });
-
   // open modal for drink customization
   const openModal = (drink) => {
+    if (toppings.length === 0) {
+      console.warn('Toppings not loaded yet');
+      return;
+    }
+    const noTopping = toppings.find(t => t.topping_name === 'No Toppings') || null;
     setSelectedDrink(drink);
-    setModifications({size: 'Medium', sweetness: 'Normal (100%)', ice: 'Regular', topping: 'No Toppings', quantity: 1});
+    setModifications({size: 'Medium', sweetness: 'Normal (100%)', ice: 'Regular', topping: noTopping, quantity: 1});
   };
 
   // close modal
@@ -63,6 +66,14 @@ function Cashier({ onBack }) {
   // clears entire cart
   const clearCart = () => setCart([])
 
+    // Calculate total
+  const totalPrice = cart.reduce((sum, item) => {
+    const base = Number(item.drink.base_price);
+    const toppingPrice = Number(item.modifications.topping?.extra_cost || 0);
+    const quantity = Number(item.modifications.quantity);
+    return sum + (base + toppingPrice) * quantity;
+  }, 0);
+
   return (
       <div className='cashier-container'>
 
@@ -71,11 +82,11 @@ function Cashier({ onBack }) {
           <h2>Menu</h2>
           <ul>
             <li><button onClick={onBack}>Exit</button></li>
-            {/* To add more nav spots later */}
+            {/* to add more nav spots later */}
           </ul>
         </nav>
 
-        {/* left side of screen */}
+        {/* drink menu */}
         <div className='drink-section'>
           <h2>Choose a Drink</h2>
           <div className='drink-group'>
@@ -98,7 +109,7 @@ function Cashier({ onBack }) {
         </div>
 
         
-        {/* right side of screen */}
+        {/* cart */}
         <div className='cart-section'>
           <h2>Cart</h2>
           {cart.length === 0 ? <p>No Drinks Yet</p> : (
@@ -108,7 +119,9 @@ function Cashier({ onBack }) {
                 <span>
                   {item.modifications.quantity} x {item.drink.drink_name} (
                   {item.modifications.size}, {item.modifications.sweetness}, {item.modifications.ice}
-                  {item.modifications.topping ? ` + ${item.modifications.topping}` : ''})&nbsp;
+                  {item.modifications.topping ? ` + ${item.modifications.topping.topping_name}` : ''})&nbsp;
+                  ${( (Number(item.drink.base_price) + Number(item.modifications.topping?.extra_cost || 0)) * item.modifications.quantity).toFixed(2)}
+                  &nbsp;&nbsp;
                 </span>
                 <button className='remove-btn' onClick={() => removeFromCart(idx)}>
                   X
@@ -118,6 +131,15 @@ function Cashier({ onBack }) {
             </ul>
           )}
 
+          <div>
+            <h2>
+              {/* shows total amount owed */}
+              Subtotal: ${totalPrice.toFixed(2)} <br></br>
+              Tax: ${(totalPrice * 0.0825).toFixed(2)} <br></br>
+              Order Total: ${(totalPrice * 1.0825).toFixed(2)}
+            </h2>
+          </div>
+
           <div className='cart-controls'>
               <button className='clear-btn' onClick={clearCart}>
                 Clear Cart
@@ -125,12 +147,13 @@ function Cashier({ onBack }) {
             </div>  
         </div>
 
-        {/* toppings pop up */}
+        {/* modifications pop up */}
         {selectedDrink && (
           <div className='modal-backdrop' onClick={closeModal}>
             <div className='modal' onClick={e => e.stopPropagation()}>
               <h3>{selectedDrink.drink_name} Modifications</h3>
 
+              {/* size */}
               <div className="modal-section">
                 <label>Size:</label>
                 <select
@@ -143,6 +166,7 @@ function Cashier({ onBack }) {
                 </select>
               </div>
 
+              {/* sweetness */}
               <div className="modal-section">
                 <label>Sweetness:</label>
                 <select
@@ -157,6 +181,7 @@ function Cashier({ onBack }) {
                 </select>
               </div>
 
+              {/* ice */}
               <div className="modal-section">
                 <label>Ice:</label>
                 <select
@@ -168,27 +193,30 @@ function Cashier({ onBack }) {
                   <option>Regular</option>
                 </select>
               </div>
-
+              
+              {/* toppings */}
               <div className="modal-section">
                 <label>Toppings:</label>
                 <div className="toppings-options">
                   {toppings.map(topping => (
-                    <label key={topping}>
+                    <label key={topping.topping_id}>
                       <input
                         type="radio"
                         name="topping"
-                        value={topping}
-                        checked={modifications.topping === topping} 
+                        value={topping.topping_name}
+                        checked={modifications.topping?.topping_id === topping.topping_id} 
                         onChange={() => setModifications(prev => ({
                           ...prev,
-                          topping
+                          topping: topping
                         }))}
-                      /> {topping}
+                      /> 
+                      {topping.topping_name} (+${Number(topping.extra_cost).toFixed(2)})
                     </label>
                   ))}
                 </div>
               </div>
 
+              {/* quantity */}
               <div className="modal-section">
                 <label>Quantity:</label>
                 <input
