@@ -4,29 +4,25 @@ import Display from './Views/MenuBoard/Display'
 import Cashier from './Views/Cashier/Cashier'
 
 function App() {
-  const [count, setCount] = useState(0)
-  const [showCashier, setShowCashier] = useState(false)
+  const [currentView, setCurrentView] = useState('main')
 
   return (
     <>
-      {showCashier ? (
-          <div>
-            <Cashier onBack={() => setShowCashier(false)} />
-          </div>
-        ) : (
-          <div>
-            <h1>
-              Menu
-            </h1>
+      {currentView === 'cashier' && (
+        <Cashier onBack={() => setCurrentView('main')} />
+      )}
 
-            {/* <Display/> */}
-            <Display />
+      {currentView === 'display' && (
+        <Display onBack={() => setCurrentView('main')} />
+      )}
 
-            <button onClick={() => setShowCashier(true)}>
-              Go to Cashier
-            </button>
-          </div>
-        )}
+      {currentView === 'main' && (
+        <div>
+          <h1>Main</h1>
+          <button onClick={() => setCurrentView('cashier')}>Go to Cashier</button>
+          <button onClick={() => setCurrentView('display')}>Go to Menu</button>
+        </div>
+      )}
     </>
   )
 }
