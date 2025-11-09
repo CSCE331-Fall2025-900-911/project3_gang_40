@@ -20,6 +20,7 @@ function App() {
             </h1>
 
             {/* <Display/> */}
+            <Display />
 
             <button onClick={() => setShowCashier(true)}>
               Go to Cashier
