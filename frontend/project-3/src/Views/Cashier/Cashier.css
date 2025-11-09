@@ -32,6 +32,7 @@ body > #root {
   padding: 20px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 }
 
 .sidebar h2 {
@@ -147,6 +148,7 @@ body > #root {
   background-color: #dc3545;
   border: none;
   color: white;
+  margin-right: 4px;
   border-radius: 50%;
   width: 25px;
   height: 25px;
@@ -159,6 +161,44 @@ body > #root {
 .remove-btn:hover {
   background-color: #b02a37;
 }
+
+.add-btn {
+  background-color: #50C878;
+  border: none;
+  color: white;
+  margin-right: 4px;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 0;
+  cursor: pointer;
+}
+
+.add-btn:hover {
+  background-color: #329F56;
+}
+
+.edit-btn {
+  background-color: #8BB3E4;
+  border: none;
+  color: white;
+  margin-right: 4px;
+  border-radius: 40%;
+  width: 40px;
+  height: 25px;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 0;
+  cursor: pointer;
+}
+
+.edit-btn:hover {
+  background-color: #6A9EDD;
+}
+
+
 
 .cart-controls {
   margin-top: 30px;
@@ -179,6 +219,19 @@ body > #root {
 
 .clear-btn:hover {
   background-color: #bc212f;
+}
+
+.submit-btn {
+  background-color: #50C878;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.submit-btn:hover {
+  background-color: #329F56;
 }
 
 /* modal box */
