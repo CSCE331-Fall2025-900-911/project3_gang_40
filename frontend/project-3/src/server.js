@@ -10,11 +10,9 @@ const { Pool } = pkg;
 const app = express();
 const port = 5000;
 
-// Middleware
 app.use(cors());
 app.use(express.json());
 
-// PostgreSQL connection
 const pool = new Pool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -23,7 +21,7 @@ const pool = new Pool({
   port: process.env.DB_PORT
 });
 
-// Example: get all drinks
+
 app.get('/api/drinks', async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM drinks');
