@@ -20,10 +20,11 @@ import taroPearlMilkTea from "/assets/images/taro_pearl_milk_tea-removebg-previe
 import thaiPearlMilkTea from "/assets/images/thai_pearl_milk_tea-removebg-preview.png"
 import tigerBoba from "/assets/images/tiger_boba-removebg-preview.png"
 
-function Display() {
+function Display({ onBack }) {
     return (
 
         <div className="menu-board">
+            <button onClick={onBack}>Exit</button>
             <h1 className="menu-title">Fresh Brew</h1>
             <p>Classic Teas - Brewed to Perfection!</p>
             <div className="menu-items">
