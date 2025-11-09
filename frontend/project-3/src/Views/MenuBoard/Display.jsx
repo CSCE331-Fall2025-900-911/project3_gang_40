@@ -25,17 +25,101 @@ function Display() {
 
         
         <div>
-            <MenuItem 
+            <MenuItem
                menu = {{name: "Berry Lychee",
                 imgUrl: berryLychee,
-                toppings: "je"}}
+                toppings: "toppings"}}
             />
-            <MenuItem 
+            <MenuItem
                 menu = {{name: "Classic Pearl Milk Tea",
                 imgUrl: classicPearl,
-                toppings: "jej"}}
+                toppings: "toppings"}}
             />
-            
+            <MenuItem
+                menu = {{name: "Classic Tea",
+                imgUrl: classicTea,
+                toppings: "toppings"}}
+            />
+            <MenuItem
+                menu = {{name: "Coconut Pearl Milk Tea",
+                imgUrl: coconutPearlMilkTea,
+                toppings: "toppings"}}
+            />
+            <MenuItem
+                menu = {{name: "Coffee Crema",
+                imgUrl: coffeeCreama,
+                toppings: "toppings"}}
+            />
+            <MenuItem
+                menu = {{name: "Coffee Milk Tea w/ Coffee Jelly",
+                imgUrl: coffeeMilkTeaWCoffeeJelly,
+                toppings: "toppings"}}
+            />
+            <MenuItem
+                menu = {{name: "Golden Retriever",
+                imgUrl: goldenRetriever,
+                toppings: "toppings"}}
+            />
+            <MenuItem
+                menu = {{name: "Hokkaido Pearl Milk Tea",
+                imgUrl: HokkaidoPearlMilkTea,
+                toppings: "toppings"}}
+            />
+            <MenuItem
+                menu = {{name: "Honey Lemonade",
+                imgUrl: honeyLemonade,
+                toppings: "toppings"}}
+            />
+            <MenuItem
+                menu = {{name: "Honey Pearl Milk Tea",
+                imgUrl: honeyPearlMilkTea,
+                toppings: "toppings"}}
+            />
+            <MenuItem
+                menu = {{name: "Honey Tea",
+                imgUrl: honeyTea,
+                toppings: "toppings"}}
+            />
+            <MenuItem
+                menu = {{name: "Mango & Passion Fruit Tea",
+                imgUrl: mangoPassionFruitTea,
+                toppings: "toppings"}}
+            />
+            <MenuItem
+                menu = {{name: "Mango Green Milk Tea",
+                imgUrl: mangoGreenMilkTea,
+                toppings: "toppings"}}
+            />
+            <MenuItem
+                menu = {{name: "Mango Green Tea",
+                imgUrl: mangoGreenTea,
+                toppings: "toppings"}}
+            />
+            <MenuItem
+                menu = {{name: "Passion Chess",
+                imgUrl: passionChess,
+                toppings: "toppings"}}
+            />
+            <MenuItem
+                menu = {{name: "Peach Tea w/ Honey Jelly",
+                imgUrl: peachTeaWHoneyJelly,
+                toppings: "toppings"}}
+            />
+            <MenuItem
+                menu = {{name: "Taro Pearl Milk Tea",
+                imgUrl: taroPearlMilkTea,
+                toppings: "toppings"}}
+            />
+            <MenuItem
+                menu = {{name: "Thai Pearl Milk Tea",
+                imgUrl: thaiPearlMilkTea,
+                toppings: "toppings"}}
+            />
+            <MenuItem
+                menu = {{name: "Tiger Boba",
+                imgUrl: tigerBoba,
+                toppings: "toppings"}}
+            />
         </div>
     )
 }
