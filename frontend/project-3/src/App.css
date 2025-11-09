@@ -4,3 +4,17 @@
   padding: 2rem;
   text-align: center;
 }
+
+.menu-title {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: black;
+}
+
+.menu-items {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 20px;
+  justify-items: center;
+}
