@@ -63,7 +63,7 @@ body > #root {
 
 /* left side */
 .drink-section {
-  flex: 6;
+  flex: 7;
   background-color: #1a1a1a;
   padding: 40px;
   border-right: 2px solid #ddd;
@@ -96,7 +96,7 @@ body > #root {
   text-align: center;    
   white-space: normal;  
   word-break: break-word; 
-  padding: 20px;
+  padding: 10px;
 
   font-size: 1rem;
   cursor: pointer;
@@ -110,7 +110,7 @@ body > #root {
 
 /* Right Side */
 .cart-section {
-  flex: 4;
+  flex: 3;
   background-color: #1a1a1a;
   padding: 40px;
   text-align: center;
@@ -190,10 +190,10 @@ body > #root {
   background: #1a1a1a;
   color: white;
   font-size: 20px;
-  padding: 20px;
-  border-radius: 12px;
+  padding: 25px;
+  border-radius: 15px;
   width: 500px;
-  height: 750px;
+  height: 800px;
 }
 
 .modal select, .modal input[type="number"] {
