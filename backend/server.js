@@ -23,6 +23,7 @@ app.use(express.json());
 
 // Mount API routes
 app.use('/api/drinks', drinksRoutes);
+app.use('/api/drinks/sizes', drinksRoutes);
 app.use('/api/toppings', toppingsRoutes);
 app.use('/api/employees', employeesRoutes);
 app.use('/api/checkout', checkoutRoutes);
@@ -36,5 +37,5 @@ app.get('/', (req, res) => {
 app.use(errorHandler);
 
 app.listen(port, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Server running on http://localhost:${port}`);
 });
