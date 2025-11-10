@@ -23,6 +23,28 @@ import thaiPearlMilkTea from "/assets/images/thai_pearl_milk_tea-removebg-previe
 import tigerBoba from "/assets/images/tiger_boba-removebg-preview.png"
 
 function Display({ onBack }) {
+  // Sizes from database
+  const sizes = [
+    { id: 1, name: 'Small', price: 0.00 },
+    { id: 2, name: 'Medium', price: 0.50 },
+    { id: 3, name: 'Large', price: 1.00 }
+  ];
+
+  // Ice levels from database
+  const iceLevels = [
+    'No Ice',
+    'Less',
+    'Regular'
+  ];
+
+  // Sweetness levels from database
+  const sweetnessLevels = [
+    'No Sugar (0%)',
+    'Less (80%)',
+    'Normal (100%)'
+  ];
+
+  // Toppings from database
   const toppings = [
     { id: 1, name: 'Pearls (Boba)', price: 0.75 },
     { id: 2, name: 'Lychee Jelly', price: 0.75 },
@@ -44,7 +66,7 @@ function Display({ onBack }) {
         <button className="nav-button" onClick={onBack}>Exit</button>
       </div>
 
-      <h1 className="menu-title">Fresh Brew</h1>
+      <h1 className="menu-title">Main Menu Bobas</h1>
 
       <h2 className="menu-title">Classic Teas</h2>
       <div className="menu-items">
@@ -170,6 +192,44 @@ function Display({ onBack }) {
           price="6.50"
           toppings="toppings"
         />
+      </div>
+
+      {/* Customization Options Section */}
+      <h2 className="menu-title">Drink Customization</h2>
+      
+      {/* Sizes Section */}
+      <h3 className="subsection-title">Sizes</h3>
+      <div className="options-grid">
+        {sizes.map(size => (
+          <div key={size.id} className="option-item">
+            <h4 className="option-name">{size.name}</h4>
+            <p className="option-price">
+              {size.price === 0 ? 'Base Price' : `+$${size.price.toFixed(2)}`}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      {/* Ice Level Section */}
+      <h3 className="subsection-title">Ice Level</h3>
+      <div className="options-grid">
+        {iceLevels.map((level, index) => (
+          <div key={index} className="option-item">
+            <h4 className="option-name">{level}</h4>
+            <p className="option-price">No Extra Charge</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Sweetness Section */}
+      <h3 className="subsection-title">Sweetness</h3>
+      <div className="options-grid">
+        {sweetnessLevels.map((level, index) => (
+          <div key={index} className="option-item">
+            <h4 className="option-name">{level}</h4>
+            <p className="option-price">No Extra Charge</p>
+          </div>
+        ))}
       </div>
 
       {/* Toppings Section */}
