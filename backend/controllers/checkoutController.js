@@ -19,12 +19,18 @@ export const checkout = async (req, res, next) => {
 
     await client.query('BEGIN');
 
+    // Get size extra cost
+    const sizeRes = await client.query('SELECT size_id, extra_cost FROM drink_sizes');
+    const sizeMap = {};
+    sizeRes.rows.forEach(row => sizeMap[row.size_id] = Number(row.extra_cost));
+
     // Calculate total price
     const totalPrice = cart.reduce((sum, item) => {
       const base = Number(item.drink.base_price);
       const toppingPrice = Number(item.modifications.topping?.extra_cost || 0);
+      const sizeExtra = sizeMap[item.modifications.size_id] || 0;
       const quantity = Number(item.modifications.quantity);
-      return sum + (base + toppingPrice) * quantity * tax;
+      return sum + (base + toppingPrice + sizeExtra) * quantity * tax;
     }, 0);
 
     // Insert into sales_history
