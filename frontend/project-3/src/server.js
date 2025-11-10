@@ -67,7 +67,7 @@ app.get('/api/employees/cashiers', async (req, res) => {
 
 // sends order to database
 app.post('/api/checkout', async (req, res) => {
-  const { cart, employee_id = null, customer_id = null, payment_method = 'Card', tax = 1.0835 }= req.body;
+  const { cart, employee_id = null, customer_id = null, payment_method = 'Card', sale_type = 'Sale', tax = 1.0835 }= req.body;
 
   if (!cart || cart.length === 0) {
     return res.status(400).json({ message: 'Cart is empty' });
@@ -88,10 +88,10 @@ app.post('/api/checkout', async (req, res) => {
 
     // insert into sales history
     const saleResult = await client.query(
-      `INSERT INTO sales_history (customer_id, employee_id, sales_time, total_price, payment_method)
-       VALUES ($1, $2, NOW(), $3, $4)
+      `INSERT INTO sales_history (customer_id, employee_id, sales_time, total_price, payment_method, sale_type)
+       VALUES ($1, $2, NOW(), $3, $4, $5)
        RETURNING sales_id`,
-       [customer_id, employee_id, totalPrice, payment_method]
+       [customer_id, employee_id, totalPrice, payment_method, sale_type]
     );
     const salesId = saleResult.rows[0].sales_id;
     const sizeMap = { Small: 1, Medium: 2, Large: 3 };
