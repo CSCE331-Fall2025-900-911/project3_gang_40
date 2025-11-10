@@ -31,7 +31,7 @@ function Cashier({ onBack }) {
 
   // populate drinks from database
   useEffect(() => {
-    fetch('http://localhost:5000/api/drinks')
+    fetch('http://localhost:5001/api/drinks')
       .then(res => res.json())
       .then(data => setDrinks(data))
       .catch(err => console.error('Error fetching drinks:', err))
@@ -39,7 +39,7 @@ function Cashier({ onBack }) {
 
    // populate toppings from database
   useEffect(() => {
-    fetch('http://localhost:5000/api/toppings')
+    fetch('http://localhost:5001/api/toppings')
       .then(res => res.json())
       .then(data => setToppings(data))
       .catch(err => console.error('Error fetching toppings:', err))
@@ -47,7 +47,7 @@ function Cashier({ onBack }) {
 
   // gets drink sizes from database
   useEffect(() => {
-    fetch('http://localhost:5000/api/drink-sizes')
+    fetch('http://localhost:5001/api/drink-sizes')
       .then(res => res.json())
       .then(data => setSizes(data))
       .catch(err => console.error('Error fetching sizes:', err));
@@ -57,7 +57,7 @@ function Cashier({ onBack }) {
   const openEmployeeModal = () => {
     setShowEmployeeModal(true) 
     if (employees.length === 0) {
-      fetch('http://localhost:5000/api/employees/cashiers')
+      fetch('http://localhost:5001/api/employees/cashiers')
         .then(res => res.json())
         .then(data => setEmployees(data))
         .catch(err => console.error('Error fetching employees:', err))
