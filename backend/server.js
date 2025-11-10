@@ -9,6 +9,7 @@ import drinksRoutes from './routes/drinks.js';
 import toppingsRoutes from './routes/toppings.js';
 import employeesRoutes from './routes/employees.js';
 import checkoutRoutes from './routes/checkout.js';
+import returnsRoutes from './routes/returns.js';
 
 // Error 
 import errorHandler from './errorHandler.js';
@@ -27,6 +28,7 @@ app.use('/api/drinks/sizes', drinksRoutes);
 app.use('/api/toppings', toppingsRoutes);
 app.use('/api/employees', employeesRoutes);
 app.use('/api/checkout', checkoutRoutes);
+app.use('/api/returns', returnsRoutes);
 
 // Simple health check
 app.get('/', (req, res) => {
