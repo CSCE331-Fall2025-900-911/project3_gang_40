@@ -346,3 +346,117 @@ html {
 .menu-board::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.4);
 }
+
+/* Subsection Title Styling */
+.subsection-title {
+  color: white;
+  font-size: 1.8rem;
+  margin: 2rem 0 1rem;
+  text-align: center;
+  font-weight: 400;
+  letter-spacing: 2px;
+  font-family: 'Raleway', 'Montserrat', 'Poppins', 'Segoe UI', sans-serif;
+}
+
+/* Options Grid for Sizes, Ice, Sweetness */
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 200px));
+  gap: 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto 2rem;
+  padding: 1rem;
+  justify-content: center;
+}
+
+.option-item {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 15px;
+  padding: 1.5rem 1rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.option-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(79, 172, 254, 0.1), rgba(0, 242, 254, 0.1));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 0;
+}
+
+.option-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.option-item:hover::before {
+  opacity: 1;
+}
+
+.option-name {
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: #0f2027;
+  margin-bottom: 0.5rem;
+  z-index: 1;
+  position: relative;
+  font-family: 'Raleway', 'Montserrat', 'Poppins', 'Segoe UI', sans-serif;
+}
+
+.option-price {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #2c5364;
+  z-index: 1;
+  position: relative;
+  margin: 0;
+}
+
+/* Responsive adjustments for options */
+@media (max-width: 768px) {
+  .subsection-title {
+    font-size: 1.5rem;
+  }
+
+  .options-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 180px));
+    gap: 1rem;
+  }
+
+  .option-item {
+    height: 110px;
+    padding: 1rem;
+  }
+
+  .option-name {
+    font-size: 1.1rem;
+  }
+
+  .option-price {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .options-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .option-item {
+    height: 100px;
+  }
+}
