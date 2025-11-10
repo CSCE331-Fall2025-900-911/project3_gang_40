@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
 import './Cashier.css'
+import Returns from './Returns';
 
 function Cashier({ onBack }) {
+  const [currentView, setCurrentView] = useState('cashier')
   // create empty list for drinks and toppings
   const [drinks, setDrinks] = useState([])
   const [toppings, setToppings] = useState([])
@@ -22,6 +24,10 @@ function Cashier({ onBack }) {
   // payment option selector
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [selectedPayment, setSelectedPayment] = useState(null);
+
+  // for switching views 
+  const handleReturnClick = () => setCurrentView('returns');
+  const handleBack = () => setCurrentView('cashier');
 
   // populate drinks from database
   useEffect(() => {
@@ -215,6 +221,8 @@ function Cashier({ onBack }) {
   }, 0);
 
   return (
+    <>
+    {currentView === 'cashier' && (
       <div className='cashier-container'>
 
         {/* nav bar on far left */}
@@ -225,6 +233,7 @@ function Cashier({ onBack }) {
             <ul>
               <li><button onClick={onBack}>Exit</button></li>
               <li><button onClick={openEmployeeModal}>Change Employee</button></li>
+              <li><button onClick={handleReturnClick}>Returns</button></li>
               {/* to add more nav spots later */}
             </ul>
           </div>
@@ -453,14 +462,12 @@ function Cashier({ onBack }) {
               <h3>Select Payment Method</h3>
               <div className='payment-options'>
                 <button className='payment-btn' onClick={() => {
-                    setSelectedPayment('Cash');
                     submitOrder('Cash');
                   }}  
                 >
                   Cash
                 </button>
                 <button className='payment-btn' onClick={() => {
-                    setSelectedPayment('Card');
                     submitOrder('Card');
                   }}
                 >
@@ -468,7 +475,6 @@ function Cashier({ onBack }) {
                 </button>
               </div>
               <button className='payment-cancel-btn' onClick={() => {
-                  setSelectedPayment('Null');
                   submitOrder(null, true);
                 }}
               >
@@ -480,6 +486,12 @@ function Cashier({ onBack }) {
 
 
       </div>
+    )}
+
+    {currentView === 'returns' && (
+      <Returns onBack={handleBack} />
+    )}
+    </>
   )
 }
 
