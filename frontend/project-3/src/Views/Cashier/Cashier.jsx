@@ -19,6 +19,9 @@ function Cashier({ onBack }) {
   const [employees, setEmployees] = useState([])
   const [currentEmployee, setCurrentEmployee] = useState(null)
   const [showEmployeeModal, setShowEmployeeModal] = useState(false)
+  // payment option selector
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [selectedPayment, setSelectedPayment] = useState(null);
 
   // populate drinks from database
   useEffect(() => {
@@ -159,7 +162,7 @@ function Cashier({ onBack }) {
   const clearCart = () => setCart([])
 
   // sumits order to database
-  const submitOrder = async () => {
+  const submitOrder = async (paymentMethod = null, isVoid = false) => {
     if (!currentEmployee) {
       alert('Employee not selected');
       return;
@@ -170,6 +173,7 @@ function Cashier({ onBack }) {
     }
 
     try {
+      // get values needed for inserting into databse
       const response = await fetch('http://localhost:5000/api/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -177,15 +181,21 @@ function Cashier({ onBack }) {
           cart,
           employee_id: currentEmployee.employee_id,
           customer_id: Math.floor(Math.random() * 200) + 1,
-          payment_method: 'Card', // will be a button to choose later
+          payment_method: isVoid ? 'Null' : paymentMethod,
+          sale_type: isVoid ? 'Void' : 'Sale',
           tax: 1.0825
         })
       });
 
+      // show alert in window that purchase went through or failed
       const data = await response.json();
       if (response.ok) {
-        alert(`Order submitted successfully. Sales ID: ${data.salesId}`);
+        alert(
+          isVoid ? `Void purchase recorded. Sales ID: ${data.salesId}`
+          : `Order submitted successfully. Sales ID: ${data.salesId}`
+        );
         clearCart();
+        setShowPaymentModal(false);
       } else {
         alert(`Failed to submit order: ${data.message}`);
       }
@@ -222,15 +232,13 @@ function Cashier({ onBack }) {
           {/* bottom half of nav bar */}
           {/* shows current employee */}
           {currentEmployee ? (
-            <div style={{ fontsize: '0.9em', color: '#eee' }}>
+            <div>
               Signed in as: <br />
               <strong>{currentEmployee.first_name} {currentEmployee.last_name}</strong>
               <br />({currentEmployee.role})
             </div>
           ) : (
-            <div style={{ fontsize: '0.9em', color: '#eee' }}>
-              No employee signed in
-            </div>
+            <div>No employee signed in</div>
           )}
         </nav>
 
@@ -260,49 +268,52 @@ function Cashier({ onBack }) {
         {/* cart */}
         <div className='cart-section'>
           <h2>Cart</h2>
-          {cart.length === 0 ? <p>No Drinks Yet</p> : (
-            <ul>
-              {cart.map((item, idx) => {
-                // get size name from size id
-                const size = sizes.find(s => s.size_id === item.modifications.size_id) || { size_name: 'Unknown', extra_cost: 0 };
-                const itemPrice = (Number(item.drink.base_price) + Number(item.modifications.topping?.extra_cost || 0) + Number(size.extra_cost)) * Number(item.modifications.quantity);
-                const sizeName = size.size_name;
-                
-                return (
-                  <li key={idx}>
-                    <span>
-                      {item.modifications.quantity} x {item.drink.drink_name} <br />
-                      ({sizeName}, {item.modifications.sweetness}, {item.modifications.ice}
-                      {item.modifications.topping ? ` + ${item.modifications.topping.topping_name}` : ''}) <br />
-                      ${itemPrice.toFixed(2)}
-                      &nbsp;&nbsp;
-                    </span>
-                    <button className='remove-btn' onClick={() => removeFromCart(idx)}>-</button>
-                    <button className='add-btn' onClick={() => addAnotherDrink(idx)}>+</button>
-                    <button className='edit-btn' onClick={() => openModal(item.drink, item, idx)}>Edit</button>
-                  </li>
-                );
-              })}
-            </ul>
-          )}
 
-          <div>
-            <h2>
-              {/* shows total amount owed */}
-              Subtotal: ${totalPrice.toFixed(2)} <br></br>
-              Tax: ${(totalPrice * 0.0825).toFixed(2)} <br></br>
-              Order Total: ${(totalPrice * 1.0825).toFixed(2)}
-            </h2>
+          <div className='cart-items-wrapper'>
+            {cart.length === 0 ? (
+              <p>No Drinks Yet</p>
+            ) : (
+              <ul className='cart-list'>
+                {/* shows item details */}
+                {cart.map((item, idx) => {
+                  const size = sizes.find(s => s.size_id === item.modifications.size_id) || { size_name: 'Unknown', extra_cost: 0 };
+                  const itemPrice = (Number(item.drink.base_price) + Number(item.modifications.topping?.extra_cost || 0) + Number(size.extra_cost)) * Number(item.modifications.quantity);
+                  const sizeName = size.size_name;
+
+                  return (
+                    <li key={idx}>
+                      <span className="cart-item-info">
+                        <strong className="cart-item-name">{item.modifications.quantity} x {item.drink.drink_name}</strong>
+                        <br />
+                        <span className="cart-item-details">
+                          ({sizeName}, {item.modifications.sweetness}, {item.modifications.ice}
+                          {item.modifications.topping ? ` + ${item.modifications.topping.topping_name}` : ''})
+                        </span>
+                        <br />
+                        <span className="cart-item-price">${itemPrice.toFixed(2)}</span>
+                      </span>
+                      <div className="cart-item-buttons">
+                        <button className='remove-btn' onClick={() => removeFromCart(idx)}>-</button>
+                        <button className='add-btn' onClick={() => addAnotherDrink(idx)}>+</button>
+                        <button className='edit-btn' onClick={() => openModal(item.drink, item, idx)}>Edit</button>
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
           </div>
 
-          <div className='cart-controls'>
-              <button className='clear-btn' onClick={clearCart}>
-                Clear Cart
-              </button>
-              <button className='submit-btn' onClick={submitOrder}>
-                Submit Order
-              </button>
-            </div>  
+          {/* totals at bottom of cart */}
+          <div className='cart-totals'>
+            <h3>Subtotal: ${totalPrice.toFixed(2)}</h3>
+            <h3>Tax: ${(totalPrice * 0.0825).toFixed(2)}</h3>
+            <h3>Total: ${(totalPrice * 1.0825).toFixed(2)}</h3>
+            <div className='cart-controls'>
+              <button className='clear-btn' onClick={clearCart}>Clear Cart</button>
+              <button className='submit-btn' onClick={() => setShowPaymentModal(true)}>Submit Order</button>
+            </div>
+          </div>
         </div>
 
         {/* modifications pop up */}
@@ -414,15 +425,15 @@ function Cashier({ onBack }) {
         {/* employee switcher modal */}
         {showEmployeeModal && (
           <div className='modal-backdrop' onClick={closeEmployeeModal}>
-            <div className='modal' onClick={e => e.stopPropagation()}>
+            <div className='modal-employees' onClick={e => e.stopPropagation()}>
               <h3>Select Employee</h3>
               {employees.length > 0 ? (
-                <ul>
+                <ul style={{listStyleType: 'none', padding: 0, margin: 0 }}>
                   {employees.map(employee => (
                     <li key={employee.employee_id} style={{ marginBottom: '8px' }}>
                       <button
                         onClick={() => handleEmployeeSelect(employee)}
-                        style={{width: '100%', padding: '8px', borderRadius: '8px', cursor: 'pointer' }}>
+                        style={{width: '80%', padding: '8px', borderRadius: '8px', cursor: 'pointer' }}>
                           {employee.first_name} {employee.last_name} - {employee.role}
                       </button>
                     </li>
@@ -431,11 +442,43 @@ function Cashier({ onBack }) {
               ) : (
                 <p>Loading employees...</p>
               )}
-              <button onClick={closeEmployeeModal} style = {{width: '100px', height: '30px', cursor: 'pointer'}}>Cancel</button>
+              <button onClick={closeEmployeeModal} style = {{width: '100px', height: '30px', cursor: 'pointer', marginTop: '30px'}}>Cancel</button>
             </div>
           </div>
-
         )}
+
+        {showPaymentModal && (
+          <div className='modal-backdrop' onClick={() => setShowPaymentModal(false)}>
+            <div className='modal-payment' onClick={e => e.stopPropagation()}>
+              <h3>Select Payment Method</h3>
+              <div className='payment-options'>
+                <button className='payment-btn' onClick={() => {
+                    setSelectedPayment('Cash');
+                    submitOrder('Cash');
+                  }}  
+                >
+                  Cash
+                </button>
+                <button className='payment-btn' onClick={() => {
+                    setSelectedPayment('Card');
+                    submitOrder('Card');
+                  }}
+                >
+                  Card
+                </button>
+              </div>
+              <button className='payment-cancel-btn' onClick={() => {
+                  setSelectedPayment('Null');
+                  submitOrder(null, true);
+                }}
+              >
+                Void
+              </button>
+            </div>
+          </div>
+        )}
+
+
       </div>
   )
 }

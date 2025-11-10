@@ -1,5 +1,4 @@
 html, body {
-  
   margin: 0;
   padding: 0;
   width: 100%;
@@ -64,7 +63,7 @@ body > #root {
 
 /* left side */
 .drink-section {
-  flex: 7;
+  flex: 6;
   background-color: #1a1a1a;
   padding: 40px;
   border-right: 2px solid #ddd;
@@ -148,7 +147,7 @@ body > #root {
   background-color: #dc3545;
   border: none;
   color: white;
-  margin-right: 4px;
+  margin-right: 10px;
   border-radius: 50%;
   width: 25px;
   height: 25px;
@@ -166,7 +165,7 @@ body > #root {
   background-color: #50C878;
   border: none;
   color: white;
-  margin-right: 4px;
+  margin-right: 10px;
   border-radius: 50%;
   width: 25px;
   height: 25px;
@@ -184,7 +183,7 @@ body > #root {
   background-color: #8BB3E4;
   border: none;
   color: white;
-  margin-right: 4px;
+  margin-right: 10px;
   border-radius: 40%;
   width: 40px;
   height: 25px;
@@ -198,7 +197,49 @@ body > #root {
   background-color: #6A9EDD;
 }
 
+.cart-section {
+  flex: 3;
+  background-color: #1a1a1a;
+  padding: 20px 40px;
+  display: flex;
+  flex-direction: column;
+}
 
+.cart-items-wrapper {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 20px; 
+}
+
+.cart-item-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; 
+}
+
+.cart-item-name {
+  font-weight: bold;
+}
+
+.cart-item-details {
+  font-size: 0.9rem;
+  color: #ccc;
+}
+
+.cart-item-price {
+  font-weight: normal;
+  color: white;
+}
+
+.cart-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.cart-totals {
+  padding-top: 15px;
+}
 
 .cart-controls {
   margin-top: 30px;
@@ -234,6 +275,44 @@ body > #root {
   background-color: #329F56;
 }
 
+/* payment modal layout */
+.payment-options {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 15px;
+}
+
+.payment-btn {
+  width: 100px;
+  height: 40px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  color: white;
+  background-color: #1e87e5;
+  font-size: 1rem;
+}
+
+.payment-btn:hover {
+  background-color: #106DC7; 
+}
+
+.payment-cancel-btn {
+  margin-top: 30px;
+  width: 80px;
+  height: 30px;
+  cursor: pointer;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 6px;
+}
+
+.payment-cancel-btn:hover {
+  background-color: #b02a37;
+}
+
 /* modal box */
 .modal-backdrop {
   position: fixed;
@@ -256,6 +335,26 @@ body > #root {
   border-radius: 15px;
   width: 500px;
   height: 800px;
+}
+
+.modal-payment {
+  background: #1a1a1a;
+  color: white;
+  font-size: 20px;
+  padding: 25px;
+  border-radius: 25px;
+  width: 500px;
+  height: 200px;
+}
+
+.modal-employees {
+  background: #1a1a1a;
+  color: white;
+  font-size: 20px;
+  padding: 25px;
+  border-radius: 25px;
+  width: 500px;
+  height: 700px;
 }
 
 .modal select, .modal input[type="number"] {
