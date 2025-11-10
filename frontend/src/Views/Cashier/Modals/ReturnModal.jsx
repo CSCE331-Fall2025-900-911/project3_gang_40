@@ -18,7 +18,7 @@ function ReturnModal({ isOpen, closeModal, onConfirm }) {
 
   return (
     <div className='modal-backdrop' onClick={closeModal}>
-      <div className='modal' onClick={e => e.stopPropagation()}>
+      <div className='modal-return' onClick={e => e.stopPropagation()}>
         <h3>Enter Sales ID</h3>
         <div className="modal-section">
           <input
