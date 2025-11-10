@@ -22,6 +22,7 @@ app.use(express.json());
 
 // Mount API routes
 app.use('/api/drinks', drinksRoutes);
+app.use('/api/drinks/sizes', drinksRoutes);
 app.use('/api/toppings', toppingsRoutes);
 app.use('/api/employees', employeesRoutes);
 app.use('/api/checkout', checkoutRoutes);
