@@ -40,6 +40,8 @@ function Display({ onBack }) {
   // Sweetness levels from database
   const sweetnessLevels = [
     'No Sugar (0%)',
+    'Light (30%)',
+    'Half (50%)',
     'Less (80%)',
     'Normal (100%)'
   ];
@@ -55,8 +57,7 @@ function Display({ onBack }) {
     { id: 7, name: 'Mango Popping Boba', price: 1.00 },
     { id: 8, name: 'Strawberry Popping Boba', price: 1.00 },
     { id: 9, name: 'Ice Cream', price: 1.00 },
-    { id: 10, name: 'Creama', price: 1.00 },
-    { id: 11, name: 'No Toppings', price: 0.00 }
+    { id: 10, name: 'Creama', price: 1.00 }
   ];
 
   return (
