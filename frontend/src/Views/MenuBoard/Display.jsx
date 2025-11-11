@@ -223,6 +223,8 @@ function Display({ onBack }) {
       </div>
 
       {/* Sweetness Section */}
+      // This section displays the available sweetness levels for customization.
+      // Each option shows the label name and notes that it has no extra charge.
       <h3 className="subsection-title">Sweetness</h3>
       <div className="options-grid">
         {sweetnessLevels.map((level, index) => (
@@ -234,6 +236,8 @@ function Display({ onBack }) {
       </div>
 
       {/* Toppings Section */}
+      // This section displays all available toppings in a grid layout.
+      // Each topping shows its name and price (or "Free" if the price is $0).
       <h2 className="menu-title">Toppings</h2>
       <div className="toppings-grid">
         {toppings.map(topping => (
