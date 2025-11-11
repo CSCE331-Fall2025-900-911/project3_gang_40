@@ -17,10 +17,22 @@ function App() {
       )}
 
       {currentView === 'main' && (
-        <div>
-          <h1>Main</h1>
-          <button onClick={() => setCurrentView('cashier')}>Go to Cashier</button>
-          <button onClick={() => setCurrentView('display')}>Go to Menu</button>
+        <div className="home-container">
+          <h1 className="menu-title">Boba Shop</h1>
+          <div className="menu-items">
+            <button 
+              className="nav-button cashier-button"
+              onClick={() => setCurrentView('cashier')}
+            >
+              Cashier
+            </button>
+            <button 
+              className="nav-button menu-button"
+              onClick={() => setCurrentView('display')}
+            >
+              Menu
+            </button>
+          </div>
         </div>
       )}
     </>
