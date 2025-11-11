@@ -1,6 +1,8 @@
 import React from 'react';
 import './MenuItem.css';
 
+// MenuItem Component
+// This component renders a single menu item card with its image, name, price, and optional toppings.
 const MenuItem = ({ image, name, price, toppings }) => {
   return (
     <div className="menu-item">
