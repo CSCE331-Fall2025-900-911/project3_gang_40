@@ -45,12 +45,12 @@
 
 .home-container .cashier-button {
   background: linear-gradient(135deg, #2d774e 0%, #718b63 100%);
-  color: white;
+  color: rgb(13, 7, 7);
 }
 
 .home-container .menu-button {
   background: linear-gradient(135deg, #43658f 0%, #65a9e1 100%);
-  color: white;
+  color: rgb(13, 7, 7);
 }
 
 .home-container .nav-button:hover {
