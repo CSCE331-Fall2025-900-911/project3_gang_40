@@ -9,7 +9,7 @@ function EmployeeModal({ employees, selectEmployee, closeModal }) {
               <li key={emp.employee_id} style={{ marginBottom: '8px' }}>
                 <button
                   onClick={() => selectEmployee(emp)}
-                  style={{ width: '80%', padding: '8px', borderRadius: '8px', cursor: 'pointer' }}
+                  style={{ width: '80%', padding: '4px', borderRadius: '8px', cursor: 'pointer' }}
                 >
                   {emp.first_name} {emp.last_name} - {emp.role}
                 </button>
@@ -17,7 +17,7 @@ function EmployeeModal({ employees, selectEmployee, closeModal }) {
             ))}
           </ul>
         ) : <p>Loading employees...</p>}
-        <button onClick={closeModal} style={{ width: '100px', height: '30px', cursor: 'pointer', marginTop: '30px' }}>Cancel</button>
+        <button onClick={closeModal} style={{ width: '100px', height: '30px', cursor: 'pointer', marginTop: '10px' }}>Cancel</button>
       </div>
     </div>
   );

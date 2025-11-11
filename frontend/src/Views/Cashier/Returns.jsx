@@ -10,7 +10,7 @@ function Returns({ onBack, currentEmployee }) {
 
   // fetch last 10 sales
   const fetchRecentSales = async () => {
-    const res = await fetch('http://localhost:5001/api/returns/recent');
+    const res = await fetch('https://project3-gang-40-sjzu.onrender.com/api/returns/recent');
     const data = await res.json();
     setSalesList(data);
   };
@@ -21,7 +21,7 @@ function Returns({ onBack, currentEmployee }) {
 
   // fetch details for a specific sale
   const fetchSaleDetails = async (id) => {
-    const res = await fetch(`http://localhost:5001/api/returns/${id}`);
+    const res = await fetch(`https://project3-gang-40-sjzu.onrender.com/api/returns/${id}`);
     const data = await res.json();
     setOrderDetails(data);
   };
@@ -38,7 +38,7 @@ function Returns({ onBack, currentEmployee }) {
     }
 
     try {
-      const res = await fetch('http://localhost:5001/api/returns', {
+      const res = await fetch('https://project3-gang-40-sjzu.onrender.com/api/returns', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
