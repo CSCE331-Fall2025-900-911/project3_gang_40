@@ -21,6 +21,7 @@ body > #root {
   max-width: 100%; 
   font-family: Arial, sans-serif;
   color: white;
+  text-align: center;
 }
 
 /* side nav bar */
