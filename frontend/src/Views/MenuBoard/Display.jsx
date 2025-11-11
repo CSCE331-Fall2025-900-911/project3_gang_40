@@ -198,9 +198,10 @@ function Display({ onBack }) {
       {/* Customization Options Section */}
       <h2 className="menu-title">Drink Customization</h2>
       
-      {/* Sizes Section */}
-      // This section displays the available drink sizes (e.g., Small, Medium, Large).
-      // Each size shows its name and price. If the price is 0, it is labeled as "Base Price"; otherwise, the extra cost is shown.
+      {/* Sizes Section 
+          This section displays the available drink sizes (e.g., Small, Medium, Large).
+          Each size shows its name and price. If the price is 0, it is labeled as "Base Price"; otherwise, the extra cost is shown.
+      */}
       <h3 className="subsection-title">Sizes</h3>
       <div className="options-grid">
         {sizes.map(size => (
@@ -213,9 +214,10 @@ function Display({ onBack }) {
         ))}
       </div>
 
-      {/* Ice Level Section */}
-      // This section displays the available ice levels for the drink.
-      // Each option shows its name and notes that there is no extra charge.
+      {/* Ice Level Section
+          This section displays the available ice levels for the drink.
+          Each option shows its name and notes that there is no extra charge.
+      */}
       <h3 className="subsection-title">Ice Level</h3>
       <div className="options-grid">
         {iceLevels.map((level, index) => (
@@ -226,9 +228,10 @@ function Display({ onBack }) {
         ))}
       </div>
 
-      {/* Sweetness Section */}
-      // This section displays the available sweetness levels for customization.
-      // Each option shows the label name and notes that it has no extra charge.
+      {/* Sweetness Section
+          This section displays the available sweetness levels for customization.
+          Each option shows the label name and notes that it has no extra charge.
+      */}
       <h3 className="subsection-title">Sweetness</h3>
       <div className="options-grid">
         {sweetnessLevels.map((level, index) => (
@@ -239,9 +242,10 @@ function Display({ onBack }) {
         ))}
       </div>
 
-      {/* Toppings Section */}
-      // This section displays all available toppings in a grid layout.
-      // Each topping shows its name and price (or "Free" if the price is $0).
+      {/* Toppings Section
+          This section displays all available toppings in a grid layout.
+          Each topping shows its name and price (or "Free" if the price is $0).
+      */}
       <h2 className="menu-title">Toppings</h2>
       <div className="toppings-grid">
         {toppings.map(topping => (
