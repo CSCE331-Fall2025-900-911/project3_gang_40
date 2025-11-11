@@ -199,6 +199,8 @@ function Display({ onBack }) {
       <h2 className="menu-title">Drink Customization</h2>
       
       {/* Sizes Section */}
+      // This section displays the available drink sizes (e.g., Small, Medium, Large).
+      // Each size shows its name and price. If the price is 0, it is labeled as "Base Price"; otherwise, the extra cost is shown.
       <h3 className="subsection-title">Sizes</h3>
       <div className="options-grid">
         {sizes.map(size => (
@@ -212,6 +214,8 @@ function Display({ onBack }) {
       </div>
 
       {/* Ice Level Section */}
+      // This section displays the available ice levels for the drink.
+      // Each option shows its name and notes that there is no extra charge.
       <h3 className="subsection-title">Ice Level</h3>
       <div className="options-grid">
         {iceLevels.map((level, index) => (
