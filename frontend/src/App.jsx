@@ -18,8 +18,8 @@ function App() {
 
       {currentView === 'main' && (
         <div className="home-container">
-          <h1 className="menu-title">Boba Shop</h1>
-          <div className="menu-items">
+          <h1 className="home-title">Boba Shop</h1>
+          <div className="home-nav-items">
             <button 
               className="nav-button cashier-button"
               onClick={() => setCurrentView('cashier')}

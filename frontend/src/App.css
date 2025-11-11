@@ -1,37 +1,35 @@
-#root {
-  max-width: 1280px;
+/* App.css - Only for home page */
+.home-container {
+  width: 100%;
+  max-width: 800px;
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 2rem;
 }
 
-.menu-title {
+.home-container .home-title {
   font-size: 3.5rem;
   margin-bottom: 3rem;
   color: #2c3e50;
   font-weight: 700;
   letter-spacing: 2px;
+  text-align: center;
 }
 
-.home-container {
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.menu-items {
+.home-container .home-nav-items {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 30px;
   padding: 20px;
   justify-items: center;
+  width: 100%;
 }
 
-.nav-button {
+.home-container .nav-button {
   width: 100%;
   min-height: 200px;
   padding: 40px 50px;
@@ -45,37 +43,37 @@
   letter-spacing: 1px;
 }
 
-.cashier-button {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+.home-container .cashier-button {
+  background: linear-gradient(135deg, #2d774e 0%, #718b63 100%);
   color: white;
 }
 
-.menu-button {
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+.home-container .menu-button {
+  background: linear-gradient(135deg, #43658f 0%, #65a9e1 100%);
   color: white;
 }
 
-.nav-button:hover {
+.home-container .nav-button:hover {
   transform: translateY(-8px);
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
 }
 
-.nav-button:active {
+.home-container .nav-button:active {
   transform: translateY(-4px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 @media (max-width: 768px) {
-  .menu-items {
+  .home-container .home-nav-items {
     grid-template-columns: 1fr;
     gap: 20px;
   }
   
-  .menu-title {
+  .home-container .home-title {
     font-size: 2.5rem;
   }
   
-  .nav-button {
+  .home-container .nav-button {
     min-height: 150px;
     font-size: 1.5rem;
   }
