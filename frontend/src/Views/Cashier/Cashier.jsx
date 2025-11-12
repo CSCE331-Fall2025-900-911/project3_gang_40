@@ -115,7 +115,7 @@ function Cashier({ onBack }) {
 
     try {
       // get values needed for inserting into databse
-      const response = await fetch('http://localhost:5001/api/checkout', {
+      const response = await fetch('https://project3-gang-40-sjzu.onrender.com/api/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
