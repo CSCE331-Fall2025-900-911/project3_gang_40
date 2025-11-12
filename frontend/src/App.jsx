@@ -2,6 +2,7 @@ import { useState } from 'react'
 import './App.css'
 import Display from './Views/MenuBoard/Display'
 import Cashier from './Views/Cashier/Cashier'
+import Customer from './Views/Customer/Customer'
 
 function App() {
   const [currentView, setCurrentView] = useState('main')
@@ -14,6 +15,10 @@ function App() {
 
       {currentView === 'display' && (
         <Display onBack={() => setCurrentView('main')} />
+      )}
+
+      {currentView === 'customer' && (
+        <Customer onBack={() => setCurrentView('main')} />
       )}
 
       {currentView === 'main' && (
@@ -31,6 +36,12 @@ function App() {
               onClick={() => setCurrentView('display')}
             >
               Menu
+            </button>
+            <button 
+              className="nav-button menu-button"
+              onClick={() => setCurrentView('customer')}
+            >
+              Customer
             </button>
           </div>
         </div>
