@@ -5,6 +5,9 @@ function Customer({ onBack }) {
     <>
       <button onClick={onBack}>Exit</button>
       <h2>Customer View</h2>
+
+      <button >Translate</button>
+      <button >Text Dictation</button>
     </>
   );
 }
