@@ -4,6 +4,7 @@ import ReturnModal from './Modals/ReturnModal';
 import Sidebar from './Sidebar';
 
 function Returns({ onBack, currentEmployee }) {
+  // states to store sales details
   const [salesList, setSalesList] = useState([]);
   const [orderDetails, setOrderDetails] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -26,11 +27,12 @@ function Returns({ onBack, currentEmployee }) {
     setOrderDetails(data);
   };
 
+  // Triggered from modal when a user confirms a Sales ID
   const handleModalConfirm = (salesId) => {
     fetchSaleDetails(salesId);
   };
 
-  // confirm a return for a sale
+  // confirm a return for a sale with the backend
   const confirmReturn = async (salesId) => {
     if (!currentEmployee) {
       alert('No employee selected');
@@ -64,12 +66,16 @@ function Returns({ onBack, currentEmployee }) {
 
   return (
     <div className='returns-container'>
+      {/* Sidebar Navigation */}
       <Sidebar
         currentEmployee={currentEmployee}
         buttons={[{ label: 'Cashier', onClick: onBack }]}
       />
 
+
       {/* Previous Orders */}
+      {/* List of previous sales */}
+      {/* Previous Sales Section: displays list of last 10 sales + find sales ID option */}
       <div className='returns-section'>
         <h2>Previous Orders</h2>
         <button className='find-btn' onClick={() => setIsModalOpen(true)}>Find Sales ID</button>
@@ -84,7 +90,10 @@ function Returns({ onBack, currentEmployee }) {
         </ul>
       </div>
 
+
       {/* Order Details */}
+      {/* Display details of the selected sale */}
+      {/* Order Details Section: shows items for the selected sale and allows confirming a return */} 
       <div className='order-section'>
         <h2>Order Details</h2>
         {orderDetails.length === 0 && <p>Select a sale to see details</p>}
@@ -96,6 +105,7 @@ function Returns({ onBack, currentEmployee }) {
             </p>
           </div>
         ))}
+        {/* Only show confirm button if order details exist and an employee is logged in */}
         {orderDetails.length > 0 && currentEmployee && (
           <button 
             className='make-return-btn'
@@ -106,6 +116,8 @@ function Returns({ onBack, currentEmployee }) {
         )}
       </div>
 
+
+      {/* Modal for entering a sales ID manually */}
       <ReturnModal
         isOpen={isModalOpen}
         closeModal={() => setIsModalOpen(false)}
