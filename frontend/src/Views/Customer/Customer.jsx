@@ -6,7 +6,7 @@ function Customer({ onBack }) {
     <>
       <div className='customer-container'>
 
-        <div className='sidebar'>
+        <div className='sidebar-customer'>
           <p>sidebar</p>
         </div>
 

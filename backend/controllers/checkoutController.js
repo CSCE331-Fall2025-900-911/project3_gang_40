@@ -6,7 +6,7 @@ export const checkout = async (req, res, next) => {
   try {
     const {
       cart,
-      employeeId = null,
+      employee_id = null,
       customer_id = null,
       payment_method = 'Card',
       sale_type = 'Sale',
@@ -20,15 +20,15 @@ export const checkout = async (req, res, next) => {
     await client.query('BEGIN');
 
     // Get size extra cost
-    const sizeRes = await client.query('SELECT sizeId, extra_cost FROM drink_sizes');
+    const sizeRes = await client.query('SELECT size_id, extra_cost FROM drink_sizes');
     const sizeMap = {};
-    sizeRes.rows.forEach(row => sizeMap[row.sizeId] = Number(row.extra_cost));
+    sizeRes.rows.forEach(row => sizeMap[row.size_id] = Number(row.extra_cost));
 
     // Calculate total price
     const totalPrice = cart.reduce((sum, item) => {
       const base = Number(item.drink.base_price);
       const toppingPrice = Number(item.modifications.topping?.extra_cost || 0);
-      const sizeExtra = sizeMap[item.modifications.sizeId] || 0;
+      const sizeExtra = sizeMap[item.modifications.size_id] || 0;
       const quantity = Number(item.modifications.quantity);
       return sum + (base + toppingPrice + sizeExtra) * quantity * tax;
     }, 0);
@@ -36,10 +36,10 @@ export const checkout = async (req, res, next) => {
     // Insert into sales_history
     const saleResult = await client.query(
       `INSERT INTO sales_history
-        (customer_id, employeeId, sales_time, total_price, payment_method, sale_type)
+        (customer_id, employee_id, sales_time, total_price, payment_method, sale_type)
        VALUES ($1, $2, NOW(), $3, $4, $5)
        RETURNING sales_id`,
-      [customer_id, employeeId, totalPrice, payment_method, sale_type]
+      [customer_id, employee_id, totalPrice, payment_method, sale_type]
     );
     const salesId = saleResult.rows[0].sales_id;
 
@@ -47,31 +47,31 @@ export const checkout = async (req, res, next) => {
     for (const item of cart) {
       const { drink, modifications } = item;
       const toppingId = modifications.topping?.toppingId || null;
-      const sizeId = modifications.sizeId;
+      const size_id = modifications.size_id;
 
       // Get or create variation_id
-      let variationId;
+      let variation_id;
       const variationResult = await client.query(
         `SELECT variation_id FROM drinkVariation
-         WHERE drinkId = $1 AND sizeId = $2 AND sweetness = $3 AND iceLevel = $4 AND toppingId IS NOT DISTINCT FROM $5`,
-        [drink.drinkId, sizeId, modifications.sweetness, modifications.ice, toppingId]
+         WHERE drink_id = $1 AND size_id = $2 AND sweetness = $3 AND iceLevel = $4 AND toppingId IS NOT DISTINCT FROM $5`,
+        [drink.drink_id, size_id, modifications.sweetness, modifications.ice, toppingId]
       );
 
       if (variationResult.rows.length > 0) {
-        variationId = variationResult.rows[0].variation_id;
+        variation_id = variationResult.rows[0].variation_id;
       } else {
         const insertVar = await client.query(
-          `INSERT INTO drinkVariation (drinkId, sizeId, sweetness, iceLevel, toppingId)
+          `INSERT INTO drinkVariation (drink_id, size_id, sweetness, iceLevel, toppingId)
            VALUES ($1, $2, $3, $4, $5) RETURNING variation_id`,
-          [drink.drinkId, sizeId, modifications.sweetness, modifications.ice, toppingId]
+          [drink.drink_id, size_id, modifications.sweetness, modifications.ice, toppingId]
         );
-        variationId = insertVar.rows[0].variation_id;
+        variation_id = insertVar.rows[0].variation_id;
       }
 
       // Get size extra cost
       const sizeResult = await client.query(
-        `SELECT extra_cost FROM drink_sizes WHERE sizeId = $1`,
-        [sizeId]
+        `SELECT extra_cost FROM drink_sizes WHERE size_id = $1`,
+        [size_id]
       );
       const sizeExtra = Number(sizeResult.rows[0]?.extra_cost || 0);
 
@@ -82,7 +82,7 @@ export const checkout = async (req, res, next) => {
       await client.query(
         `INSERT INTO orders (sales_id, variation_id, quantity, price)
          VALUES ($1, $2, $3, $4)`,
-        [salesId, variationId, modifications.quantity, price]
+        [salesId, variation_id, modifications.quantity, price]
       );
     }
 

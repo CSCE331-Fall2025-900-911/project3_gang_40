@@ -4,7 +4,7 @@ import { pool } from '../db.js';
 export const getRecentSales = async (req, res, next) => {
   try {
     const result = await pool.query(
-      'SELECT * FROM sales_history ORDER BY salesId DESC LIMIT 10'
+      'SELECT * FROM sales_history ORDER BY sales_id DESC LIMIT 10'
     );
     res.json(result.rows);
   } catch (err) {
@@ -12,16 +12,16 @@ export const getRecentSales = async (req, res, next) => {
   }
 };
 
-// Get orders for a specific salesId
+// Get orders for a specific sales_id
 export const getSalesDetails = async (req, res, next) => {
-  const salesId = parseInt(req.params.id);
-  if (isNaN(salesId)) return res.status(400).json({ error: 'Invalid sales ID' });
+  const sales_id = parseInt(req.params.id);
+  if (isNaN(sales_id)) return res.status(400).json({ error: 'Invalid sales ID' });
 
   try {
     const result = await pool.query(`
       SELECT 
         o.order_id,
-        o.salesId,
+        o.sales_id,
         o.quantity,
         o.price,
         d.drink_name,
@@ -34,9 +34,9 @@ export const getSalesDetails = async (req, res, next) => {
       JOIN drinks d ON dv.drink_id = d.drink_id
       JOIN drink_sizes ds ON dv.size_id = ds.size_id
       LEFT JOIN toppings t ON dv.topping_id = t.topping_id
-      WHERE o.salesId = $1
+      WHERE o.sales_id = $1
       ORDER BY o.order_id
-    `, [salesId]);
+    `, [sales_id]);
 
     res.json(result.rows);
   } catch (err) {
@@ -46,13 +46,13 @@ export const getSalesDetails = async (req, res, next) => {
 
 // Create a return
 export const createReturn = async (req, res) => {
-  const { salesId, employee_id } = req.body;
+  const { sales_id, employee_id } = req.body;
 
   try {
     // 1. Look up original sale
     const originalSaleResult = await pool.query(
-      'SELECT customer_id, total_price, payment_method FROM sales_history WHERE salesId = $1',
-      [salesId]
+      'SELECT customer_id, total_price, payment_method FROM sales_history WHERE sales_id = $1',
+      [sales_id]
     );
 
     if (originalSaleResult.rows.length === 0) {
@@ -64,7 +64,7 @@ export const createReturn = async (req, res) => {
     // 2. Insert new row as return
     const insertResult = await pool.query(
       `INSERT INTO sales_history 
-       (customer_id, employee_id, sales_time, total_price, payment_method, sale_type, original_salesId)
+       (customer_id, employee_id, sales_time, total_price, payment_method, sale_type, original_sales_id)
        VALUES ($1, $2, CURRENT_TIMESTAMP, $3, $4, 'Return', $5)
        RETURNING *`,
       [
@@ -72,7 +72,7 @@ export const createReturn = async (req, res) => {
         employee_id,
         -originalSale.total_price, // negative
         originalSale.payment_method,
-        salesId
+        sales_id
       ]
     );
 
