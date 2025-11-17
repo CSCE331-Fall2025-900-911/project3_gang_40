@@ -65,7 +65,10 @@ export const addAnotherDrinkHelper = (index, setCart) => {
 
     newCart[index] = {
       ...item,
-      modifications: { ...item.modifications, quantity: item.modifications.quantity + 1 }
+      modifications: {
+        ...item.modifications,
+        quantity: Number(item.modifications.quantity) + 1
+      }
     };
     return newCart;
   });
