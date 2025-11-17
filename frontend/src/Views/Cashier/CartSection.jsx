@@ -10,7 +10,7 @@ function CartSection({ cart, sizes, removeFromCart, addAnotherDrink, openModal, 
           <ul className='cart-list'>
             {cart.map((item, idx) => {
               // gets values from database to show in cart
-              const size = sizes.find(s => s.sizeId === item.modifications.sizeId) || { size_name: 'Unknown', extra_cost: 0 };
+              const size = sizes.find(s => s.size_id === item.modifications.size_id) || { size_name: 'Medium', extra_cost: 0.50 };
               const itemPrice = (Number(item.drink.base_price) + Number(item.modifications.topping?.extra_cost || 0) + Number(size.extra_cost)) * Number(item.modifications.quantity);
               const sizeName = size.size_name;
 
@@ -21,7 +21,9 @@ function CartSection({ cart, sizes, removeFromCart, addAnotherDrink, openModal, 
                     <br />
                     <span className="cart-item-details">
                       ({sizeName}, {item.modifications.sweetness}, {item.modifications.ice}
-                      {item.modifications.topping ? ` + ${item.modifications.topping.topping_name}` : ''})
+                      {item.modifications.topping
+                      ? ` + ${item.modifications.topping.topping_name}`
+                      : ' + No Toppings'})
                     </span>
                     <br />
                     <span className="cart-item-price">${itemPrice.toFixed(2)}</span>

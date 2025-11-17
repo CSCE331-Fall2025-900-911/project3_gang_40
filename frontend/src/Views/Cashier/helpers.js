@@ -18,7 +18,7 @@ export const openModalHelper = (
     setEditingIndex(index);
   } else {
     setModifications({
-      sizeId: 2,
+      size_id: 2,
       sweetness: 'Normal (100%)',
       ice: 'Regular',
       topping: null,
@@ -64,12 +64,12 @@ export const addAnotherDrinkHelper = (index, setCart) => {
     const item = newCart[index];
 
     newCart[index] = {
-      ...item,
-      modifications: {
-        ...item.modifications,
-        quantity: Number(item.modifications.quantity) + 1
-      }
-    };
+    ...item,
+    modifications: {
+      ...item.modifications,
+      quantity: Number(item.modifications.quantity) + 1
+    }
+  };
     return newCart;
   });
 };
@@ -95,7 +95,7 @@ export const calculateTotalPrice = (cart, sizes) => {
   return cart.reduce((sum, item) => {
     const base = Number(item.drink.base_price);
     const toppingPrice = Number(item.modifications.topping?.extra_cost || 0);
-    const sizeExtra = Number(sizes.find(s => s.sizeId === item.modifications.sizeId)?.extra_cost || 0);
+    const sizeExtra = Number(sizes.find(s => s.size_id === item.modifications.size_id)?.extra_cost || 0);
     const quantity = Number(item.modifications.quantity);
     return sum + (base + toppingPrice + sizeExtra) * quantity;
   }, 0);

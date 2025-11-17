@@ -47,7 +47,11 @@ function DrinkModal({ drink, modifications, setModifications, toppings, sizes, i
                   type="radio"
                   name="topping"
                   value={topping.topping_name}
-                  checked={modifications.topping?.topping_id === topping.topping_id}
+                  checked={
+                  modifications.topping
+                    ? modifications.topping.topping_id === topping.topping_id
+                    : topping.topping_name === 'No Toppings'
+                }
                   onChange={() => setModifications(prev => ({ ...prev, topping }))}
                 /> 
                 {topping.topping_name} (+${Number(topping.extra_cost).toFixed(2)})
