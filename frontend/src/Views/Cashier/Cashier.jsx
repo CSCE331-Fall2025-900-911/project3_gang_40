@@ -120,7 +120,7 @@ function Cashier({ onBack }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           cart,
-          employeeId: currentEmployee.employeeId,
+          employee_id: currentEmployee.employee_id,
           customer_id: Math.floor(Math.random() * 200) + 1,
           payment_method: isVoid ? 'Null' : paymentMethod,
           sale_type: isVoid ? 'Void' : 'Sale',
