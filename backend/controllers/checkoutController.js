@@ -86,8 +86,7 @@ export const checkout = async (req, res, next) => {
       );
 
 
-      // After inserting into orders, decrement stock
-      // 1. Look up required ingredients for this drink
+      // decrement stock of drinks ordered
       const ingredientsResult = await client.query(
         `SELECT ingredient_id, quantity
         FROM drink_ingredients
@@ -95,12 +94,12 @@ export const checkout = async (req, res, next) => {
         [drink.drink_id]
       );
 
-      // 2. For each ingredient, calculate total used and update inventory
+      // get ingredient amount per drink
       for (const ing of ingredientsResult.rows) {
-        const requiredPerCup = Number(ing.quantity);  // amount per drink
+        const requiredPerCup = Number(ing.quantity); 
         const totalUsed = requiredPerCup * Number(modifications.quantity);
 
-        // Check current stock
+        // check current stock
         const stockResult = await client.query(
           `SELECT stock_quantity
           FROM ingredients
@@ -111,13 +110,13 @@ export const checkout = async (req, res, next) => {
 
         const currentStock = Number(stockResult.rows[0].stock_quantity);
 
+        // throw error if drink is out of stock
         if (currentStock < totalUsed) {
           throw new Error(
             `Insufficient stock for ingredient ${ing.ingredient_id}. Needed ${totalUsed}, but only ${currentStock} available.`
           );
         }
 
-        // Decrement stock
         await client.query(
           `UPDATE ingredients
           SET stock_quantity = stock_quantity - $1

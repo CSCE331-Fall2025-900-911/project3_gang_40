@@ -1,6 +1,6 @@
 import { pool } from '../db.js';
 
-// Get last N sales
+// Get last 10 sales
 export const getRecentSales = async (req, res, next) => {
   try {
     const result = await pool.query(
