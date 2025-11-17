@@ -5,6 +5,8 @@ function ReturnModal({ isOpen, closeModal, onConfirm }) {
 
   if (!isOpen) return null;
 
+  // modal pop up for sales id
+  // shows order with input sales id if given one
   const handleConfirm = () => {
     const id = parseInt(salesIdInput);
     if (isNaN(id)) {
@@ -20,6 +22,7 @@ function ReturnModal({ isOpen, closeModal, onConfirm }) {
     <div className='modal-backdrop' onClick={closeModal}>
       <div className='modal-return' onClick={e => e.stopPropagation()}>
         <h3>Enter Sales ID</h3>
+        {/* text to enter sales id of order to return */}
         <div className="modal-section">
           <input
             type="number"
@@ -35,6 +38,7 @@ function ReturnModal({ isOpen, closeModal, onConfirm }) {
             }}
           />
         </div>
+        {/* buttons to confirm return or cancel */}
         <div className="modal-actions" style={{ marginTop: '10px', display: 'flex', justifyContent: 'space-between' }}>
           <button onClick={handleConfirm}>Confirm</button>
           <button onClick={closeModal}>Cancel</button>
