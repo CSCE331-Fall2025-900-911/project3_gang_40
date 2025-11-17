@@ -8,14 +8,14 @@ function EmployeeModal({ employees, selectEmployee, closeModal }) {
         {employees.length > 0 ? (
           <ul style={{ listStyleType: 'none', padding: 0, margin: 0 }}>
             {employees.map(emp => (
-              <li key={emp.employeeId} style={{ marginBottom: '8px' }}>
+              <li key={emp.employee_id} style={{ marginBottom: '8px' }}>
                 {/* Button to select an employee */}
                 <button
                   onClick={() => selectEmployee(emp)}
                   style={{ width: '80%', padding: '4px', borderRadius: '8px', cursor: 'pointer' }}
                 >
                   {/* Display employee name and role */}
-                  {emp.firstName} {emp.lastName} - {emp.role}
+                  {emp.first_name} {emp.last_name} - {emp.role}
                 </button>
               </li>
             ))}
