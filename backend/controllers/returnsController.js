@@ -14,8 +14,8 @@ export const getRecentSales = async (req, res, next) => {
 
 // Get orders for a specific sales_id
 export const getSalesDetails = async (req, res, next) => {
-  const salesId = parseInt(req.params.id);
-  if (isNaN(salesId)) return res.status(400).json({ error: 'Invalid sales ID' });
+  const sales_id = parseInt(req.params.id);
+  if (isNaN(sales_id)) return res.status(400).json({ error: 'Invalid sales ID' });
 
   try {
     const result = await pool.query(`
@@ -36,7 +36,7 @@ export const getSalesDetails = async (req, res, next) => {
       LEFT JOIN toppings t ON dv.topping_id = t.topping_id
       WHERE o.sales_id = $1
       ORDER BY o.order_id
-    `, [salesId]);
+    `, [sales_id]);
 
     res.json(result.rows);
   } catch (err) {

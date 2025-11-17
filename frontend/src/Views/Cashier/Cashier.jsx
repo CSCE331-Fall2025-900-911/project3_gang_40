@@ -51,7 +51,7 @@ function Cashier({ onBack }) {
       .catch(err => console.error('Error fetching drinks:', err))
   }, []);
 
-   // populate toppings from database
+  // populate toppings from database
   useEffect(() => {
     fetch('https://project3-gang-40-sjzu.onrender.com/api/toppings')
       .then(res => res.json())
@@ -70,9 +70,9 @@ function Cashier({ onBack }) {
   // gets cashiers from employees table in database
   useEffect(() => {
     fetch('https://project3-gang-40-sjzu.onrender.com/api/employees/cashiers')
-    .then(res => res.json())
-    .then(data => setEmployees(data))
-    .catch(err => console.error('Error fetching employees:', err))
+      .then(res => res.json())
+      .then(data => setEmployees(data))
+      .catch(err => console.error('Error fetching employees:', err))
   }, []);
 
   // keeps employee signed in with page refresh
@@ -120,7 +120,7 @@ function Cashier({ onBack }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           cart,
-          employee_id: currentEmployee.employee_id,
+          employeeId: currentEmployee.employeeId,
           customer_id: Math.floor(Math.random() * 200) + 1,
           payment_method: isVoid ? 'Null' : paymentMethod,
           sale_type: isVoid ? 'Void' : 'Sale',
@@ -133,7 +133,7 @@ function Cashier({ onBack }) {
       if (response.ok) {
         alert(
           isVoid ? `Void purchase recorded. Sales ID: ${data.salesId}`
-          : `Order submitted successfully. Sales ID: ${data.salesId}`
+            : `Order submitted successfully. Sales ID: ${data.salesId}`
         );
         clearCart();
         setShowPaymentModal(false);
@@ -148,7 +148,7 @@ function Cashier({ onBack }) {
 
   // open modal for drink customization
   const openModal = (drink, cartItem = null, index = null) => openModalHelper(
-    drink, cartItem, index, setSelectedDrink, 
+    drink, cartItem, index, setSelectedDrink,
     setModifications, setIsEditing, setEditingIndex
   );
 
@@ -172,73 +172,73 @@ function Cashier({ onBack }) {
 
   return (
     <>
-    {currentView === 'cashier' && (
-      <div className='cashier-container'>
+      {currentView === 'cashier' && (
+        <div className='cashier-container'>
 
-        {/* nav bar on far left */}
-        <Sidebar
-          currentEmployee={currentEmployee}
-          buttons={[
-            { label: 'Exit', onClick: onBack },
-            { label: 'Change Employee', onClick: () => setShowEmployeeModal(true) },
-            { label: 'Returns', onClick: handleReturnClick },
-          ]}
-        />
-
-        {/* drink menu */}
-        <DrinkSection drinks={drinks} openModal={openModal} />
-
-        {/* cart */}
-        <CartSection 
-          cart={cart} 
-          sizes={sizes} 
-          removeFromCart={removeFromCart} 
-          addAnotherDrink={addAnotherDrink} 
-          openModal={openModal} 
-          totalPrice={totalPrice} 
-          clearCart={clearCart} 
-          setShowPaymentModal={setShowPaymentModal} 
-        />
-
-        {/* drink modifications pop up */}
-        {selectedDrink && (
-          <DrinkModal 
-            drink={selectedDrink} 
-            modifications={modifications || {}} 
-            setModifications={setModifications} 
-            toppings={toppings} 
-            sizes={sizes} 
-            isEditing={isEditing} 
-            saveEdits={saveEdits} 
-            addToCart={addToCart} 
-            closeModal={() => setSelectedDrink(null)} 
+          {/* nav bar on far left */}
+          <Sidebar
+            currentEmployee={currentEmployee}
+            buttons={[
+              { label: 'Exit', onClick: onBack },
+              { label: 'Change Employee', onClick: () => setShowEmployeeModal(true) },
+              { label: 'Returns', onClick: handleReturnClick },
+            ]}
           />
-        )}
 
-        {/* employee switcher modal */}
-        {showEmployeeModal && (
-          <EmployeeModal 
-            employees={employees} 
-            selectEmployee={(emp) => { setCurrentEmployee(emp); setShowEmployeeModal(false); }} 
-            closeModal={() => setShowEmployeeModal(false)} 
+          {/* drink menu */}
+          <DrinkSection drinks={drinks} openModal={openModal} />
+
+          {/* cart */}
+          <CartSection
+            cart={cart}
+            sizes={sizes}
+            removeFromCart={removeFromCart}
+            addAnotherDrink={addAnotherDrink}
+            openModal={openModal}
+            totalPrice={totalPrice}
+            clearCart={clearCart}
+            setShowPaymentModal={setShowPaymentModal}
           />
-        )}
 
-        {/* paymendt method modal */}
-        {showPaymentModal && (
-          <PaymentModal 
-            submitOrder={submitOrder} 
-            closeModal={() => setShowPaymentModal(false)} 
-          />
-        )}
+          {/* drink modifications pop up */}
+          {selectedDrink && (
+            <DrinkModal
+              drink={selectedDrink}
+              modifications={modifications || {}}
+              setModifications={setModifications}
+              toppings={toppings}
+              sizes={sizes}
+              isEditing={isEditing}
+              saveEdits={saveEdits}
+              addToCart={addToCart}
+              closeModal={() => setSelectedDrink(null)}
+            />
+          )}
 
-      </div>
-    )}
+          {/* employee switcher modal */}
+          {showEmployeeModal && (
+            <EmployeeModal
+              employees={employees}
+              selectEmployee={(emp) => { setCurrentEmployee(emp); setShowEmployeeModal(false); }}
+              closeModal={() => setShowEmployeeModal(false)}
+            />
+          )}
 
-    {/* set to returns view */}
-    {currentView === 'returns' && (
-      <Returns onBack={handleBack} currentEmployee={currentEmployee} />
-    )}
+          {/* paymendt method modal */}
+          {showPaymentModal && (
+            <PaymentModal
+              submitOrder={submitOrder}
+              closeModal={() => setShowPaymentModal(false)}
+            />
+          )}
+
+        </div>
+      )}
+
+      {/* set to returns view */}
+      {currentView === 'returns' && (
+        <Returns onBack={handleBack} currentEmployee={currentEmployee} />
+      )}
     </>
   )
 }
