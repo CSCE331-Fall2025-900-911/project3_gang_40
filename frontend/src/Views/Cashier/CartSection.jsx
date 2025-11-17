@@ -8,7 +8,7 @@ function CartSection({ cart, sizes, removeFromCart, addAnotherDrink, openModal, 
         ) : (
           <ul className='cart-list'>
             {cart.map((item, idx) => {
-              const size = sizes.find(s => s.size_id === item.modifications.size_id) || { size_name: 'Unknown', extra_cost: 0 };
+              const size = sizes.find(s => s.sizeId === item.modifications.sizeId) || { size_name: 'Unknown', extra_cost: 0 };
               const itemPrice = (Number(item.drink.base_price) + Number(item.modifications.topping?.extra_cost || 0) + Number(size.extra_cost)) * Number(item.modifications.quantity);
               const sizeName = size.size_name;
 
@@ -37,7 +37,7 @@ function CartSection({ cart, sizes, removeFromCart, addAnotherDrink, openModal, 
       </div>
 
       <div className='cart-totals'>
-        <h3>Subtotal: ${totalPrice.toFixed(2)}</h3>
+        <h3 className="subttotal">Subtotal: ${totalPrice.toFixed(2)}</h3>
         <h3>Tax: ${(totalPrice * 0.0825).toFixed(2)}</h3>
         <h3>Total: ${(totalPrice * 1.0825).toFixed(2)}</h3>
         <div className='cart-controls'>

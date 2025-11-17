@@ -43,7 +43,7 @@ function Returns({ onBack, currentEmployee }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
           sales_id: salesId, 
-          employee_id: currentEmployee.employee_id 
+          employeeId: currentEmployee.employeeId 
         })
       });
 
