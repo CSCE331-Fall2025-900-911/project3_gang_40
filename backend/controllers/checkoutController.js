@@ -46,24 +46,24 @@ export const checkout = async (req, res, next) => {
     // Insert each drink into orders
     for (const item of cart) {
       const { drink, modifications } = item;
-      const toppingId = modifications.topping?.topping_id || null;
+      const topping_id = modifications.topping?.topping_id || null;
       const size_id = modifications.size_id;
 
       // Get or create variation_id
       let variation_id;
       const variationResult = await client.query(
         `SELECT variation_id FROM drink_variation
-         WHERE drink_id = $1 AND size_id = $2 AND sweetness = $3 AND ice_level = $4 AND toppingId IS NOT DISTINCT FROM $5`,
-        [drink.drink_id, size_id, modifications.sweetness, modifications.ice, toppingId]
+         WHERE drink_id = $1 AND size_id = $2 AND sweetness = $3 AND ice_level = $4 AND topping_id IS NOT DISTINCT FROM $5`,
+        [drink.drink_id, size_id, modifications.sweetness, modifications.ice, topping_id]
       );
 
       if (variationResult.rows.length > 0) {
         variation_id = variationResult.rows[0].variation_id;
       } else {
         const insertVar = await client.query(
-          `INSERT INTO drink_variation (drink_id, size_id, sweetness, ice_level, toppingId)
+          `INSERT INTO drink_variation (drink_id, size_id, sweetness, ice_level, topping_id)
            VALUES ($1, $2, $3, $4, $5) RETURNING variation_id`,
-          [drink.drink_id, size_id, modifications.sweetness, modifications.ice, toppingId]
+          [drink.drink_id, size_id, modifications.sweetness, modifications.ice, topping_id]
         );
         variation_id = insertVar.rows[0].variation_id;
       }
