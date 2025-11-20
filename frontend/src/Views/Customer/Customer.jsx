@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react';
 import './Customer.css'
 import Cart from './Cart';
+import Modifications from './Modifications';
 
 function Customer({ onBack }) {
   const [currentView, setCurrentView] = useState('customer');
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedDrink, setSelectedDrink] = useState(null);
   const [drinks, setDrinks] = useState([]);
+  
 
   useEffect(() => {
     fetch('https://project3-gang-40-sjzu.onrender.com/api/drinks')
@@ -25,33 +28,46 @@ function Customer({ onBack }) {
         <Cart onBack={() => setCurrentView('customer')} />
       )}
 
+      {/* modifications view */}
+      {currentView === 'modifications' && (
+        <Modifications 
+          drink={selectedDrink} 
+          onBack={() => setCurrentView('customer')} 
+        />
+      )}
+
       {/* kiosk view */}
       {currentView === 'customer' && (
         <div className='customer-container'>
           <div className='drinks-bar '>
 
-            <button onClick={() => setSelectedCategory('Milky')}>Milky</button>
-            <button onClick={() => setSelectedCategory('Fruity')}>Fruity</button>
-            <button onClick={() => setSelectedCategory('Classic')}>Classic</button>
-            <button onClick={() => setSelectedCategory('Special')}>Special</button>
-            <button onClick={() => setSelectedCategory(null)}>Show All</button>
+            <button onClick={() => setSelectedCategory('Milky')}
+              className={selectedCategory === 'Milky' ? 'active-drink-btn' : ''}>Milky</button>
+            <button onClick={() => setSelectedCategory('Fruity')}
+              className={selectedCategory === 'Fruity' ? 'active-drink-btn' : ''}>Fruity</button>
+            <button onClick={() => setSelectedCategory('Classic')} 
+              className={selectedCategory === 'Classic' ? 'active-drink-btn' : ''}>Classic</button>
+            <button onClick={() => setSelectedCategory('Special')}
+              className={selectedCategory === 'Special' ? 'active-drink-btn' : ''}>Special</button>
+            <button onClick={() => setSelectedCategory(null)}
+              className={selectedCategory === null ? 'active-drink-btn' : ''}>Show All</button>
 
           </div>
 
           <div className='drink-container'>
             <h2>{selectedCategory ? `${selectedCategory} Drinks` : 'All Drinks'}</h2>
 
-            <div className='drink-group'>
+            <div className='drink-group-customer'>
               {filteredDrinks.length > 0 ? (
                 filteredDrinks.map(drink => (
                   <button
                     key={drink.drink_id}
-                    className="drink-button"
-                    onClick={() => console.log("Selected drink:", drink)}
+                    onClick={() => {
+                      setSelectedDrink(drink);
+                      setCurrentView('modifications');
+                    }}
                   >
-                    <strong>{drink.drink_name}</strong>
-                    <br />
-                    ${Number(drink.base_price).toFixed(2)}
+                    {drink.drink_name}<br />${Number(drink.base_price).toFixed(2)}
                   </button>
                 ))
               ) : (
@@ -60,7 +76,7 @@ function Customer({ onBack }) {
             </div>
             
 
-            <button onClick={onBack}>Exit</button>
+            <button className='exit-btn' onClick={onBack}>Exit</button>
           </div>
 
           <div className='cart-container'>
