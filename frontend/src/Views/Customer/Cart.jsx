@@ -10,6 +10,11 @@ function Cart({ onBack }) {
     
       <div>
         <button onClick={onBack}>Exit</button>
+
+        <div>
+          <p>CART</p>
+        </div>
+
       </div>
 
 
