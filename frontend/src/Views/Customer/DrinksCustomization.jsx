@@ -1,7 +1,7 @@
 import { useState } from "react";
 import NavBar from "./NavBar";
 
-function DrinksCustomization({ drink, modifications, setModifications, onNext, onBack, cart, onCartClick, currentStep, onStepClick }) {
+function DrinksCustomization({ drink, modifications, setModifications, onNext, onBack, cart, onCartClick, currentStep, onStepClick, sizes }) {
   return (
     <div className="customization-page">
       <div className="customization-container">
@@ -11,6 +11,26 @@ function DrinksCustomization({ drink, modifications, setModifications, onNext, o
         </div>
 
         <div className="customization-content">
+          {/* Size Selection */}
+          <div className="customization-section">
+            <label htmlFor="size">Size:</label>
+            <div className="size-options">
+              {sizes && sizes.length > 0 ? (
+                sizes.map(size => (
+                  <button
+                    key={size.size_id}
+                    className={`size-btn ${modifications.size_id === size.size_id ? 'active' : ''}`}
+                    onClick={() => setModifications(prev => ({ ...prev, size_id: size.size_id }))}
+                  >
+                    {size.size_name}
+                  </button>
+                ))
+              ) : (
+                <p>Loading sizes...</p>
+              )}
+            </div>
+          </div>
+
           {/* Sweetness Level Selection */}
           <div className="customization-section">
             <label htmlFor="sweetness">Sweetness Level:</label>
