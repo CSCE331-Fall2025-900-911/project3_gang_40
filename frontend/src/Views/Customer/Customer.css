@@ -1066,3 +1066,23 @@ body {
   background-color: #5a6268;
   transform: translateY(-2px);
 }
+
+.dictation-btn {
+  margin-bottom: 8px;
+  padding: 10px 16px;
+  background-color: #3d7ca8;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.dictation-btn:hover {
+  background-color: #3730a3;
+}
+
+.dictation-btn:active {
+  background-color: #312e81;
+}
