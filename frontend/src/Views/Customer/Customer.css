@@ -352,7 +352,8 @@ body {
 }
 
 .sweetness-options,
-.ice-options {
+.ice-options,
+.size-options {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
@@ -360,7 +361,8 @@ body {
 }
 
 .sweetness-btn,
-.ice-btn {
+.ice-btn,
+.size-btn {
   padding: 0.7rem 1rem;
   border: 2px solid #ddd;
   border-radius: 20px;
@@ -373,14 +375,16 @@ body {
 }
 
 .sweetness-btn:hover,
-.ice-btn:hover {
+.ice-btn:hover,
+.size-btn:hover {
   border-color: #5dade2;
   background-color: #e3f2fd;
   transform: scale(1.05);
 }
 
 .sweetness-btn.active,
-.ice-btn.active {
+.ice-btn.active,
+.size-btn.active {
   background-color: #5dade2;
   color: white;
   border-color: #3d7ca8;

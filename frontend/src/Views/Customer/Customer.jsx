@@ -10,6 +10,7 @@ function Customer({ onBack }) {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedDrink, setSelectedDrink] = useState(null);
   const [drinks, setDrinks] = useState([]);
+  const [sizes, setSizes] = useState([]);
   const [cart, setCart] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [editingIndex, setEditingIndex] = useState(null);
@@ -27,6 +28,14 @@ function Customer({ onBack }) {
       .then(res => res.json())
       .then(data => setDrinks(data))
       .catch(err => console.error('Error fetching drinks:', err));
+  }, []);
+
+  // gets drink sizes from database
+  useEffect(() => {
+    fetch('https://project3-gang-40-sjzu.onrender.com/api/drinks/sizes')
+      .then(res => res.json())
+      .then(data => setSizes(data))
+      .catch(err => console.error('Error fetching sizes:', err));
   }, []);
 
   const filteredDrinks = selectedCategory
@@ -124,6 +133,7 @@ function Customer({ onBack }) {
           onCartClick={() => setCurrentView('cart')}
           currentStep={2}
           onStepClick={handleStepClick}
+          sizes={sizes}
         />
       )}
 
