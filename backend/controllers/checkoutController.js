@@ -46,24 +46,24 @@ export const checkout = async (req, res, next) => {
     // Insert each drink into orders
     for (const item of cart) {
       const { drink, modifications } = item;
-      const toppingId = modifications.topping?.toppingId || null;
+      const topping_id = modifications.topping?.topping_id || null;
       const size_id = modifications.size_id;
 
       // Get or create variation_id
       let variation_id;
       const variationResult = await client.query(
-        `SELECT variation_id FROM drinkVariation
-         WHERE drink_id = $1 AND size_id = $2 AND sweetness = $3 AND iceLevel = $4 AND toppingId IS NOT DISTINCT FROM $5`,
-        [drink.drink_id, size_id, modifications.sweetness, modifications.ice, toppingId]
+        `SELECT variation_id FROM drink_variation
+         WHERE drink_id = $1 AND size_id = $2 AND sweetness = $3 AND ice_level = $4 AND topping_id IS NOT DISTINCT FROM $5`,
+        [drink.drink_id, size_id, modifications.sweetness, modifications.ice, topping_id]
       );
 
       if (variationResult.rows.length > 0) {
         variation_id = variationResult.rows[0].variation_id;
       } else {
         const insertVar = await client.query(
-          `INSERT INTO drinkVariation (drink_id, size_id, sweetness, iceLevel, toppingId)
+          `INSERT INTO drink_variation (drink_id, size_id, sweetness, ice_level, topping_id)
            VALUES ($1, $2, $3, $4, $5) RETURNING variation_id`,
-          [drink.drink_id, size_id, modifications.sweetness, modifications.ice, toppingId]
+          [drink.drink_id, size_id, modifications.sweetness, modifications.ice, topping_id]
         );
         variation_id = insertVar.rows[0].variation_id;
       }
@@ -84,6 +84,48 @@ export const checkout = async (req, res, next) => {
          VALUES ($1, $2, $3, $4)`,
         [salesId, variation_id, modifications.quantity, price]
       );
+
+
+      // decrement stock of drinks ordered
+      const ingredientsResult = await client.query(
+        `SELECT ingredient_id, quantity
+        FROM drink_ingredients
+        WHERE drink_id = $1`,
+        [drink.drink_id]
+      );
+
+      // get ingredient amount per drink
+      for (const ing of ingredientsResult.rows) {
+        const requiredPerCup = Number(ing.quantity); 
+        const totalUsed = requiredPerCup * Number(modifications.quantity);
+
+        // check current stock
+        const stockResult = await client.query(
+          `SELECT stock_quantity
+          FROM ingredients
+          WHERE ingredient_id = $1
+          FOR UPDATE`,
+          [ing.ingredient_id]
+        );
+
+        const currentStock = Number(stockResult.rows[0].stock_quantity);
+
+        // throw error if drink is out of stock
+        if (currentStock < totalUsed) {
+          throw new Error(
+            `Insufficient stock for ingredient ${ing.ingredient_id}. Needed ${totalUsed}, but only ${currentStock} available.`
+          );
+        }
+
+        await client.query(
+          `UPDATE ingredients
+          SET stock_quantity = stock_quantity - $1
+          WHERE ingredient_id = $2`,
+          [totalUsed, ing.ingredient_id]
+        );
+      }
+
+
     }
 
     await client.query('COMMIT');

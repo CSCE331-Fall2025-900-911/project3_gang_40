@@ -2,13 +2,15 @@ function CartSection({ cart, sizes, removeFromCart, addAnotherDrink, openModal, 
   return (
     <div className='cart-section'>
       <h2>Cart</h2>
+      {/* shows drinks currently in cart */}
       <div className='cart-items-wrapper'>
         {cart.length === 0 ? (
           <p>No Drinks Yet</p>
         ) : (
           <ul className='cart-list'>
             {cart.map((item, idx) => {
-              const size = sizes.find(s => s.sizeId === item.modifications.sizeId) || { size_name: 'Unknown', extra_cost: 0 };
+              // gets values from database to show in cart
+              const size = sizes.find(s => s.size_id === item.modifications.size_id) || { size_name: 'Medium', extra_cost: 0.50 };
               const itemPrice = (Number(item.drink.base_price) + Number(item.modifications.topping?.extra_cost || 0) + Number(size.extra_cost)) * Number(item.modifications.quantity);
               const sizeName = size.size_name;
 
@@ -19,11 +21,14 @@ function CartSection({ cart, sizes, removeFromCart, addAnotherDrink, openModal, 
                     <br />
                     <span className="cart-item-details">
                       ({sizeName}, {item.modifications.sweetness}, {item.modifications.ice}
-                      {item.modifications.topping ? ` + ${item.modifications.topping.topping_name}` : ''})
+                      {item.modifications.topping
+                      ? ` + ${item.modifications.topping.topping_name}`
+                      : ' + No Toppings'})
                     </span>
                     <br />
                     <span className="cart-item-price">${itemPrice.toFixed(2)}</span>
                   </span>
+                  {/* editing buttons for drink in cart */}
                   <div className="cart-item-buttons">
                     <button className='remove-btn' onClick={() => removeFromCart(idx)}>-</button>
                     <button className='add-btn' onClick={() => addAnotherDrink(idx)}>+</button>
@@ -36,6 +41,7 @@ function CartSection({ cart, sizes, removeFromCart, addAnotherDrink, openModal, 
         )}
       </div>
 
+      {/* shows price for cart and submit / clear button */}
       <div className='cart-totals'>
         <h3 className="subttotal">Subtotal: ${totalPrice.toFixed(2)}</h3>
         <h3>Tax: ${(totalPrice * 0.0825).toFixed(2)}</h3>
