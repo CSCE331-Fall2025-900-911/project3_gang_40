@@ -2,7 +2,7 @@ import { useState } from "react";
 import NavBar from "./NavBar";
 
 function DrinksCustomization({ drink, modifications, setModifications, onNext, onBack, cart, onCartClick, currentStep, onStepClick, sizes }) {
-  const handleDictation = () => {
+  const handleDictationSize = () => {
     const SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
     if (!SpeechRecognition) {
       alert("Speech Recognition not supported in this browser.");
@@ -13,17 +13,71 @@ function DrinksCustomization({ drink, modifications, setModifications, onNext, o
     recog.lang = "en-US";
     recog.onresult = (event) => {
       const spoken = event.results[0][0].transcript.trim();
-      console.log("You said:", spoken);
-      console.log("Available sizes:", sizes.map(s => s.size_name));
       const spokenNorm = spoken.toLowerCase().trim();
       const match = sizes.find(s =>
         spokenNorm.includes(s.size_name.toLowerCase())
       );
       if (match) {
         setModifications(prev => ({ ...prev, size_id: match.size_id }));
-        console.log("Matched size:", match.size_name);
       } else {
-        alert(`No matching size found for ${spoken}. Available sizes: ${sizes.map(s => s.size_name).join(", ")}`);
+        alert(`No matching size found for ${spoken}. Please try again.`);
+      }
+    };
+    recog.start();
+  };
+  const handleDictationSweetness = () => {
+    const SpeechRecognition =
+      window.webkitSpeechRecognition || window.SpeechRecognition;
+    if (!SpeechRecognition) {
+      alert("Speech Recognition not supported in this browser.");
+      return;
+    }
+    const recog = new SpeechRecognition();
+    recog.continuous = false;
+    recog.lang = "en-US";
+    recog.onresult = (event) => {
+      const spoken = event.results[0][0].transcript.trim().toLowerCase();
+      const sweetnessMap = [
+        { words: ["no sugar"], value: "No Sugar" },
+        { words: ["light", "30"], value: "Light (30%)" },
+        { words: ["half", "50"], value: "Half (50%)" },
+        { words: ["less", "80"], value: "Less (80%)" },
+        { words: ["normal", "regular", "100"], value: "Normal (100%)" }
+      ];
+      for (let s of sweetnessMap) {
+        if (s.words.some((w) => spoken.includes(w))) {
+          setModifications((prev) => ({ ...prev, sweetness: s.value }));
+          return;
+        }
+      }
+      alert(`Could not match sweetness level from: "${spoken}"`);
+    };
+    recog.start();
+  };
+  const handleDictationIce = () => {
+    const SpeechRecognition =
+      window.webkitSpeechRecognition || window.SpeechRecognition;
+    if (!SpeechRecognition) {
+      alert("Speech Recognition not supported in this browser.");
+      return;
+    }
+    const recog = new SpeechRecognition();
+    recog.continuous = false;
+    recog.lang = "en-US";
+    recog.onresult = (event) => {
+      const spoken = event.results[0][0].transcript.trim().toLowerCase();
+      if (spoken.includes("no ice")) {
+        setModifications((prev) => ({ ...prev, ice: "No Ice" }));
+      } else if (
+        spoken.includes("less") ||
+        spoken.includes("light ice") ||
+        spoken.includes("little ice")
+      ) {
+        setModifications((prev) => ({ ...prev, ice: "Less" }));
+      } else if (spoken.includes("regular") || spoken.includes("normal")) {
+        setModifications((prev) => ({ ...prev, ice: "Regular" }));
+      } else {
+        alert(`Could not match ice level from: "${spoken}"`);
       }
     };
     recog.start();
@@ -41,7 +95,7 @@ function DrinksCustomization({ drink, modifications, setModifications, onNext, o
           {/* Size Selection */}
           <div className="customization-section">
             <label htmlFor="size">Size:</label>
-            <button type="button" onClick={handleDictation} className="dictation-btn">
+            <button type="button" onClick={handleDictationSize} className="dictation-btn">
               Speak Size
             </button>
             <div className="size-options">
@@ -64,9 +118,12 @@ function DrinksCustomization({ drink, modifications, setModifications, onNext, o
           {/* Sweetness Level Selection */}
           <div className="customization-section">
             <label htmlFor="sweetness">Sweetness Level:</label>
+            <button onClick={handleDictationSweetness} className="dictation-btn">
+              Speak Sweetness
+            </button>
             <div className="sweetness-options">
               {[
-                'No Sugar (0%)',
+                'No Sugar',
                 'Light (30%)',
                 'Half (50%)',
                 'Less (80%)',
@@ -86,6 +143,9 @@ function DrinksCustomization({ drink, modifications, setModifications, onNext, o
           {/* Ice Level Selection */}
           <div className="customization-section">
             <label htmlFor="ice">Ice Level:</label>
+            <button onClick={handleDictationIce} className="dictation-btn">
+              Speak Ice
+            </button>
             <div className="ice-options">
               {['No Ice', 'Less', 'Regular'].map(level => (
                 <button
