@@ -2,6 +2,33 @@ import { useState } from "react";
 import NavBar from "./NavBar";
 
 function DrinksCustomization({ drink, modifications, setModifications, onNext, onBack, cart, onCartClick, currentStep, onStepClick, sizes }) {
+  const handleDictation = () => {
+    const SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
+    if (!SpeechRecognition) {
+      alert("Speech Recognition not supported in this browser.");
+      return;
+    }
+    const recog = new SpeechRecognition();
+    recog.continuous = false;
+    recog.lang = "en-US";
+    recog.onresult = (event) => {
+      const spoken = event.results[0][0].transcript.trim();
+      console.log("You said:", spoken);
+      console.log("Available sizes:", sizes.map(s => s.size_name));
+      const spokenNorm = spoken.toLowerCase().trim();
+      const match = sizes.find(s =>
+        spokenNorm.includes(s.size_name.toLowerCase())
+      );
+      if (match) {
+        setModifications(prev => ({ ...prev, size_id: match.size_id }));
+        console.log("Matched size:", match.size_name);
+      } else {
+        alert(`No matching size found for ${spoken}. Available sizes: ${sizes.map(s => s.size_name).join(", ")}`);
+      }
+    };
+    recog.start();
+  };
+
   return (
     <div className="customization-page">
       <div className="customization-container">
@@ -14,6 +41,9 @@ function DrinksCustomization({ drink, modifications, setModifications, onNext, o
           {/* Size Selection */}
           <div className="customization-section">
             <label htmlFor="size">Size:</label>
+            <button type="button" onClick={handleDictation} className="dictation-btn">
+              Speak Size
+            </button>
             <div className="size-options">
               {sizes && sizes.length > 0 ? (
                 sizes.map(size => (
