@@ -37,7 +37,7 @@ function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem }) {
       console.log('Cart Items:', cart.length);
       cart.forEach((item, idx) => {
         console.log(`  ${idx + 1}. ${item.drink.drink_name} x${item.quantity} - $${(Number(item.drink.base_price) * item.quantity).toFixed(2)}`);
-        console.log(`     Sweetness: ${item.modifications.sweetness}, Ice: ${item.modifications.ice}, Topping: ${item.modifications.topping?.topping_name || 'None'}`);
+        console.log(`     Size: ${item.modifications.size_name || item.modifications.size_id}, Sweetness: ${item.modifications.sweetness}, Ice: ${item.modifications.ice}, Topping: ${item.modifications.topping?.topping_name || 'None'}`);
       });
       console.log('Total: $' + calculateCartTotal());
       console.log('Sending to database...');
@@ -99,6 +99,7 @@ function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem }) {
                   </div>
 
                   <div className="cart-item-customization">
+                    <p><strong>Size:</strong> {item.modifications.size_name || 'Unknown'}</p>
                     <p><strong>Sweetness:</strong> {item.modifications.sweetness}</p>
                     <p><strong>Ice:</strong> {item.modifications.ice}</p>
                     <p>

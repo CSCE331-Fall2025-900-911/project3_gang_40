@@ -93,16 +93,23 @@ function Customer({ onBack }) {
           modifications={modifications}
           setModifications={setModifications}
           onAddToCart={() => {
+            // Find the size name for the selected size_id
+            const selectedSize = sizes.find(s => s.size_id === modifications.size_id);
+            const modificationWithSize = {
+              ...modifications,
+              size_name: selectedSize ? selectedSize.size_name : 'Unknown'
+            };
+
             if (isEditing) {
               // Update existing item
               const updatedCart = [...cart];
-              updatedCart[editingIndex] = { drink: selectedDrink, modifications: { ...modifications }, quantity: modifications.quantity };
+              updatedCart[editingIndex] = { drink: selectedDrink, modifications: modificationWithSize, quantity: modifications.quantity };
               setCart(updatedCart);
               setIsEditing(false);
               setEditingIndex(null);
             } else {
               // Add new item
-              setCart([...cart, { drink: selectedDrink, modifications: { ...modifications }, quantity: modifications.quantity }]);
+              setCart([...cart, { drink: selectedDrink, modifications: modificationWithSize, quantity: modifications.quantity }]);
             }
             setModifications({
               size_id: 2,
