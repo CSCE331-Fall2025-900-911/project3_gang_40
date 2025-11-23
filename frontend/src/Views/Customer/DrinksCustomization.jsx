@@ -82,6 +82,27 @@ function DrinksCustomization({ drink, modifications, setModifications, onNext, o
     };
     recog.start();
   };
+  const handleDictationQuantity = () => {
+    const SpeechRecognition =
+      window.webkitSpeechRecognition || window.SpeechRecognition;
+    if (!SpeechRecognition) {
+      alert("Speech Recognition not supported in this browser.");
+      return;
+    }
+    const recog = new SpeechRecognition();
+    recog.continuous = false;
+    recog.lang = "en-US";
+    recog.onresult = (event) => {
+      const spoken = event.results[0][0].transcript.trim().toLowerCase();
+      let qty = parseInt(spoken.replace(/[^0-9]/g, ""));
+      if (!qty || qty < 1) {
+        alert(`Couldn't determine a quantity from: "${spoken}"`);
+        return;
+      }
+      setModifications((prev) => ({ ...prev, quantity: qty }));
+    };
+    recog.start();
+  };
 
   return (
     <div className="customization-page">
@@ -162,6 +183,9 @@ function DrinksCustomization({ drink, modifications, setModifications, onNext, o
           {/* Quantity Selection */}
           <div className="customization-section">
             <label htmlFor="quantity">Quantity:</label>
+            <button onClick={handleDictationQuantity} className="dictation-btn">
+              Text Dictation
+            </button>
             <div className="quantity-input">
               <button onClick={() => setModifications(prev => ({ ...prev, quantity: Math.max(1, prev.quantity - 1) }))}>-</button>
               <input
