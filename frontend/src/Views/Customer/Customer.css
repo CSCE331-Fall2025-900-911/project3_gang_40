@@ -200,7 +200,7 @@ body {
 
 .active-drink-btn {
   background-color: #5dade2;
-  color: white !important;
+  color: black !important;
   box-shadow: 0 6px 20px rgba(93, 173, 226, 0.4) !important;
   transform: scale(1.05) !important;
 }
@@ -745,7 +745,7 @@ body {
 .cart-item-price {
   font-size: 1.2rem;
   font-weight: 700;
-  color: #52b788;
+  color: #28a745;
   min-width: 80px;
 }
 

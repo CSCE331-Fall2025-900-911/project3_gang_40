@@ -30,7 +30,7 @@ function NavBar({ currentStep, cartCount, onCartClick, onExitClick, onStepClick 
           onClick={onCartClick}
           title="View Cart"
         >
-          🛒 Cart ({cartCount})
+            Cart ({cartCount})
         </button>
         <button 
           className="navbar-exit-btn"
