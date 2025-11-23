@@ -1,11 +1,13 @@
 function DrinkModal({ drink, modifications, setModifications, toppings, sizes, isEditing, saveEdits, addToCart, closeModal }) {
   const noTopping = toppings.find(t => t.topping_name === 'No Toppings') || null;
 
+  // modal for drink modifications pop up after selecting drink
   return (
     <div className='modal-backdrop' onClick={closeModal}>
       <div className='modal' onClick={e => e.stopPropagation()}>
         <h3>{drink.drink_name} Modifications</h3>
 
+        {/* size selection with default as medium */}
         <div className="modal-section">
           <label>Size:</label>
           <select value={modifications.size_id} onChange={e => setModifications(prev => ({ ...prev, size_id: parseInt(e.target.value) }))}>
@@ -13,6 +15,7 @@ function DrinkModal({ drink, modifications, setModifications, toppings, sizes, i
           </select>
         </div>
 
+        {/* sweetness selection with default as normal */}
         <div className="modal-section">
           <label>Sweetness:</label>
           <select value={modifications.sweetness} onChange={e => setModifications(prev => ({ ...prev, sweetness: e.target.value }))}>
@@ -24,6 +27,7 @@ function DrinkModal({ drink, modifications, setModifications, toppings, sizes, i
           </select>
         </div>
 
+        {/* ice level selection with default as regular */}
         <div className="modal-section">
           <label>Ice:</label>
           <select value={modifications.ice} onChange={e => setModifications(prev => ({ ...prev, ice: e.target.value }))}>
@@ -33,6 +37,7 @@ function DrinkModal({ drink, modifications, setModifications, toppings, sizes, i
           </select>
         </div>
 
+        {/* toppings button selector with no toppings as default */}
         <div className="modal-section">
           <label>Toppings:</label>
           <div className="toppings-options">
@@ -42,7 +47,11 @@ function DrinkModal({ drink, modifications, setModifications, toppings, sizes, i
                   type="radio"
                   name="topping"
                   value={topping.topping_name}
-                  checked={modifications.topping?.topping_id === topping.topping_id}
+                  checked={
+                  modifications.topping
+                    ? modifications.topping.topping_id === topping.topping_id
+                    : topping.topping_name === 'No Toppings'
+                }
                   onChange={() => setModifications(prev => ({ ...prev, topping }))}
                 /> 
                 {topping.topping_name} (+${Number(topping.extra_cost).toFixed(2)})
@@ -51,6 +60,7 @@ function DrinkModal({ drink, modifications, setModifications, toppings, sizes, i
           </div>
         </div>
 
+        {/* quantity slider with 1 as default */}
         <div className="modal-section">
           <label>Quantity:</label>
           <input
@@ -62,6 +72,7 @@ function DrinkModal({ drink, modifications, setModifications, toppings, sizes, i
           />
         </div>
 
+        {/* save changes or cancel button at bottom */}
         <div className="modal-actions">
           {isEditing ? <button onClick={saveEdits}>Save Changes</button> : <button onClick={addToCart}>Add to Cart</button>}
           <button onClick={closeModal}>Cancel</button>
