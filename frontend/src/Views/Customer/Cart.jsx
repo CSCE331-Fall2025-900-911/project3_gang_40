@@ -5,15 +5,23 @@ function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem }) {
   const [showPaymentModal, setShowPaymentModal] = useState(false);
 
   const calculateItemTotal = (item) => {
-    let total = Number(item.drink.base_price) * item.quantity;
-    if (item.modifications.topping && item.modifications.topping.extra_cost) {
-      total += Number(item.modifications.topping.extra_cost) * item.quantity;
+    let total = Number(item.drink.base_price);
+
+    // Add size extra cost
+    if (item.modifications.size_extra_cost) {
+      total += Number(item.modifications.size_extra_cost);
     }
-    return total.toFixed(2);
+
+    // Add topping extra cost
+    if (item.modifications.topping?.extra_cost) {
+      total += Number(item.modifications.topping.extra_cost);
+    }
+
+    return (total * item.quantity).toFixed(2);
   };
 
   const calculateCartTotal = () => {
-    return cart.reduce((sum, item) => sum + parseFloat(calculateItemTotal(item)), 0).toFixed(2);
+    return ((cart.reduce((sum, item) => sum + parseFloat(calculateItemTotal(item)), 0)) * 1.0825).toFixed(2);
   };
 
   const removeFromCart = (index) => {
@@ -37,7 +45,7 @@ function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem }) {
       console.log('Cart Items:', cart.length);
       cart.forEach((item, idx) => {
         console.log(`  ${idx + 1}. ${item.drink.drink_name} x${item.quantity} - $${(Number(item.drink.base_price) * item.quantity).toFixed(2)}`);
-        console.log(`     Size: ${item.modifications.size_name || item.modifications.size_id}, Sweetness: ${item.modifications.sweetness}, Ice: ${item.modifications.ice}, Topping: ${item.modifications.topping?.topping_name || 'None'}`);
+        console.log(`     Sweetness: ${item.modifications.sweetness}, Ice: ${item.modifications.ice}, Topping: ${item.modifications.topping?.topping_name || 'None'}`);
       });
       console.log('Total: $' + calculateCartTotal());
       console.log('Sending to database...');

@@ -97,7 +97,8 @@ function Customer({ onBack }) {
             const selectedSize = sizes.find(s => s.size_id === modifications.size_id);
             const modificationWithSize = {
               ...modifications,
-              size_name: selectedSize ? selectedSize.size_name : 'Unknown'
+              size_name: selectedSize ? selectedSize.size_name : 'Unknown',
+              size_extra_cost: selectedSize ? Number(selectedSize.extra_cost) : 0
             };
 
             if (isEditing) {
