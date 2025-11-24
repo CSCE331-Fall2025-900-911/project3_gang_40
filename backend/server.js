@@ -10,6 +10,7 @@ import toppingsRoutes from './routes/toppings.js';
 import employeesRoutes from './routes/employees.js';
 import checkoutRoutes from './routes/checkout.js';
 import returnsRoutes from './routes/returns.js';
+import translationRouter from './routes/translation.js';
 
 // Error 
 import errorHandler from './errorHandler.js';
@@ -22,13 +23,16 @@ const port = process.env.PORT || 5001;
 app.use(cors());
 app.use(express.json());
 
-// Mount API routes
+
+
 app.use('/api/drinks', drinksRoutes);
 app.use('/api/drinks/sizes', drinksRoutes);
 app.use('/api/toppings', toppingsRoutes);
 app.use('/api/employees', employeesRoutes);
 app.use('/api/checkout', checkoutRoutes);
 app.use('/api/returns', returnsRoutes);
+app.use('/translation', translationRouter);
+
 
 // Simple health check
 app.get('/', (req, res) => {

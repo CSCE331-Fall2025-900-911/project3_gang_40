@@ -1,7 +1,9 @@
 import { useState } from "react";
 import NavBar from "./components/NavBar";
+import textKeys from './components/text';
 
-function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem }) {
+
+function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem, translatedTexts }) {
   const [showPaymentModal, setShowPaymentModal] = useState(false);
 
   const calculateItemTotal = (item) => {
@@ -76,25 +78,26 @@ function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem }) {
 
   return (
     <div className="cart-page">
-      <NavBar 
+      <NavBar
         currentStep={4}
         cartCount={cart.length}
-        onCartClick={() => {}}
+        onCartClick={() => { }}
         onExitClick={onBack}
         onStepClick={onStepClick}
+        translatedTexts={translatedTexts}
       />
 
       <div className="cart-view">
         <div className="cart-header">
-          <button className="cart-back-btn" onClick={onBack}>← Back</button>
-          <h2>Your Cart</h2>
+          <button className="cart-back-btn" onClick={onBack}>← {translatedTexts.back || textKeys.back}</button>
+          <h2>{translatedTexts.cartTitle || textKeys.cartTitle}</h2>
           <div style={{ width: '60px' }}></div>
         </div>
 
         {cart.length === 0 ? (
           <div className="empty-cart">
-            <p>Your cart is empty</p>
-            <p>Add drinks to get started!</p>
+            <p>{translatedTexts.cartEmpty || textKeys.cartEmpty}</p>
+            <p>{translatedTexts.cartEmptySubtext || textKeys.cartEmptySubtext}</p>
           </div>
         ) : (
           <>
@@ -107,12 +110,14 @@ function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem }) {
                   </div>
 
                   <div className="cart-item-customization">
-                    <p><strong>Size:</strong> {item.modifications.size_name || 'Unknown'}</p>
-                    <p><strong>Sweetness:</strong> {item.modifications.sweetness}</p>
-                    <p><strong>Ice:</strong> {item.modifications.ice}</p>
+                    <p><strong>{translatedTexts.size || textKeys.size}:</strong> {item.modifications.size_name || 'Unknown'}</p>
+                    <p><strong>{translatedTexts.sweetness || textKeys.sweetness}:</strong> {item.modifications.sweetness}</p>
+                    <p><strong>{translatedTexts.ice || textKeys.ice}:</strong> {item.modifications.ice}</p>
                     <p>
-                      <strong>Topping:</strong> {item.modifications.topping ? item.modifications.topping.topping_name : 'None'}
-                      {item.modifications.topping && item.modifications.topping.extra_cost > 0 && 
+                      <p>
+                        <strong>{translatedTexts.topping || textKeys.topping}:</strong> {item.modifications.topping ? item.modifications.topping.topping_name : 'None'}
+                      </p>
+                      {item.modifications.topping && item.modifications.topping.extra_cost > 0 &&
                         ` (+$${Number(item.modifications.topping.extra_cost).toFixed(2)})`
                       }
                     </p>
@@ -121,8 +126,8 @@ function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem }) {
                   <div className="cart-item-footer">
                     <span className="cart-item-price">${calculateItemTotal(item)}</span>
                     <div className="cart-item-actions">
-                      <button className="edit-btn" onClick={() => onEditItem(index)}>Edit</button>
-                      <button className="delete-btn" onClick={() => removeFromCart(index)}>Delete</button>
+                      <button className="edit-btn" onClick={() => onEditItem(index)}>{translatedTexts.edit || textKeys.edit}</button>
+                      <button className="delete-btn" onClick={() => removeFromCart(index)}>{translatedTexts.delete || textKeys.delete}</button>
                     </div>
                   </div>
                 </div>
@@ -130,18 +135,18 @@ function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem }) {
             </div>
 
             <div className="cart-total">
-              <h3>Total: ${calculateCartTotal()}</h3>
+              <h3>{translatedTexts.total || textKeys.total}: ${calculateCartTotal()}</h3>
             </div>
 
             <div className="cart-actions">
-              <button className="continue-shopping-btn" onClick={onBack}>Continue Shopping</button>
-              <button className="checkout-btn" onClick={() => setShowPaymentModal(true)}>Checkout</button>
+              <button className="continue-shopping-btn" onClick={onBack}> {translatedTexts.continueShopping || textKeys.continueShopping}</button>
+              <button className="checkout-btn" onClick={() => setShowPaymentModal(true)}>{translatedTexts.checkout || textKeys.checkout}</button>
             </div>
           </>
         )}
 
         {cart.length === 0 && (
-          <button className="back-btn" onClick={onBack}>Back</button>
+          <button className="back-btn" onClick={onBack}>{translatedTexts.back || textKeys.back}</button>
         )}
       </div>
 
@@ -149,29 +154,29 @@ function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem }) {
       {showPaymentModal && (
         <div className="payment-modal-overlay">
           <div className="payment-modal">
-            <h2>Choose Payment Method</h2>
-            <p>Total: ${calculateCartTotal()}</p>
-            
+            <h2>{translatedTexts.choosePayment || textKeys.choosePayment}</h2>
+            <p>{translatedTexts.total || textKeys.total}: ${calculateCartTotal()}</p>
+
             <div className="payment-options">
-              <button 
+              <button
                 className="payment-btn payment-cash"
                 onClick={() => handleCheckout('Cash')}
               >
-                Cash
+                {translatedTexts.cash || textKeys.cash}
               </button>
-              <button 
+              <button
                 className="payment-btn payment-card"
                 onClick={() => handleCheckout('Card')}
               >
-                Card
+                {translatedTexts.card || textKeys.card}
               </button>
             </div>
 
-            <button 
+            <button
               className="payment-cancel-btn"
               onClick={() => setShowPaymentModal(false)}
             >
-              Cancel
+              {translatedTexts.cancel || textKeys.cancel}
             </button>
           </div>
         </div>
