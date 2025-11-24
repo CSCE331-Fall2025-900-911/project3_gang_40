@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import './Customer.css'
-import Cart from './Cart';
 import DrinksCustomization from './DrinksCustomization';
 import ToppingSelection from './ToppingSelection';
-import NavBar from './NavBar';
+import NavBar from "./components/NavBar";
+import '../Customer/css/Customer.css'
+import Cart from './Cart';
+
 
 function Customer({ onBack }) {
   const [currentView, setCurrentView] = useState('customer');

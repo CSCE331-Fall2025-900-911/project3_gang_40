@@ -1,5 +1,5 @@
 import { useState } from "react";
-import NavBar from "./NavBar";
+import NavBar from "./components/NavBar";
 
 function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem }) {
   const [showPaymentModal, setShowPaymentModal] = useState(false);

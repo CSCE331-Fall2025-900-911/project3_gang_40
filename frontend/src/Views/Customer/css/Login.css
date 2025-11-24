@@ -1,0 +1,72 @@
+.logo {
+    width: 7em;
+    padding: 1em;
+
+}
+
+.boba {
+    width: 30em;
+    border-radius: 10em;
+}
+
+.left {
+    display: flex;
+    padding: 2em;
+    align-items: center;
+    justify-content: center;
+}
+
+.text {
+    margin-left: 1.5em;
+}
+
+.bottom {
+    display: flex;
+    padding: 2em;
+    
+    align-items: center;
+    justify-content: center;
+    gap:2em;
+}
+
+.left-box {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.right-box {
+    display: flex;
+    align-items: center;
+}
+
+.login-btn{
+    padding: 2em;
+    text-align: center;
+    font-size: 1em;
+    width: 354.56px;
+
+}
+
+.accessibility{
+    display: flex;
+    gap:1.5em;
+}
+
+.language{
+    padding: 2em;
+    width: 12em;
+
+}
+
+.shortcuts{
+    padding: 2em;
+    width:12em;
+
+}
+
+.points{
+    padding:2em;
+    height:234.52px;
+    font-size: 1.4em;
+}

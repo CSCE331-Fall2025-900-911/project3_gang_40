@@ -2,7 +2,9 @@ import { useState } from 'react'
 import './App.css'
 import Display from './Views/MenuBoard/Display'
 import Cashier from './Views/Cashier/Cashier'
-import Customer from './Views/Customer/Customer'
+import Login from './Views/Customer/Login'
+
+
 
 function App() {
   const [currentView, setCurrentView] = useState('main')
@@ -18,8 +20,9 @@ function App() {
       )}
 
       {currentView === 'customer' && (
-        <Customer onBack={() => setCurrentView('main')} />
+        <Login onBack={() => setCurrentView('main')} />
       )}
+
 
       {currentView === 'main' && (
         <div className="home-container">

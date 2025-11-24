@@ -1,5 +1,5 @@
 import { useState } from "react";
-import NavBar from "./NavBar";
+import NavBar from "./components/NavBar";
 
 function DrinksCustomization({ drink, modifications, setModifications, onNext, onBack, cart, onCartClick, currentStep, onStepClick, sizes }) {
   const handleDictation = () => {
