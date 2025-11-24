@@ -3,21 +3,29 @@ import './css/Login.css';
 import logo from './assets/share_tea.png';
 import boba from './assets/boba.jpeg';
 import LoginModal from './components/LoginModal';
-import Customer from './Customer'; // adjust path if needed
+import Customer from './Customer';
 
 function Login() {
     const [modalOpen, setModalOpen] = useState(false);
     const [customerEmail, setCustomerEmail] = useState(null);
+    const [selectedLanguage, setSelectedLanguage] = useState('en');
+    const [showLanguageDropdown, setShowLanguageDropdown] = useState(false); // new
 
     // If logged in, show Customer page
     if (customerEmail) {
-        return <Customer email={customerEmail} />;
+        return <Customer email={customerEmail} language={selectedLanguage} onBack={() => setCustomerEmail(null)} />;
     }
 
     function onLoginSuccess(userEmail) {
         console.log("Logged in user:", userEmail);
-        setCustomerEmail(userEmail); // show Customer.jsx instead of login
-        setModalOpen(false);          // close modal
+        setCustomerEmail(userEmail);
+        setModalOpen(false);
+    }
+
+    // handler for language selection
+    function handleLanguageSelect(lang) {
+        setSelectedLanguage(lang);
+        setShowLanguageDropdown(false); // hide dropdown after selection
     }
 
     return (
@@ -40,7 +48,21 @@ function Login() {
                     <button className='login-btn' onClick={() => setModalOpen(true)}>Login</button>
 
                     <div className="accessibility">
-                        <button className="language">Language Change</button>
+                        <button
+                            className="language"
+                            onClick={() => setShowLanguageDropdown(prev => !prev)}
+                        >
+                            Language Change
+                        </button>
+
+                        {showLanguageDropdown && (
+                            <div className="language-dropdown">
+                                <button onClick={() => handleLanguageSelect('en')}>English</button>
+                                <button onClick={() => handleLanguageSelect('es')}>Spanish</button>
+                                <button onClick={() => handleLanguageSelect('fr')}>French</button>
+                                <button onClick={() => handleLanguageSelect('zh-CN')}>Chinese</button>
+                            </div>
+                        )}
                         <button className="shortcuts">Accessibility</button>
                     </div>
                 </div>
@@ -53,7 +75,7 @@ function Login() {
             {modalOpen && (
                 <LoginModal
                     onClose={() => setModalOpen(false)}
-                    onLoginSuccess={onLoginSuccess} 
+                    onLoginSuccess={onLoginSuccess}
                 />
             )}
         </div>

@@ -4,9 +4,10 @@ import ToppingSelection from './ToppingSelection';
 import NavBar from "./components/NavBar";
 import '../Customer/css/Customer.css'
 import Cart from './Cart';
+import translations from './components/translations';
 
 
-function Customer({ onBack }) {
+function Customer({ onBack, email, language = 'en' }) {
   const [currentView, setCurrentView] = useState('customer');
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedDrink, setSelectedDrink] = useState(null);
@@ -22,7 +23,7 @@ function Customer({ onBack }) {
     topping: null,
     quantity: 1
   });
-  
+
 
   useEffect(() => {
     fetch('https://project3-gang-40-sjzu.onrender.com/api/drinks')
@@ -38,6 +39,24 @@ function Customer({ onBack }) {
       .then(data => setSizes(data))
       .catch(err => console.error('Error fetching sizes:', err));
   }, []);
+
+  useEffect(() => {
+    if (window.google && window.google.translate) {
+      const interval = setInterval(() => {
+        const frame = document.querySelector('iframe.goog-te-menu-frame');
+        if (frame) {
+          frame.contentWindow.document.querySelectorAll('.goog-te-menu2-item span.text').forEach(span => {
+            if (span.innerText === language) span.click();
+          });
+          clearInterval(interval);
+        }
+      }, 500);
+
+      return () => clearInterval(interval);
+    }
+  }, [language]);
+
+
 
   const filteredDrinks = selectedCategory
     ? drinks.filter(d => d.drink_type === selectedCategory)
@@ -55,7 +74,7 @@ function Customer({ onBack }) {
 
   // Handle navbar step clicks for navigation
   const handleStepClick = (step) => {
-    switch(step) {
+    switch (step) {
       case 1:
         setCurrentView('customer');
         break;
@@ -75,9 +94,11 @@ function Customer({ onBack }) {
 
   return (
     <>
+      <div id="google_translate_element"></div>
+
       {/* cart view */}
       {currentView === 'cart' && (
-        <Cart 
+        <Cart
           cart={cart}
           setCart={setCart}
           onBack={() => setCurrentView('customer')}
@@ -132,7 +153,7 @@ function Customer({ onBack }) {
 
       {/* customization view (sweetness/ice sliders) */}
       {currentView === 'customization' && (
-        <DrinksCustomization 
+        <DrinksCustomization
           drink={selectedDrink}
           modifications={modifications}
           setModifications={setModifications}
@@ -160,7 +181,7 @@ function Customer({ onBack }) {
                 className={selectedCategory === 'Milky' ? 'active-drink-btn' : ''}>Milky</button>
               <button onClick={() => setSelectedCategory('Fruity')}
                 className={selectedCategory === 'Fruity' ? 'active-drink-btn' : ''}>Fruity</button>
-              <button onClick={() => setSelectedCategory('Classic')} 
+              <button onClick={() => setSelectedCategory('Classic')}
                 className={selectedCategory === 'Classic' ? 'active-drink-btn' : ''}>Classic</button>
               <button onClick={() => setSelectedCategory('Special')}
                 className={selectedCategory === 'Special' ? 'active-drink-btn' : ''}>Special</button>
@@ -193,7 +214,7 @@ function Customer({ onBack }) {
             </div>
           </div>
 
-          <NavBar 
+          <NavBar
             currentStep={1}
             cartCount={cart.length}
             onCartClick={() => setCurrentView('cart')}
@@ -205,5 +226,6 @@ function Customer({ onBack }) {
     </>
   );
 }
+
 
 export default Customer;
