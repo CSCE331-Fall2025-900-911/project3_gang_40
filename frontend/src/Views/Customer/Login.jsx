@@ -1,0 +1,63 @@
+import React, { useState } from 'react';
+import './css/Login.css';
+import logo from './assets/share_tea.png';
+import boba from './assets/boba.jpeg';
+import LoginModal from './components/LoginModal';
+import Customer from './Customer'; // adjust path if needed
+
+function Login() {
+    const [modalOpen, setModalOpen] = useState(false);
+    const [customerEmail, setCustomerEmail] = useState(null);
+
+    // If logged in, show Customer page
+    if (customerEmail) {
+        return <Customer email={customerEmail} />;
+    }
+
+    function onLoginSuccess(userEmail) {
+        console.log("Logged in user:", userEmail);
+        setCustomerEmail(userEmail); // show Customer.jsx instead of login
+        setModalOpen(false);          // close modal
+    }
+
+    return (
+        <div className='main'>
+            <div className='up'>
+                <div className="top-left">
+                    <img className='logo' src={logo} alt='logo' />
+                </div>
+                <div className='left'>
+                    <img className='boba' src={boba} alt='boba' />
+                    <div className="text">
+                        <h2 className='text_1'>Welcome to Share Tea!</h2>
+                        <p className='text_2'>Login below for Share Tea Rewards</p>
+                    </div>
+                </div>
+            </div>
+
+            <div className="bottom">
+                <div className="left-box">
+                    <button className='login-btn' onClick={() => setModalOpen(true)}>Login</button>
+
+                    <div className="accessibility">
+                        <button className="language">Language Change</button>
+                        <button className="shortcuts">Accessibility</button>
+                    </div>
+                </div>
+
+                <div className='right-box'>
+                    <button className='points'>Earn Points</button>
+                </div>
+            </div>
+
+            {modalOpen && (
+                <LoginModal
+                    onClose={() => setModalOpen(false)}
+                    onLoginSuccess={onLoginSuccess} 
+                />
+            )}
+        </div>
+    );
+}
+
+export default Login;

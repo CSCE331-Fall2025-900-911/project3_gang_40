@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import NavBar from "./NavBar";
+import NavBar from "./components/NavBar";
 
 function ToppingSelection({ drink, modifications, setModifications, onAddToCart, onBack, cart, onCartClick, currentStep, onStepClick }) {
   const [toppings, setToppings] = useState([]);
