@@ -4,7 +4,8 @@ import ToppingSelection from './ToppingSelection';
 import NavBar from "./components/NavBar";
 import '../Customer/css/Customer.css'
 import Cart from './Cart';
-import translations from './components/translations';
+//import translations from './components/translations';
+import cartFeedback from "./assets/cart_feedback.png"
 
 
 function Customer({ onBack, email, language = 'en' }) {
@@ -23,6 +24,7 @@ function Customer({ onBack, email, language = 'en' }) {
     topping: null,
     quantity: 1
   });
+  const [showFeedback, setShowFeedback] = useState(false);
 
 
   useEffect(() => {
@@ -134,6 +136,14 @@ function Customer({ onBack, email, language = 'en' }) {
               // Add new item
               setCart([...cart, { drink: selectedDrink, modifications: modificationWithSize, quantity: modifications.quantity }]);
             }
+
+            //VISUAL FEEDBACK FOR ADDING TO CART
+            setShowFeedback(true);
+            setTimeout(() => {
+              setShowFeedback(false);
+            }, 20000); //
+
+
             setModifications({
               size_id: 2,
               sweetness: 'Normal (100%)',
@@ -223,9 +233,16 @@ function Customer({ onBack, email, language = 'en' }) {
           />
         </div>
       )}
+
+      {/* visual feedback */}
+      {showFeedback && (
+        <div className="cart-feedback-animation">
+          <img src={cartFeedback} alt="Added to cart" className="cart-feedback-image" />
+          <div className="feedback-message">Added to Cart!</div>
+        </div>
+      )}
     </>
   );
 }
-
 
 export default Customer;

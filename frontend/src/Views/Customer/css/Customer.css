@@ -1086,3 +1086,62 @@ body {
 .dictation-btn:active {
   background-color: #312e81;
 }
+
+/* ====== CART FEEDBACK ANIMATION ====== */
+.cart-feedback-animation {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 300;
+  pointer-events: none;
+  animation: slideUpFade 3.5s ease forwards; /* increased duration */
+  width: 70%;
+  max-width: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2%;
+}
+
+.cart-feedback-animation .feedback-message {
+  background: rgba(40, 167, 69, 0.95);
+  color: #fff;
+  padding: 1.5% 2%;
+  border-radius: 5%;
+  box-shadow: 0 4% 12% rgba(40, 167, 69, 0.18);
+  font-weight: 700;
+  font-size: 2.2vh;
+  display: inline-block;
+  transform: translateY(0);
+  width: auto;
+  text-align: center;
+}
+
+@keyframes slideUpFade {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 3%) scale(0.96);
+  }
+  25% {
+    opacity: 1;
+    transform: translate(-50%, -2.5%) scale(1.03);
+  }
+  80% {
+    opacity: 1;
+    transform: translate(-50%, -8%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -12%) scale(0.98);
+  }
+}
+
+.cart-feedback-image {
+  width: 25%;
+  min-width: 200px;
+  height: auto;
+  margin-right: 2%;
+  vertical-align: middle;
+  display: inline-block;
+}
