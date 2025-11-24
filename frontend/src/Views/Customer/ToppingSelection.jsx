@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import NavBar from "./components/NavBar";
+import textKeys from './components/text';
 
-function ToppingSelection({ drink, modifications, setModifications, onAddToCart, onBack, cart, onCartClick, currentStep, onStepClick }) {
+function ToppingSelection({ drink, modifications, setModifications, onAddToCart, onBack, cart, onCartClick, currentStep, onStepClick, translatedTexts }) {
   const [toppings, setToppings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -45,10 +46,12 @@ function ToppingSelection({ drink, modifications, setModifications, onAddToCart,
     <div className="topping-page">
       <div className="topping-container">
         <div className="topping-header">
-          <h2>Select a Topping</h2>
+          <h2>{translatedTexts?.selectTopping || textKeys.selectTopping}</h2>
           <p>{drink.drink_name}</p>
           <p className="topping-summary">
-            Sweetness: {modifications.sweetness} | Ice: {modifications.ice} | Qty: {modifications.quantity}
+            {translatedTexts?.sweetness || textKeys.sweetness}: {modifications.sweetness} |
+            {translatedTexts?.ice || textKeys.ice}: {modifications.ice} |
+            {translatedTexts?.quantity || textKeys.quantity}: {modifications.quantity}
           </p>
         </div>
 
@@ -73,16 +76,16 @@ function ToppingSelection({ drink, modifications, setModifications, onAddToCart,
         </div>
 
         <div className="topping-summary-footer">
-          <p>Total: ${calculateTotal()}</p>
+          <p> {translatedTexts?.total || textKeys.total}: ${calculateTotal()}</p>
         </div>
 
         <div className="topping-actions">
-          <button className="back-btn" onClick={onBack}>Back</button>
-          <button className="add-to-cart-btn" onClick={onAddToCart}>Add to Cart</button>
+          <button className="back-btn" onClick={onBack}> {translatedTexts?.back || textKeys.back}</button>
+          <button className="add-to-cart-btn" onClick={onAddToCart}>  {translatedTexts?.addToCart || textKeys.addToCart}</button>
         </div>
       </div>
 
-      <NavBar 
+      <NavBar
         currentStep={3}
         cartCount={cart.length}
         onCartClick={onCartClick}

@@ -3,8 +3,8 @@ import DrinksCustomization from './DrinksCustomization';
 import ToppingSelection from './ToppingSelection';
 import NavBar from "./components/NavBar";
 import '../Customer/css/Customer.css'
+import textKeys from './components/text';
 import Cart from './Cart';
-//import translations from './components/translations';
 import cartFeedback from "./assets/cart_feedback.png"
 
 
@@ -17,6 +17,8 @@ function Customer({ onBack, email, language = 'en' }) {
   const [cart, setCart] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [editingIndex, setEditingIndex] = useState(null);
+  const [translatedTexts, setTranslatedTexts] = useState({});
+
   const [modifications, setModifications] = useState({
     size_id: 2,
     sweetness: 'Normal (100%)',
@@ -26,7 +28,6 @@ function Customer({ onBack, email, language = 'en' }) {
   });
   const [showFeedback, setShowFeedback] = useState(false);
 
-
   useEffect(() => {
     fetch('https://project3-gang-40-sjzu.onrender.com/api/drinks')
       .then(res => res.json())
@@ -34,7 +35,6 @@ function Customer({ onBack, email, language = 'en' }) {
       .catch(err => console.error('Error fetching drinks:', err));
   }, []);
 
-  // gets drink sizes from database
   useEffect(() => {
     fetch('https://project3-gang-40-sjzu.onrender.com/api/drinks/sizes')
       .then(res => res.json())
@@ -42,29 +42,10 @@ function Customer({ onBack, email, language = 'en' }) {
       .catch(err => console.error('Error fetching sizes:', err));
   }, []);
 
-  useEffect(() => {
-    if (window.google && window.google.translate) {
-      const interval = setInterval(() => {
-        const frame = document.querySelector('iframe.goog-te-menu-frame');
-        if (frame) {
-          frame.contentWindow.document.querySelectorAll('.goog-te-menu2-item span.text').forEach(span => {
-            if (span.innerText === language) span.click();
-          });
-          clearInterval(interval);
-        }
-      }, 500);
-
-      return () => clearInterval(interval);
-    }
-  }, [language]);
-
-
-
   const filteredDrinks = selectedCategory
     ? drinks.filter(d => d.drink_type === selectedCategory)
     : drinks;
 
-  // Handle editing cart item
   const handleEditItem = (index) => {
     const itemToEdit = cart[index];
     setSelectedDrink(itemToEdit.drink);
@@ -74,7 +55,6 @@ function Customer({ onBack, email, language = 'en' }) {
     setCurrentView('customization');
   };
 
-  // Handle navbar step clicks for navigation
   const handleStepClick = (step) => {
     switch (step) {
       case 1:
@@ -94,11 +74,74 @@ function Customer({ onBack, email, language = 'en' }) {
     }
   };
 
+  // useEffect(() => {
+  //   const translateTexts = async () => {
+  //     try {
+  //       const res = await fetch('http://localhost:5001/translation', {
+  //         method: 'POST',
+  //         headers: { 'Content-Type': 'application/json' },
+  //         body: JSON.stringify({
+  //           text: Object.values(textKeys).join('||'),
+  //           targetLang: language
+  //         })
+  //       });
+  //       const data = await res.json();
+  //       const translatedArray = data.translatedText.split('||');
+  //       const translatedObj = {};
+  //       Object.keys(textKeys).forEach((key, i) => {
+  //         translatedObj[key] = translatedArray[i];
+  //       });
+  //       setTranslatedTexts(translatedObj);
+  //     } catch (err) {
+  //       console.error('Translation error:', err);
+  //       setTranslatedTexts(textKeys); // fallback
+  //     }
+  //   };
+  //   translateTexts();
+  // }, [language]);
+
+  useEffect(() => {
+  const translateTexts = async () => {
+    try {
+      const res = await fetch('https://project3-gang-40-sjzu.onrender.com/translation', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          text: Object.values(textKeys).join('||'),
+          targetLang: language
+        })
+      });
+
+      if (!res.ok) {
+        throw new Error(`Server responded with status ${res.status}`);
+      }
+
+      const data = await res.json();
+
+      const translatedArray = data?.translatedText
+        ? data.translatedText.split('||')
+        : Object.values(textKeys);
+
+      const translatedObj = {};
+      Object.keys(textKeys).forEach((key, i) => {
+        translatedObj[key] = translatedArray[i] || textKeys[key];
+      });
+
+      setTranslatedTexts(translatedObj);
+    } catch (err) {
+      console.error('Translation error:', err);
+      setTranslatedTexts(textKeys); // fallback to default texts
+    }
+  };
+
+  translateTexts();
+}, [language]);
+
+
   return (
     <>
       <div id="google_translate_element"></div>
 
-      {/* cart view */}
       {currentView === 'cart' && (
         <Cart
           cart={cart}
@@ -107,17 +150,16 @@ function Customer({ onBack, email, language = 'en' }) {
           currentStep={4}
           onStepClick={handleStepClick}
           onEditItem={handleEditItem}
+          translatedTexts={translatedTexts}
         />
       )}
 
-      {/* toppings selection view */}
       {currentView === 'toppingSelection' && (
         <ToppingSelection
           drink={selectedDrink}
           modifications={modifications}
           setModifications={setModifications}
           onAddToCart={() => {
-            // Find the size name for the selected size_id
             const selectedSize = sizes.find(s => s.size_id === modifications.size_id);
             const modificationWithSize = {
               ...modifications,
@@ -126,14 +168,12 @@ function Customer({ onBack, email, language = 'en' }) {
             };
 
             if (isEditing) {
-              // Update existing item
               const updatedCart = [...cart];
               updatedCart[editingIndex] = { drink: selectedDrink, modifications: modificationWithSize, quantity: modifications.quantity };
               setCart(updatedCart);
               setIsEditing(false);
               setEditingIndex(null);
             } else {
-              // Add new item
               setCart([...cart, { drink: selectedDrink, modifications: modificationWithSize, quantity: modifications.quantity }]);
             }
 
@@ -158,10 +198,10 @@ function Customer({ onBack, email, language = 'en' }) {
           onCartClick={() => setCurrentView('cart')}
           currentStep={3}
           onStepClick={handleStepClick}
+          translatedTexts={translatedTexts}
         />
       )}
 
-      {/* customization view (sweetness/ice sliders) */}
       {currentView === 'customization' && (
         <DrinksCustomization
           drink={selectedDrink}
@@ -174,33 +214,45 @@ function Customer({ onBack, email, language = 'en' }) {
           currentStep={2}
           onStepClick={handleStepClick}
           sizes={sizes}
+          translatedTexts={translatedTexts}
         />
       )}
 
-      {/* kiosk view */}
       {currentView === 'customer' && (
         <div className='customer-page'>
           <div className='customer-container'>
             <div className='drinks-header'>
-              <h1>Fresh Brew</h1>
-              <p>Select Your Favorite Drink</p>
+              <h1>{translatedTexts.pageTitle || textKeys.pageTitle}</h1>
+              <p>{translatedTexts.selectDrink || textKeys.selectDrink}</p>
             </div>
 
             <div className='drinks-bar'>
               <button onClick={() => setSelectedCategory('Milky')}
-                className={selectedCategory === 'Milky' ? 'active-drink-btn' : ''}>Milky</button>
+                className={selectedCategory === 'Milky' ? 'active-drink-btn' : ''}>
+                {translatedTexts.milky || textKeys.milky}
+              </button>
               <button onClick={() => setSelectedCategory('Fruity')}
-                className={selectedCategory === 'Fruity' ? 'active-drink-btn' : ''}>Fruity</button>
+                className={selectedCategory === 'Fruity' ? 'active-drink-btn' : ''}>
+                {translatedTexts.fruity || textKeys.fruity}
+              </button>
               <button onClick={() => setSelectedCategory('Classic')}
-                className={selectedCategory === 'Classic' ? 'active-drink-btn' : ''}>Classic</button>
+                className={selectedCategory === 'Classic' ? 'active-drink-btn' : ''}>
+                {translatedTexts.classic || textKeys.classic}
+              </button>
               <button onClick={() => setSelectedCategory('Special')}
-                className={selectedCategory === 'Special' ? 'active-drink-btn' : ''}>Special</button>
+                className={selectedCategory === 'Special' ? 'active-drink-btn' : ''}>
+                {translatedTexts.special || textKeys.special}
+              </button>
               <button onClick={() => setSelectedCategory(null)}
-                className={selectedCategory === null ? 'active-drink-btn' : ''}>Show All</button>
+                className={selectedCategory === null ? 'active-drink-btn' : ''}>
+                {translatedTexts.showAll || textKeys.showAll}
+              </button>
             </div>
 
             <div className='drink-container'>
-              <h2>{selectedCategory ? `${selectedCategory} Drinks` : 'All Drinks'}</h2>
+              <h2>{selectedCategory
+                ? `${translatedTexts[selectedCategory.toLowerCase()] || selectedCategory} ${translatedTexts.drinks || 'Drinks'}`
+                : translatedTexts.allDrinks || 'All Drinks'}</h2>
 
               <div className='drink-group-customer'>
                 {filteredDrinks.length > 0 ? (
@@ -218,7 +270,7 @@ function Customer({ onBack, email, language = 'en' }) {
                     </button>
                   ))
                 ) : (
-                  <p>No drinks found</p>
+                  <p>{translatedTexts.noDrinks || 'No drinks found'}</p>
                 )}
               </div>
             </div>
@@ -230,6 +282,7 @@ function Customer({ onBack, email, language = 'en' }) {
             onCartClick={() => setCurrentView('cart')}
             onExitClick={onBack}
             onStepClick={handleStepClick}
+            translatedTexts={translatedTexts}
           />
         </div>
       )}

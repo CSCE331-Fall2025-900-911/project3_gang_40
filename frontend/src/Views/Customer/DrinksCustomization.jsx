@@ -1,7 +1,8 @@
 import { useState } from "react";
 import NavBar from "./components/NavBar";
+import textKeys from './components/text';
 
-function DrinksCustomization({ drink, modifications, setModifications, onNext, onBack, cart, onCartClick, currentStep, onStepClick, sizes }) {
+function DrinksCustomization({ drink, modifications, setModifications, onNext, onBack, cart, onCartClick, currentStep, onStepClick, sizes, translatedTexts }) {
   const handleDictation = () => {
     const SpeechRecognition =
       window.webkitSpeechRecognition || window.SpeechRecognition;
@@ -63,17 +64,17 @@ function DrinksCustomization({ drink, modifications, setModifications, onNext, o
     <div className="customization-page">
       <div className="customization-container">
         <div className="customization-header">
-          <h2>Customize {drink.drink_name}</h2>
-          <p>Base Price: ${Number(drink.base_price).toFixed(2)}</p>
+          <h2>{(translatedTexts.customizeDrink || textKeys.customizeDrink)} {drink.drink_name}</h2>
+          <p>{translatedTexts.basePrice || textKeys.basePrice}: ${Number(drink.base_price).toFixed(2)}</p>
         </div>
 
         <div className="customization-content">
           <button type="button" onClick={handleDictation} className="dictation-btn">
-            Speak Order
+            {translatedTexts.speakOrder || textKeys.speakOrder}
           </button>
           {/* Size Selection */}
           <div className="customization-section">
-            <label htmlFor="size">Size:</label>
+            <label htmlFor="size">{translatedTexts.size || textKeys.size}:</label>
             <div className="size-options">
               {sizes && sizes.length > 0 ? (
                 sizes.map(size => (
@@ -93,7 +94,7 @@ function DrinksCustomization({ drink, modifications, setModifications, onNext, o
 
           {/* Sweetness Level Selection */}
           <div className="customization-section">
-            <label htmlFor="sweetness">Sweetness Level:</label>
+            <label htmlFor="sweetness">{translatedTexts.sweetnessLevel || textKeys.sweetnessLevel}:</label>
             <div className="sweetness-options">
               {[
                 'No Sugar (0%)',
@@ -115,7 +116,7 @@ function DrinksCustomization({ drink, modifications, setModifications, onNext, o
 
           {/* Ice Level Selection */}
           <div className="customization-section">
-            <label htmlFor="ice">Ice Level:</label>
+            <label htmlFor="ice">{translatedTexts.iceLevel || textKeys.iceLevel}:</label>
             <div className="ice-options">
               {['No Ice', 'Less', 'Regular'].map(level => (
                 <button
@@ -131,7 +132,7 @@ function DrinksCustomization({ drink, modifications, setModifications, onNext, o
 
           {/* Quantity Selection */}
           <div className="customization-section">
-            <label htmlFor="quantity">Quantity:</label>
+            <label htmlFor="quantity">{translatedTexts.quantity || textKeys.quantity}:</label>
             <div className="quantity-input">
               <button onClick={() => setModifications(prev => ({ ...prev, quantity: Math.max(1, prev.quantity - 1) }))}>-</button>
               <input
@@ -146,17 +147,18 @@ function DrinksCustomization({ drink, modifications, setModifications, onNext, o
         </div>
 
         <div className="customization-actions">
-          <button className="back-btn" onClick={onBack}>Back</button>
-          <button className="next-btn" onClick={onNext}>Next: Select Toppings</button>
+          <button className="back-btn" onClick={onBack}>{translatedTexts.back || textKeys.back}</button>
+          <button className="next-btn" onClick={onNext}>{translatedTexts.nextToppings || textKeys.nextToppings}</button>
         </div>
       </div>
 
-      <NavBar 
+      <NavBar
         currentStep={2}
         cartCount={cart.length}
         onCartClick={onCartClick}
         onExitClick={onBack}
         onStepClick={onStepClick}
+        translatedTexts={translatedTexts}
       />
     </div>
   );
