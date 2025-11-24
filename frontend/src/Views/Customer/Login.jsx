@@ -4,6 +4,8 @@ import logo from './assets/share_tea.png';
 import boba from './assets/boba.jpeg';
 import LoginModal from './components/LoginModal';
 import Customer from './Customer';
+import textKeys from './components/text';
+
 
 function Login() {
     const [modalOpen, setModalOpen] = useState(false);
@@ -76,6 +78,7 @@ function Login() {
                 <LoginModal
                     onClose={() => setModalOpen(false)}
                     onLoginSuccess={onLoginSuccess}
+                    translatedTexts={textKeys} 
                 />
             )}
         </div>
