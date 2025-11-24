@@ -5,6 +5,8 @@ import NavBar from "./components/NavBar";
 import '../Customer/css/Customer.css'
 import textKeys from './components/text';
 import Cart from './Cart';
+import cartFeedback from "./assets/cart_feedback.png"
+
 
 function Customer({ onBack, email, language = 'en' }) {
   const [currentView, setCurrentView] = useState('customer');
@@ -24,6 +26,7 @@ function Customer({ onBack, email, language = 'en' }) {
     topping: null,
     quantity: 1
   });
+  const [showFeedback, setShowFeedback] = useState(false);
 
   useEffect(() => {
     fetch('https://project3-gang-40-sjzu.onrender.com/api/drinks')
@@ -173,6 +176,14 @@ function Customer({ onBack, email, language = 'en' }) {
             } else {
               setCart([...cart, { drink: selectedDrink, modifications: modificationWithSize, quantity: modifications.quantity }]);
             }
+
+            //VISUAL FEEDBACK FOR ADDING TO CART
+            setShowFeedback(true);
+            setTimeout(() => {
+              setShowFeedback(false);
+            }, 20000); //
+
+
             setModifications({
               size_id: 2,
               sweetness: 'Normal (100%)',
@@ -273,6 +284,14 @@ function Customer({ onBack, email, language = 'en' }) {
             onStepClick={handleStepClick}
             translatedTexts={translatedTexts}
           />
+        </div>
+      )}
+
+      {/* visual feedback */}
+      {showFeedback && (
+        <div className="cart-feedback-animation">
+          <img src={cartFeedback} alt="Added to cart" className="cart-feedback-image" />
+          <div className="feedback-message">Added to Cart!</div>
         </div>
       )}
     </>
