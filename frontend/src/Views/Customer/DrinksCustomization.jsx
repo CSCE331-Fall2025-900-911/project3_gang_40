@@ -53,9 +53,6 @@ function DrinksCustomization({ drink, modifications, setModifications, onNext, o
         newMods.quantity = detectedQty;
       }
       setModifications((prev) => ({ ...prev, ...newMods }));
-      if (Object.keys(newMods).length === 0) {
-        alert(`Didn't detect size, sweetness, ice, or quantity from: "${spoken}"`);
-      }
     };
     recog.start();
   };
