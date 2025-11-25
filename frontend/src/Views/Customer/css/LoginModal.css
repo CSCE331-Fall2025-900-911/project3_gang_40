@@ -52,8 +52,25 @@
     align-items: center;
 }
 
+
+
+
+.error-message {
+    color: #c0392b; 
+    margin-top: 12px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.google-login-wrapper {
+    display: flex;
+    justify-content: center;
+    margin: 12px 0;
+}
+
 .divider {
     text-align: center;
-    font-size: 0.9em;
-    color: gray;
+    margin-top: 10px;
+    font-size: 13px;
+    color: #666;
 }

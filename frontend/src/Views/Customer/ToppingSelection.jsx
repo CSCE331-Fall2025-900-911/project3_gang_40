@@ -92,7 +92,6 @@ function ToppingSelection({ drink, modifications, setModifications, onAddToCart,
         onExitClick={onBack}
         onStepClick={onStepClick}
         translatedTexts={translatedTexts}
-        translatedTexts={translatedTexts}
 
       />
     </div>
