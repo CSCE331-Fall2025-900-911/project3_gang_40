@@ -20,6 +20,10 @@ function App() {
       )}
 
       {currentView === 'customer' && (
+        <Customer onBack={() => setCurrentView('main')} />
+      )}
+
+      {currentView === 'login' && (
         <Login onBack={() => setCurrentView('main')} />
       )}
 
@@ -42,7 +46,7 @@ function App() {
             </button>
             <button 
               className="nav-button menu-button"
-              onClick={() => setCurrentView('customer')}
+              onClick={() => setCurrentView('login')}
             >
               Customer
             </button>

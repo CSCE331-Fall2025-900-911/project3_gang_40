@@ -3,7 +3,7 @@ import NavBar from "./components/NavBar";
 import textKeys from './components/text';
 
 
-function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem, translatedTexts }) {
+function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem, translatedTexts, onOrderComplete  }) {
   const [showPaymentModal, setShowPaymentModal] = useState(false);
 
   const calculateItemTotal = (item) => {
@@ -64,8 +64,7 @@ function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem, tra
         console.log('Order submitted successfully. Sales ID:', data.salesId);
         alert(`Order submitted successfully. Sales ID: ${data.salesId}`);
         setShowPaymentModal(false);
-        setCart([]);
-        onBack();
+        if (onOrderComplete) onOrderComplete(); 
       } else {
         console.error('Failed to submit order:', data.message);
         alert(`Failed to submit order: ${data.message}`);

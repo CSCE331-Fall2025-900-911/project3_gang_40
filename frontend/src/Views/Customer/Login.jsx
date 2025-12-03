@@ -7,7 +7,7 @@ import Customer from './Customer';
 import textKeys from './components/text';
 
 
-function Login() {
+function Login({ onBack }) {
     const [modalOpen, setModalOpen] = useState(false);
     const [customerEmail, setCustomerEmail] = useState(null);
     const [selectedLanguage, setSelectedLanguage] = useState('en');
@@ -15,7 +15,18 @@ function Login() {
 
     // If logged in, show Customer page
     if (customerEmail) {
-        return <Customer email={customerEmail} language={selectedLanguage} onBack={() => setCustomerEmail(null)} />;
+        return <Customer 
+            email={customerEmail} 
+            language={selectedLanguage} 
+            onBack={() => {
+                setCustomerEmail(null)
+                onBack()
+            }} 
+
+            onOrderComplete={() => {
+                setCustomerEmail(null)
+            }}
+        />;
     }
 
     function onLoginSuccess(userEmail) {
@@ -71,7 +82,9 @@ function Login() {
 
                 <div className='right-box'>
                     <button className='points'>Earn Points</button>
+                    <button className='customer-exit-btn' onClick={onBack}>Exit</button>
                 </div>
+
             </div>
 
             {modalOpen && (

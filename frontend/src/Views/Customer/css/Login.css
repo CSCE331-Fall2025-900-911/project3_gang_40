@@ -38,6 +38,7 @@
 .right-box {
     display: flex;
     align-items: center;
+    gap: 2em;
 }
 
 .login-btn{
@@ -66,6 +67,12 @@
 }
 
 .points{
+    padding:2em;
+    height:234.52px;
+    font-size: 1.4em;
+}
+
+.customer-exit-btn {
     padding:2em;
     height:234.52px;
     font-size: 1.4em;
