@@ -1177,3 +1177,14 @@ body {
   vertical-align: middle;
   display: inline-block;
 }
+
+.thank-you-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  color: black;
+  font-size: 2rem;
+}

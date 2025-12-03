@@ -26,8 +26,9 @@ import taroPearlMilkTea from "/assets/images/taro_pearl_milk_tea-removebg-previe
 import thaiPearlMilkTea from "/assets/images/thai_pearl_milk_tea-removebg-preview.png"
 import tigerBoba from "/assets/images/tiger_boba-removebg-preview.png"
 import defaultDrink from "/assets/images/bubble-tea-clipart.png"
+import ThankYouScreen from './ThankYouScreen';
 
-function Customer({ onBack, email, language = 'en' }) {
+function Customer({ onBack, onOrderComplete, email, language = 'en' }) {
   const [currentView, setCurrentView] = useState('customer');
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedDrink, setSelectedDrink] = useState(null);
@@ -37,6 +38,7 @@ function Customer({ onBack, email, language = 'en' }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editingIndex, setEditingIndex] = useState(null);
   const [translatedTexts, setTranslatedTexts] = useState({});
+  const [showThankYou, setShowThankYou] = useState(false)
 
   const [modifications, setModifications] = useState({
     size_id: 2,
@@ -184,16 +186,32 @@ function Customer({ onBack, email, language = 'en' }) {
   translateTexts();
 }, [language]);
 
+  if (showThankYou) {
+    return (
+      <ThankYouScreen
+        onBackToLogin={() => {
+          setShowThankYou(false);
+          onOrderComplete(); 
+        }}
+      />
+    );
+  }
 
   return (
+    
     <>
+    
       <div id="google_translate_element"></div>
 
       {currentView === 'cart' && (
         <Cart
           cart={cart}
           setCart={setCart}
-          onBack={() => setCurrentView('customer')}
+          onBack={() => setCurrentView('customer')}        
+          onOrderComplete={() => {                          
+              setShowThankYou(true)
+              setCart([])
+          }}
           currentStep={4}
           onStepClick={handleStepClick}
           onEditItem={handleEditItem}
@@ -228,7 +246,7 @@ function Customer({ onBack, email, language = 'en' }) {
             setShowFeedback(true);
             setTimeout(() => {
               setShowFeedback(false);
-            }, 10000); //
+            }, 5000); //
 
 
             setModifications({
@@ -351,6 +369,8 @@ function Customer({ onBack, email, language = 'en' }) {
         </div>
       )}
 
+      
+
       {/* visual feedback */}
       {showFeedback && (
         <div className="cart-feedback-animation">
@@ -362,4 +382,7 @@ function Customer({ onBack, email, language = 'en' }) {
   );
 }
 
+
+
 export default Customer;
+
