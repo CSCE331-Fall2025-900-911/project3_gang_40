@@ -3,8 +3,8 @@ function DrinkModal({ drink, modifications, setModifications, toppings, sizes, i
 
   // modal for drink modifications pop up after selecting drink
   return (
-    <div className='modal-backdrop' onClick={closeModal}>
-      <div className='modal' onClick={e => e.stopPropagation()}>
+    <div className='cashier-modal-backdrop' onClick={closeModal}>
+      <div className='cashier-modal' onClick={e => e.stopPropagation()}>
         <h3>{drink.drink_name} Modifications</h3>
 
         {/* size selection with default as medium */}

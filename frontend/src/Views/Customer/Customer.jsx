@@ -193,6 +193,7 @@ function Customer({ onBack, onOrderComplete, email, language = 'en' }) {
           setShowThankYou(false);
           onOrderComplete(); 
         }}
+        userEmail={email}
       />
     );
   }

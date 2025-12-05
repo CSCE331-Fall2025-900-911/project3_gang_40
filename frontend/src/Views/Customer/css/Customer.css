@@ -145,6 +145,16 @@ body {
   padding-top: 1.5rem;
 }
 
+.loading-toppings {
+  color: white;
+  text-align: center;
+  font-size: 2.5rem;
+  text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.5);
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding-top: 5rem;
+}
+
 /* ========== DRINKS PAGE STYLES ========== */
 .drinks-header {
   text-align: center;
@@ -1178,13 +1188,37 @@ body {
   display: inline-block;
 }
 
+
+/* Thank You Screen After Submitting Order */
+.thank-you-page {
+  background: linear-gradient(135deg, #232526 0%, #414345 50%, #536976 100%);
+}
+
 .thank-you-container {
+  color: white;
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: white;
-  color: black;
   font-size: 2rem;
+  text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+
+
+.back-to-login-btn {
+  margin-top: 1rem;
+  background: rgba(255, 255, 255, 0.95);
+  color: #0f2027;
+  border: none;
+  padding: 0.7rem 1.4rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }

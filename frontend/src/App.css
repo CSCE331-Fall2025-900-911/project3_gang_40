@@ -1,7 +1,6 @@
 /* App.css - Only for home page */
 .home-container {
   width: 100%;
-  max-width: 800px;
   margin: 0 auto;
   min-height: 100vh;
   display: flex;
@@ -9,12 +8,13 @@
   align-items: center;
   justify-content: center;
   padding: 2rem;
+  background: linear-gradient(135deg, #232526 0%, #414345 50%, #536976 100%);
 }
 
 .home-container .home-title {
   font-size: 3.5rem;
   margin-bottom: 3rem;
-  color: #2c3e50;
+  color: white;
   font-weight: 700;
   letter-spacing: 2px;
   text-align: center;
@@ -26,10 +26,10 @@
   gap: 30px;
   padding: 20px;
   justify-items: center;
-  width: 100%;
+  width: 60%;
 }
 
-.home-container .nav-button {
+.home-container .home-nav-button {
   width: 100%;
   min-height: 200px;
   padding: 40px 50px;
@@ -45,20 +45,30 @@
 
 .home-container .cashier-button {
   background: linear-gradient(135deg, #2d774e 0%, #718b63 100%);
-  color: rgb(13, 7, 7);
+  color: white;
 }
 
 .home-container .menu-button {
   background: linear-gradient(135deg, #43658f 0%, #65a9e1 100%);
-  color: rgb(13, 7, 7);
+  color: white;
 }
 
-.home-container .nav-button:hover {
+.home-container .customer-button {
+  background: linear-gradient(135deg, #ab5050 0%, #ac6868 100%);
+  color: white;
+}
+
+.home-container .manager-button {
+  background: linear-gradient(135deg, #af8746 0%, #f5bf5c 100%);
+  color: white;
+}
+
+.home-container .home-nav-button:hover {
   transform: translateY(-8px);
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
 }
 
-.home-container .nav-button:active {
+.home-container .home-nav-button:active {
   transform: translateY(-4px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
@@ -73,7 +83,7 @@
     font-size: 2.5rem;
   }
   
-  .home-container .nav-button {
+  .home-container .home-nav-button {
     min-height: 150px;
     font-size: 1.5rem;
   }
