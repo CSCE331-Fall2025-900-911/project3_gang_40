@@ -146,57 +146,57 @@ body > #root {
   align-items: center;
 }
 
-.remove-btn {
+.cart-remove-btn {
   background-color: #dc3545;
   border: none;
   color: white;
   margin-right: 10px;
   border-radius: 50%;
-  width: 25px;
-  height: 25px;
+  width: 30px;
+  height: 30px;
   font-size: 14px;
   font-weight: bold;
   line-height: 0;
   cursor: pointer;
 }
 
-.remove-btn:hover {
+.cart-remove-btn:hover {
   background-color: #b02a37;
 }
 
-.add-btn {
+.cart-add-btn {
   background-color: #50C878;
   border: none;
   color: white;
   margin-right: 10px;
   border-radius: 50%;
-  width: 25px;
-  height: 25px;
+  width: 30px;
+  height: 30px;
   font-size: 14px;
   font-weight: bold;
   line-height: 0;
   cursor: pointer;
 }
 
-.add-btn:hover {
+.cart-add-btn:hover {
   background-color: #329F56;
 }
 
-.edit-btn {
+.cart-edit-btn {
   background-color: #8BB3E4;
   border: none;
   color: white;
   margin-right: 10px;
-  border-radius: 40%;
+  border-radius: 50%;
   width: 40px;
-  height: 25px;
+  height: 30px;
   font-size: 14px;
   font-weight: bold;
   line-height: 0;
   cursor: pointer;
 }
 
-.edit-btn:hover {
+.cart-edit-btn:hover {
   background-color: #6A9EDD;
 }
 
@@ -229,7 +229,7 @@ body > #root {
   color: #ccc;
 }
 
-.cart-item-price {
+.cashier-cart-item-price {
   font-weight: normal;
   color: white;
 }
@@ -269,7 +269,7 @@ body > #root {
   background-color: #bc212f;
 }
 
-.submit-btn {
+.cashier-submit-btn {
   width: 50%;
   height: 5vh;
   background-color: #50C878;
@@ -325,7 +325,7 @@ body > #root {
 }
 
 /* modal box */
-.modal-backdrop {
+.cashier-modal-backdrop {
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.5);
@@ -337,7 +337,7 @@ body > #root {
   overflow-y: auto;
 }
 
-.modal,
+.cashier-modal,
 .modal-payment,
 .modal-employees {
   background: #1a1a1a;
@@ -352,7 +352,7 @@ body > #root {
   overflow-y: auto;
 }
 
-.modal select, .modal input[type="number"] {
+.cashier-modal select, .cashier-modal input[type="number"] {
   font-size: 1.0rem;   
   padding: 4px 4px;  
   border-radius: 6px;
