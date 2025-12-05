@@ -1,15 +1,15 @@
 import { useState } from 'react'
 
-function Employee({ onBack }) {
+function Inventory({ onBack }) {
 
   return (
     <>
       <div>
-        <h1>Employee Page</h1>
+        <h1>Inventory Page</h1>
         <button onClick={onBack}>Exit</button>
       </div>
     </>
   )
 }
 
-export default Employee;
+export default Inventory;
