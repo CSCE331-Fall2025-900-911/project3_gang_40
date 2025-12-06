@@ -5,6 +5,9 @@ import textKeys from './components/text';
 
 function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem, translatedTexts, onOrderComplete  }) {
   const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [showPhoneNumberModal, setShowPhoneNumberModal] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [pendingPaymentMethod, setPendingPaymentMethod] = useState(null);
 
   const calculateItemTotal = (item) => {
     let total = Number(item.drink.base_price);
@@ -30,6 +33,17 @@ function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem, tra
     setCart(cart.filter((_, i) => i !== index));
   };
 
+  const handlePhoneNumber = (proceed) => {
+    if (!proceed) {
+      setPhoneNumber("");
+    }
+
+    if (pendingPaymentMethod) {
+      handleCheckout(pendingPaymentMethod);
+      setPendingPaymentMethod(null);
+    }
+  }
+
   const handleCheckout = async (paymentMethod) => {
     try {
       const orderData = {
@@ -38,7 +52,8 @@ function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem, tra
         customer_id: Math.floor(Math.random() * 200) + 1,
         payment_method: paymentMethod,
         sale_type: 'Sale',
-        tax: 1.0825
+        tax: 1.0825,
+        phoneNumber: phoneNumber || null
       };
 
       console.log('====== CUSTOMER CHECKOUT ======');
@@ -63,8 +78,9 @@ function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem, tra
       if (response.ok) {
         console.log('Order submitted successfully. Sales ID:', data.salesId);
         alert(`Order submitted successfully. Sales ID: ${data.salesId}`);
-        setShowPaymentModal(false);
-        if (onOrderComplete) onOrderComplete(); 
+        setShowPhoneNumberModal(false);
+        if (onOrderComplete) onOrderComplete({ phoneNumber }); 
+        return;
       } else {
         console.error('Failed to submit order:', data.message);
         alert(`Failed to submit order: ${data.message}`);
@@ -159,13 +175,21 @@ function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem, tra
             <div className="payment-options">
               <button
                 className="payment-btn payment-cash"
-                onClick={() => handleCheckout('Cash')}
+                onClick={() => {
+                  setPendingPaymentMethod('Cash');
+                  setShowPaymentModal(false);
+                  setShowPhoneNumberModal(true);
+                 }}
               >
                 {translatedTexts.cash || textKeys.cash}
               </button>
               <button
                 className="payment-btn payment-card"
-                onClick={() => handleCheckout('Card')}
+                onClick={() => {
+                  setPendingPaymentMethod('Card');
+                  setShowPaymentModal(false);
+                  setShowPhoneNumberModal(true);
+                 }}
               >
                 {translatedTexts.card || textKeys.card}
               </button>
@@ -173,13 +197,43 @@ function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem, tra
 
             <button
               className="payment-cancel-btn"
-              onClick={() => setShowPaymentModal(false)}
+              onClick={() => {setShowPaymentModal(false)}}
             >
               {translatedTexts.cancel || textKeys.cancel}
             </button>
           </div>
         </div>
       )}
+
+      {/* Modal for getting customers phone number */}
+      {showPhoneNumberModal && (
+        <div className="payment-modal-overlay">
+          <div className="payment-modal">
+            <h2>Enter Phone Number for Order Updates</h2>
+
+            <input className="phone-number-input"
+              type="tel"
+              value={phoneNumber}
+              onChange={e => setPhoneNumber(e.target.value)}
+              placeholder="555-123-4567"
+            />
+
+            <div className="payment-options">
+              <button className="payment-btn payment-card" 
+                onClick={() => handlePhoneNumber(true)}>
+                Submit
+              </button>
+              <button  className="payment-btn payment-card" 
+                onClick={() => handlePhoneNumber(false)}>
+                Skip
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      
+
+
     </div>
   );
 }
