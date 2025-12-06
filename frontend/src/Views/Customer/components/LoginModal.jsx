@@ -92,7 +92,7 @@ function LoginModal({ onClose, onLoginSuccess, translatedTexts }) {
           </h2>
 
           <p className="modal-subtitle">
-            Sign in to continue earning Share Tea rewards.
+            Sign in to earn Share Tea rewards.
           </p>
 
           <div className="google-login-wrapper">

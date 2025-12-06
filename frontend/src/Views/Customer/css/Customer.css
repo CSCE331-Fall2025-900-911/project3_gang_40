@@ -1205,8 +1205,6 @@ body {
   text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.5);
 }
 
-
-
 .back-to-login-btn {
   margin-top: 1rem;
   background: rgba(255, 255, 255, 0.95);
@@ -1221,4 +1219,12 @@ body {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   text-transform: uppercase;
   letter-spacing: 0.5px;
+}
+
+.phone-number-input {
+  width: 80%;
+  height: 2.5em;
+  font-size: large;
+  text-align: center;
+  margin: 10px;
 }

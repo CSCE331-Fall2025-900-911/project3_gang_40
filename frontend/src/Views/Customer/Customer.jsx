@@ -39,6 +39,7 @@ function Customer({ onBack, onOrderComplete, email, language = 'en' }) {
   const [editingIndex, setEditingIndex] = useState(null);
   const [translatedTexts, setTranslatedTexts] = useState({});
   const [showThankYou, setShowThankYou] = useState(false)
+  const [lastPhoneNumber, setLastPhoneNumber] = useState(null);
 
   const [modifications, setModifications] = useState({
     size_id: 2,
@@ -190,10 +191,11 @@ function Customer({ onBack, onOrderComplete, email, language = 'en' }) {
     return (
       <ThankYouScreen
         onBackToLogin={() => {
-          setShowThankYou(false);
+          setShowThankYou(false); 
           onOrderComplete(); 
         }}
         userEmail={email}
+        userPhone={lastPhoneNumber}
       />
     );
   }
@@ -209,7 +211,8 @@ function Customer({ onBack, onOrderComplete, email, language = 'en' }) {
           cart={cart}
           setCart={setCart}
           onBack={() => setCurrentView('customer')}        
-          onOrderComplete={() => {                          
+          onOrderComplete={({ phoneNumber }) => { 
+              setLastPhoneNumber(phoneNumber || null)                         
               setShowThankYou(true)
               setCart([])
           }}
