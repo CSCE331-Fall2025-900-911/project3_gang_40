@@ -14,7 +14,7 @@ function Inventory({ onBack }) {
 
   const fetchDrinks = async () => {
     try {
-      const res = await fetch("http://localhost:5001/api/inventory/drinks");
+      const res = await fetch("https://project3-gang-40-sjzu.onrender.com/api/inventory/drinks");
       const data = await res.json();
       setDrinks(data);
     } catch (err) {
@@ -58,7 +58,7 @@ function Inventory({ onBack }) {
       })),
     };
     try {
-      await fetch("http://localhost:5001/api/inventory/drinks", {
+      await fetch("https://project3-gang-40-sjzu.onrender.com/api/inventory/drinks", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
