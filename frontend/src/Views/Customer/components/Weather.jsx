@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 function Weather() {
   const [weather, setWeather] = useState(null);
   const [error, setError] = useState("");
-  const API_KEY = "388776863a37dbe968fb1585b105339b";
+  const API_KEY = import.meta.env.VITE_WEATHER_KEY;
 
   const getWeatherIcon = (iconCode) => {
     const night = iconCode.endsWith('n');
