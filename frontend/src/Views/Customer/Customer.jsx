@@ -124,32 +124,6 @@ function Customer({ onBack, onOrderComplete, email, language = 'en' }) {
     }
   };
 
-  // useEffect(() => {
-  //   const translateTexts = async () => {
-  //     try {
-  //       const res = await fetch('http://localhost:5001/translation', {
-  //         method: 'POST',
-  //         headers: { 'Content-Type': 'application/json' },
-  //         body: JSON.stringify({
-  //           text: Object.values(textKeys).join('||'),
-  //           targetLang: language
-  //         })
-  //       });
-  //       const data = await res.json();
-  //       const translatedArray = data.translatedText.split('||');
-  //       const translatedObj = {};
-  //       Object.keys(textKeys).forEach((key, i) => {
-  //         translatedObj[key] = translatedArray[i];
-  //       });
-  //       setTranslatedTexts(translatedObj);
-  //     } catch (err) {
-  //       console.error('Translation error:', err);
-  //       setTranslatedTexts(textKeys); // fallback
-  //     }
-  //   };
-  //   translateTexts();
-  // }, [language]);
-
   useEffect(() => {
   const translateTexts = async () => {
     try {
@@ -195,7 +169,6 @@ function Customer({ onBack, onOrderComplete, email, language = 'en' }) {
           onOrderComplete(); 
         }}
         userEmail={email}
-        userPhone={lastPhoneNumber}
       />
     );
   }
@@ -211,8 +184,7 @@ function Customer({ onBack, onOrderComplete, email, language = 'en' }) {
           cart={cart}
           setCart={setCart}
           onBack={() => setCurrentView('customer')}        
-          onOrderComplete={({ phoneNumber }) => { 
-              setLastPhoneNumber(phoneNumber || null)                         
+          onOrderComplete={() => {                     
               setShowThankYou(true)
               setCart([])
           }}
@@ -220,6 +192,7 @@ function Customer({ onBack, onOrderComplete, email, language = 'en' }) {
           onStepClick={handleStepClick}
           onEditItem={handleEditItem}
           translatedTexts={translatedTexts}
+          email={email}
         />
       )}
 

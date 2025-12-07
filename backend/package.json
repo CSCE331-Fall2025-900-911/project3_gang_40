@@ -13,10 +13,12 @@
   "type": "module",
   "dependencies": {
     "@iamtraction/google-translate": "^2.0.1",
+    "@sendgrid/mail": "^8.1.6",
     "@vitalets/google-translate-api": "^9.2.1",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
-    "pg": "^8.16.3"
+    "pg": "^8.16.3",
+    "twilio": "^5.10.7"
   }
 }

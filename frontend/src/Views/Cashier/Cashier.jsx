@@ -124,7 +124,9 @@ function Cashier({ onBack }) {
           customer_id: Math.floor(Math.random() * 200) + 1,
           payment_method: isVoid ? 'Null' : paymentMethod,
           sale_type: isVoid ? 'Void' : 'Sale',
-          tax: 1.0825
+          tax: 1.0825,
+          isCustomerOrder: false,
+          customerEmail: null 
         })
       });
 
