@@ -1,5 +1,6 @@
 import React from 'react';
 import textKeys from './text';
+import Weather from './Weather'
 
 function NavBar({ currentStep, cartCount, onCartClick, onExitClick, onStepClick, translatedTexts }) {
   // Steps: 1 = drinks, 2 = customization, 3 = toppings, 4 = cart
@@ -12,6 +13,9 @@ function NavBar({ currentStep, cartCount, onCartClick, onExitClick, onStepClick,
 
   return (
     <nav className="customer-navbar">
+
+      <Weather />
+      
       <div className="navbar-steps">
         {steps.map(step => (
           <button
