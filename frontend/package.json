@@ -16,8 +16,11 @@
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "pg": "^8.16.3",
+    "qr-scanner": "^1.4.2",
+    "qrcode.react": "^4.2.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
+    "react-qr-code": "^2.0.18",
     "twilio": "^5.10.7"
   },
   "devDependencies": {
