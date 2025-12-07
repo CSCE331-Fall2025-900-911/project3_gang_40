@@ -3,11 +3,9 @@ import NavBar from "./components/NavBar";
 import textKeys from './components/text';
 
 
-function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem, translatedTexts, onOrderComplete  }) {
+
+function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem, translatedTexts, onOrderComplete, email  }) {
   const [showPaymentModal, setShowPaymentModal] = useState(false);
-  const [showPhoneNumberModal, setShowPhoneNumberModal] = useState(false);
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [pendingPaymentMethod, setPendingPaymentMethod] = useState(null);
 
   const calculateItemTotal = (item) => {
     let total = Number(item.drink.base_price);
@@ -33,16 +31,6 @@ function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem, tra
     setCart(cart.filter((_, i) => i !== index));
   };
 
-  const handlePhoneNumber = (proceed) => {
-    if (!proceed) {
-      setPhoneNumber("");
-    }
-
-    if (pendingPaymentMethod) {
-      handleCheckout(pendingPaymentMethod);
-      setPendingPaymentMethod(null);
-    }
-  }
 
   const handleCheckout = async (paymentMethod) => {
     try {
@@ -53,7 +41,8 @@ function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem, tra
         payment_method: paymentMethod,
         sale_type: 'Sale',
         tax: 1.0825,
-        phoneNumber: phoneNumber || null
+        isCustomerOrder: true,
+        customerEmail: email 
       };
 
       console.log('====== CUSTOMER CHECKOUT ======');
@@ -78,8 +67,8 @@ function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem, tra
       if (response.ok) {
         console.log('Order submitted successfully. Sales ID:', data.salesId);
         alert(`Order submitted successfully. Sales ID: ${data.salesId}`);
-        setShowPhoneNumberModal(false);
-        if (onOrderComplete) onOrderComplete({ phoneNumber }); 
+
+        if (onOrderComplete) onOrderComplete(); 
         return;
       } else {
         console.error('Failed to submit order:', data.message);
@@ -176,9 +165,7 @@ function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem, tra
               <button
                 className="payment-btn payment-cash"
                 onClick={() => {
-                  setPendingPaymentMethod('Cash');
-                  setShowPaymentModal(false);
-                  setShowPhoneNumberModal(true);
+                  handleCheckout('Cash')
                  }}
               >
                 {translatedTexts.cash || textKeys.cash}
@@ -186,9 +173,7 @@ function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem, tra
               <button
                 className="payment-btn payment-card"
                 onClick={() => {
-                  setPendingPaymentMethod('Card');
-                  setShowPaymentModal(false);
-                  setShowPhoneNumberModal(true);
+                  handleCheckout('Card')
                  }}
               >
                 {translatedTexts.card || textKeys.card}
@@ -203,36 +188,7 @@ function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem, tra
             </button>
           </div>
         </div>
-      )}
-
-      {/* Modal for getting customers phone number */}
-      {showPhoneNumberModal && (
-        <div className="payment-modal-overlay">
-          <div className="payment-modal">
-            <h2>Enter Phone Number for Order Updates</h2>
-
-            <input className="phone-number-input"
-              type="tel"
-              value={phoneNumber}
-              onChange={e => setPhoneNumber(e.target.value)}
-              placeholder="555-123-4567"
-            />
-
-            <div className="payment-options">
-              <button className="payment-btn payment-card" 
-                onClick={() => handlePhoneNumber(true)}>
-                Submit
-              </button>
-              <button  className="payment-btn payment-card" 
-                onClick={() => handlePhoneNumber(false)}>
-                Skip
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-      
-
+      )} 
 
     </div>
   );

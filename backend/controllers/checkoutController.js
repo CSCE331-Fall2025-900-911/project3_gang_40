@@ -1,5 +1,6 @@
 // controllers/checkoutController.js
 import { pool } from '../db.js';
+import { sendOrderConfirmationEmailBackend, sendOrderReadyEmailBackend } from '../routes/email.js';
 
 export const checkout = async (req, res, next) => {
   const client = await pool.connect();
@@ -10,7 +11,9 @@ export const checkout = async (req, res, next) => {
       customer_id = null,
       payment_method = 'Card',
       sale_type = 'Sale',
-      tax = 1.0835
+      tax = 1.0835,
+      isCustomerOrder = false,
+      customerEmail = null
     } = req.body;
 
     if (!cart || cart.length === 0) {
@@ -130,11 +133,34 @@ export const checkout = async (req, res, next) => {
 
     await client.query('COMMIT');
 
+    // --- Send emails only for customer orders ---
+    if (isCustomerOrder && customerEmail) {
+      try {
+        // Send confirmation email immediately
+        await sendOrderConfirmationEmailBackend(customerEmail, salesId, cart);
+        console.log(`Order confirmation email sent to ${customerEmail}`);
+
+        // Schedule "order ready" email in 2 minutes
+        setTimeout(async () => {
+          try {
+            await sendOrderReadyEmailBackend(customerEmail, salesId);
+            console.log(`Order ready email sent to ${customerEmail}`);
+          } catch (err) {
+            console.error('Failed to send order ready email:', err);
+          }
+        }, 2 * 60 * 1000); // 2 minutes
+      } catch (err) {
+        console.error('Failed to send confirmation email:', err);
+      }
+    }
+
+
     res.status(201).json({
       message: 'Order successfully added',
       salesId,
       totalPrice
     });
+
 
   } catch (err) {
     await client.query('ROLLBACK');

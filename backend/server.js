@@ -4,6 +4,8 @@ import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from "url";
 
+dotenv.config({ path: path.resolve(process.cwd(), '.env') });
+
 // Routes
 import drinksRoutes from './routes/drinks.js';
 import toppingsRoutes from './routes/toppings.js';
@@ -11,18 +13,16 @@ import employeesRoutes from './routes/employees.js';
 import checkoutRoutes from './routes/checkout.js';
 import returnsRoutes from './routes/returns.js';
 import translationRouter from './routes/translation.js';
+import emailRoutes from "./routes/email.js";
 
 // Error 
 import errorHandler from './errorHandler.js';
-
-dotenv.config({ path: path.resolve(process.cwd(), '.env') });
 
 const app = express();
 const port = process.env.PORT || 5001;
 
 app.use(cors());
 app.use(express.json());
-
 
 
 app.use('/api/drinks', drinksRoutes);
@@ -32,6 +32,8 @@ app.use('/api/employees', employeesRoutes);
 app.use('/api/checkout', checkoutRoutes);
 app.use('/api/returns', returnsRoutes);
 app.use('/translation', translationRouter);
+
+app.use("/api", emailRoutes);
 
 
 // Simple health check
