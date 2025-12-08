@@ -4,6 +4,8 @@ import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 
 function LoginModal({ onClose, onLoginSuccess, translatedTexts }) {
     const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+    console.log("Google Client ID:", clientId);
+
 
     const [error, setError] = useState("");
     const [googleClicked, setGoogleClicked] = useState(false);
@@ -15,7 +17,7 @@ function LoginModal({ onClose, onLoginSuccess, translatedTexts }) {
                 <div className="modal">
                     <h2>Configuration Error</h2>
                     <p style={{ color: "red" }}>
-                        Google OAuth Client ID is missing.  
+                        Google OAuth Client ID is missing.
                         Add <b>VITE_GOOGLE_CLIENT_ID</b> to your .env file.
                     </p>
                     <button onClick={onClose}>Close</button>
