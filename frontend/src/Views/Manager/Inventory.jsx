@@ -7,6 +7,10 @@ function Inventory({ onBack }) {
   const [ingredients, setIngredients] = useState([
     { name: "", quantity: "", unit: "" },
   ]);
+  const [editingDrink, setEditingDrink] = useState(null);
+  const [editName, setEditName] = useState("");
+  const [editPrice, setEditPrice] = useState("");
+  const [editIngredients, setEditIngredients] = useState([]);
 
   useEffect(() => {
     fetchDrinks();
@@ -72,6 +76,35 @@ function Inventory({ onBack }) {
     } catch (err) {
       console.error("Failed to add drink:", err);
     }
+  };
+
+  const openEditModal = (drink) => {
+    setEditingDrink(drink);
+    setEditName(drink.drink_name);
+    setEditPrice(drink.base_price);
+    setEditIngredients(
+      drink.ingredients.map(i => ({
+        ingredient_id: i.ingredient_id,
+        name: i.name,
+        quantity: i.quantity,
+        unit: i.unit
+      }))
+    );
+  };
+
+  const saveEdit = async () => {
+    await fetch(`http://localhost:5001/api/inventory/drinks/${editingDrink.drink_id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: editName,
+        price: editPrice,
+        ingredients: editIngredients
+      }),
+    });
+
+    setEditingDrink(null);
+    fetchDrinks(); // reload table
   };
 
   return (
@@ -151,7 +184,7 @@ function Inventory({ onBack }) {
         </thead>
         <tbody>
           {drinks.map((drink) => (
-            <tr key={drink.drink_id}>
+            <tr key={drink.drink_id} onDoubleClick={() => openEditModal(drink)}>
               <td>{drink.drink_id}</td>
               <td>{drink.drink_name}</td>
               <td>${Number(drink.base_price).toFixed(2)}</td>
@@ -166,6 +199,56 @@ function Inventory({ onBack }) {
           ))}
         </tbody>
       </table>
+      {editingDrink && (
+        <div className="modal-overlay" onClick={() => setEditingDrink(null)}>
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
+            <h2>Edit Drink</h2>
+            <input
+              value={editName}
+              onChange={(e) => setEditName(e.target.value)}
+              placeholder="Drink Name"
+            />
+            <input
+              type="number"
+              value={editPrice}
+              onChange={(e) => setEditPrice(e.target.value)}
+              placeholder="Price"
+            />
+            <h3>Ingredients</h3>
+            {editIngredients.map((ing, idx) => (
+              <div key={idx} className="ingredient-row">
+                <input
+                  value={ing.name}
+                  onChange={(e) => {
+                    const copy = [...editIngredients];
+                    copy[idx].name = e.target.value;
+                    setEditIngredients(copy);
+                  }}
+                />
+                <input
+                  type="number"
+                  value={ing.quantity}
+                  onChange={(e) => {
+                    const copy = [...editIngredients];
+                    copy[idx].quantity = e.target.value;
+                    setEditIngredients(copy);
+                  }}
+                />
+                <input
+                  value={ing.unit}
+                  onChange={(e) => {
+                    const copy = [...editIngredients];
+                    copy[idx].unit = e.target.value;
+                    setEditIngredients(copy);
+                  }}
+                />
+              </div>
+            ))}
+            <button onClick={saveEdit}>Save</button>
+            <button onClick={() => setEditingDrink(null)}>Cancel</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
