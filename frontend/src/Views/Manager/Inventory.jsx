@@ -11,6 +11,7 @@ function Inventory({ onBack }) {
   const [editName, setEditName] = useState("");
   const [editPrice, setEditPrice] = useState("");
   const [editIngredients, setEditIngredients] = useState([]);
+  const [selectedDrinkId, setSelectedDrinkId] = useState(null);
 
   useEffect(() => {
     fetchDrinks();
@@ -39,6 +40,18 @@ function Inventory({ onBack }) {
   const removeIngredientRow = (index) => {
     const updated = ingredients.filter((_, i) => i !== index);
     setIngredients(updated);
+  };
+
+  const addEditIngredientRow = () => {
+    setEditIngredients([
+      ...editIngredients,
+      { name: "", quantity: "", unit: "" }
+    ]);
+  };
+
+  const removeEditIngredientRow = (index) => {
+    const updated = editIngredients.filter((_, i) => i !== index);
+    setEditIngredients(updated);
   };
 
   const handleAddDrink = async () => {
@@ -93,18 +106,57 @@ function Inventory({ onBack }) {
   };
 
   const saveEdit = async () => {
-    await fetch(`http://localhost:5001/api/inventory/drinks/${editingDrink.drink_id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: editName,
-        price: editPrice,
-        ingredients: editIngredients
-      }),
-    });
+    try {
+      const res = await fetch(
+        `http://localhost:5001/api/inventory/drinks/${editingDrink.drink_id}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: editName,
+            price: Number(editPrice),
+            ingredients: editIngredients.map((i) => ({
+              ingredient_id: i.ingredient_id || null,
+              name: i.name,
+              quantity: Number(i.quantity),
+              unit: i.unit,
+            })),
+          }),
+        }
+      );
+      if (!res.ok) {
+        const err = await res.json();
+        console.error("Edit failed:", err);
+        alert("Failed to save edits");
+        return;
+      }
+      setEditingDrink(null);
+      fetchDrinks();
+    } catch (err) {
+      console.error("Edit request failed:", err);
+    }
+  };
 
-    setEditingDrink(null);
-    fetchDrinks(); // reload table
+  const handleDeleteDrink = async (drinkId) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this drink?");
+    if (!confirmDelete) return;
+    try {
+      const res = await fetch(
+        `https://project3-gang-40-sjzu.onrender.com/api/inventory/drinks/${drinkId}`,
+        {
+          method: "DELETE",
+        }
+      );
+      if (!res.ok) {
+        const err = await res.json();
+        console.error("Delete failed:", err);
+        alert("Failed to delete drink");
+        return;
+      }
+      fetchDrinks();
+    } catch (err) {
+      console.error("Delete error:", err);
+    }
   };
 
   return (
@@ -123,8 +175,9 @@ function Inventory({ onBack }) {
           type="number"
           placeholder="Price"
           value={price}
-          onChange={(e) => setPrice(e.target.value)}
-          style={{ marginLeft: "10px" }}
+          step="0.01"
+          min="0"
+          onChange={(e) => setPrice(e.target.value === "" ? "" : Number(e.target.value))}
         />
         <div style={{ marginTop: "15px" }}>
           <h4>Ingredients</h4>
@@ -180,11 +233,20 @@ function Inventory({ onBack }) {
             <th>Drink</th>
             <th>Price</th>
             <th>Ingredients</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {drinks.map((drink) => (
-            <tr key={drink.drink_id} onDoubleClick={() => openEditModal(drink)}>
+            <tr
+              key={drink.drink_id}
+              onClick={() => setSelectedDrinkId(drink.drink_id)}
+              style={{
+                backgroundColor:
+                  selectedDrinkId === drink.drink_id ? "#d6ebff" : "white",
+                cursor: "pointer",
+              }}
+            >
               <td>{drink.drink_id}</td>
               <td>{drink.drink_name}</td>
               <td>${Number(drink.base_price).toFixed(2)}</td>
@@ -194,6 +256,25 @@ function Inventory({ onBack }) {
                     {ing.name} — {ing.quantity} {ing.unit}
                   </div>
                 ))}
+              </td>
+              <td>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    openEditModal(drink);
+                  }}
+                  style={{ marginRight: "8px" }}
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDeleteDrink(drink.drink_id);
+                  }}
+                >
+                  Delete
+                </button>
               </td>
             </tr>
           ))}
@@ -211,14 +292,17 @@ function Inventory({ onBack }) {
             <input
               type="number"
               value={editPrice}
-              onChange={(e) => setEditPrice(e.target.value)}
+              onChange={(e) => setEditPrice(
+                e.target.value === "" ? "" : Number(e.target.value)
+              )}
               placeholder="Price"
             />
             <h3>Ingredients</h3>
             {editIngredients.map((ing, idx) => (
-              <div key={idx} className="ingredient-row">
+              <div key={idx} className="ingredient-row" style={{ marginBottom: "8px" }}>
                 <input
                   value={ing.name}
+                  placeholder="Ingredient Name"
                   onChange={(e) => {
                     const copy = [...editIngredients];
                     copy[idx].name = e.target.value;
@@ -228,22 +312,35 @@ function Inventory({ onBack }) {
                 <input
                   type="number"
                   value={ing.quantity}
+                  placeholder="Qty"
                   onChange={(e) => {
                     const copy = [...editIngredients];
-                    copy[idx].quantity = e.target.value;
+                    copy[idx].quantity = Number(e.target.value);
                     setEditIngredients(copy);
                   }}
+                  style={{ marginLeft: "6px", width: "80px" }}
                 />
                 <input
                   value={ing.unit}
+                  placeholder="Unit"
                   onChange={(e) => {
                     const copy = [...editIngredients];
                     copy[idx].unit = e.target.value;
                     setEditIngredients(copy);
                   }}
+                  style={{ marginLeft: "6px", width: "80px" }}
                 />
+                <button
+                  onClick={() => removeEditIngredientRow(idx)}
+                  style={{ marginLeft: "6px" }}
+                >
+                  - Remove Ingredient
+                </button>
               </div>
             ))}
+            <button onClick={addEditIngredientRow} style={{ marginTop: "8px" }}>
+              + Add Ingredient
+            </button>
             <button onClick={saveEdit}>Save</button>
             <button onClick={() => setEditingDrink(null)}>Cancel</button>
           </div>
