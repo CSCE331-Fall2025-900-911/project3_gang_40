@@ -130,3 +130,23 @@ export const updateDrink = async (req, res, next) => {
     client.release();
   }
 };
+
+// delete a drink from the database
+export const deleteDrink = async (req, res, next) => {
+  const { id } = req.params;
+  const client = await pool.connect();
+  try {
+    await client.query("BEGIN");
+    await client.query(
+      "DELETE FROM drinks WHERE drink_id = $1",
+      [id]
+    );
+    await client.query("COMMIT");
+    res.json({ message: "Drink deleted successfully" });
+  } catch (err) {
+    await client.query("ROLLBACK");
+    next(err);
+  } finally {
+    client.release();
+  }
+};
