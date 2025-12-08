@@ -13,7 +13,7 @@ function Employee({ onBack }) {
     const fetchEmployees = async () => {
       setLoading(true);
       try {
-        const res = await fetch("https://project3-gang-40-sjzu.onrender.com/api/employees/getAllEmployees");
+        const res = await fetch("https://project3-gang-40-sjzu.onrender.com/api/employees/employeeManagement");
         if (!res.ok) throw new Error('Failed to fetch employees');
         const data = await res.json();
         setEmployees(data);

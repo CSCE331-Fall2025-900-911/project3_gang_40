@@ -20,3 +20,6 @@ export const getCashiers = async (req, res, next) => {
     next(err);
   }
 };
+
+export const addEmployee = async (req, res, next) => {
+};
