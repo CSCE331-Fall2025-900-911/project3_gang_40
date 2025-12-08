@@ -4,7 +4,7 @@ import textKeys from './components/text';
 
 
 
-function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem, translatedTexts, onOrderComplete, email  }) {
+function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem, translatedTexts, onOrderComplete, email, largeMode  }) {
   const [showPaymentModal, setShowPaymentModal] = useState(false);
 
   const calculateItemTotal = (item) => {
@@ -81,7 +81,8 @@ function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem, tra
   };
 
   return (
-    <div className="cart-page">
+    
+    <div className={`cart-page ${largeMode ? 'cart-page--large' : ''}`}>
       <NavBar
         currentStep={4}
         cartCount={cart.length}
@@ -89,14 +90,16 @@ function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem, tra
         onExitClick={onBack}
         onStepClick={onStepClick}
         translatedTexts={translatedTexts}
+        largeMode={largeMode}
       />
 
-      <div className="cart-view">
+      <div className={`cart-view ${largeMode ? 'cart-view--large' : ''}`}>
         <div className="cart-header">
           <button className="cart-back-btn" onClick={onBack}>← {translatedTexts.back || textKeys.back}</button>
           <h2>{translatedTexts.cartTitle || textKeys.cartTitle}</h2>
           <div style={{ width: '60px' }}></div>
         </div>
+        
 
         {cart.length === 0 ? (
           <div className="empty-cart">
@@ -156,8 +159,8 @@ function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem, tra
 
       {/* Payment Method Modal */}
       {showPaymentModal && (
-        <div className="payment-modal-overlay">
-          <div className="payment-modal">
+        <div className={`payment-modal-overlay ${largeMode ? 'payment-modal-overlay--large' : ''}`}>
+          <div className={`payment-modal ${largeMode ? 'payment-modal--large' : ''}`}>
             <h2>{translatedTexts.choosePayment || textKeys.choosePayment}</h2>
             <p>{translatedTexts.total || textKeys.total}: ${calculateCartTotal()}</p>
 

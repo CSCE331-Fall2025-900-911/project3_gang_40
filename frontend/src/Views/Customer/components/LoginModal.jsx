@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../css/LoginModal.css";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 
-function LoginModal({ onClose, onLoginSuccess, translatedTexts }) {
+function LoginModal({ onClose, onLoginSuccess, translatedTexts, largeMode }) {
   const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
   const [error, setError] = useState("");
@@ -10,8 +10,8 @@ function LoginModal({ onClose, onLoginSuccess, translatedTexts }) {
 
   if (!clientId) {
     return (
-      <div className="modal-overlay">
-        <div className="modal glass-modal">
+      <div className={`modal-overlay ${largeMode ? "large" : ""}`}>
+        <div className={`modal glass-modal ${largeMode ? "modal-large" : ""}`} role="dialog">
           <button
             className="close-btn"
             onClick={onClose}
@@ -72,11 +72,10 @@ function LoginModal({ onClose, onLoginSuccess, translatedTexts }) {
 
   return (
     <GoogleOAuthProvider clientId={clientId}>
-      <div className="modal-overlay">
-        <div
-          className="modal glass-modal"
-          role="dialog"
-          aria-modal="true"
+      <div className={`modal-overlay ${largeMode ? "large" : ""}`}>
+        <div className={`modal glass-modal ${largeMode ? "modal-large" : ""}`} 
+          role="dialog" 
+          aria-modal="true" 
           aria-labelledby="login-modal-title"
         >
           <button
