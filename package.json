@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/CSCE331-Fall2025-900-911/project3_gang_40#readme",
   "dependencies": {
+    "@react-oauth/google": "^0.12.2",
     "express": "^5.1.0"
   }
 }
