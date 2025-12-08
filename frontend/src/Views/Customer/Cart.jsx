@@ -57,7 +57,7 @@ function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem, tra
       console.log('Sending to database...');
       console.log('Order Data:', orderData);
 
-      const response = await fetch('http://localhost:5001/api/checkout', {
+      const response = await fetch('https://project3-gang-40-sjzu.onrender.com/api/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(orderData)
