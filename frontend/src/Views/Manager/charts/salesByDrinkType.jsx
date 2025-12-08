@@ -17,7 +17,7 @@ const DrinkTypePieChart = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:5001/api/sales-by-drink-type')
+    fetch('https://project3-gang-40-sjzu.onrender.com/api/sales-by-drink-type')
       .then(res => res.json())
       .then(data => {
         const labels = data.map(item => item.drink_type);
