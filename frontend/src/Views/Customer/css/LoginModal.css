@@ -9,155 +9,168 @@
   z-index: 2000;
 }
 
-/* Glassy modal card */
+/* Glassy modal card - BASE SIZES */
 .modal.glass-modal {
   background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(18px);
-  border-radius: 24px;
-  padding: 2rem 2.25rem;
+  border-radius: 1.5rem;
+  padding: var(--modal-padding, 2rem 2.25rem);
   width: 100%;
-  max-width: 430px;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+  max-width: var(--modal-max-width, 430px);
+  box-shadow: 0 var(--shadow-y, 24px) var(--shadow-spread, 60px) rgba(0, 0, 0, 0.18);
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 0.9rem;
+  gap: var(--modal-gap, 0.9rem);
+  font-size: 16px;  /* BASE FONT */
+  transition: all 0.3s ease;
+  
+  /* CSS Variables - match Login page */
+  --modal-padding: 2rem 2.25rem;
+  --modal-max-width: 430px;
+  --modal-gap: 0.9rem;
+  --shadow-y: 24px;
+  --shadow-spread: 60px;
+  --font-title: 1.6rem;
+  --font-subtitle: 0.95rem;
+  --font-btn: 1rem;
+  --btn-padding: 0.9rem 1.6rem;
+  --input-font: 0.96rem;
+  --input-padding: 0.8rem 0.9rem;
+  --close-size: 1.25rem;
+  --close-top: 0.9rem;
+  --close-right: 1rem;
 }
 
-/* Close button in top-right */
-.close-btn {
+/* LARGE MODE - everything scales */
+.modal-large {
+  font-size: 24px !important;  /* THIS MAKES rem UNITS SCALE */
+  --modal-padding: 3rem 3.5rem !important;
+  --modal-max-width: 650px !important;
+  --modal-gap: 1.5rem !important;
+  --shadow-y: 36px !important;
+  --shadow-spread: 90px !important;
+  --font-title: 2.4rem !important;
+  --font-subtitle: 1.4rem !important;
+  --font-btn: 1.5rem !important;
+  --btn-padding: 1.25rem 2.5rem !important;
+  --input-font: 1.4rem !important;
+  --input-padding: 1.2rem 1.5rem !important;
+  --close-size: 2rem !important;
+  --close-top: 1.5rem !important;
+  --close-right: 1.5rem !important;
+}
+
+/* Apply scaled variables - HIGHER SPECIFICITY */
+.glass-modal .modal-title {
+  margin: 0.3rem 0 0.1rem;
+  font-size: var(--font-title) !important;
+  text-align: left;
+}
+
+.glass-modal .modal-subtitle {
+  margin: 0;
+  font-size: var(--font-subtitle) !important;
+  color: #666;
+}
+
+.glass-modal .close-btn {
   position: absolute;
-  top: 0.9rem;
-  right: 1rem;
+  top: var(--close-top);
+  right: var(--close-right);
   background: transparent;
   border: none;
-  font-size: 1.25rem;
+  font-size: var(--close-size) !important;
   cursor: pointer;
   color: #666;
   padding: 0.15rem;
   line-height: 1;
 }
 
-.close-btn:hover {
-  color: #333;
-}
-
-.close-btn:focus-visible {
+.glass-modal .close-btn:hover { color: #333; }
+.glass-modal .close-btn:focus-visible { 
   outline: 3px solid #ff7bb0;
   outline-offset: 4px;
 }
 
-/* Title and subtitle */
-.modal-title {
-  margin: 0.3rem 0 0.1rem;
-  font-size: 1.6rem;
-  text-align: left;
-}
-
-.modal-subtitle {
-  margin: 0;
-  font-size: 0.95rem;
-  color: #666;
-}
-
-/* Center Google button */
-.google-login-wrapper {
+.glass-modal .google-login-wrapper {
   display: flex;
   justify-content: center;
   margin: 0.75rem 0 0.35rem;
 }
 
-/* Inputs get softer, rounded style */
-.input-field {
+.glass-modal .input-field {
   width: 100%;
-  padding: 0.8rem 0.9rem;
+  padding: var(--input-padding) !important;
   border-radius: 999px;
   border: 1px solid rgba(0, 0, 0, 0.12);
-  font-size: 0.96rem;
+  font-size: var(--input-font) !important;
   background: rgba(255, 255, 255, 0.9);
 }
 
-.input-field:disabled {
-  color: #aaa;
-}
+.glass-modal .input-field:disabled { color: #aaa; }
 
-/* Shared button base (match page .btn) */
-.btn {
-  border: none;
+/* BULLETPROOF BUTTONS - ULTRA SPECIFIC */
+.glass-modal .btn {
+  border: none !important;
   cursor: pointer;
   border-radius: 999px;
-  font-size: 1rem;
-  padding: 0.9rem 1.6rem;
+  font-size: var(--font-btn) !important;
+  padding: var(--btn-padding) !important;
   font-weight: 600;
-  transition:
-    background-color 0.2s ease,
-    color 0.2s ease,
-    box-shadow 0.2s ease,
-    transform 0.1s ease;
+  transition: all 0.2s ease;
   outline: none;
+  box-sizing: border-box;
+  box-shadow: none; /* Reset any inherited shadows */
 }
 
-.btn:focus-visible {
-  outline: 3px solid #ff4d4f;
+.glass-modal .btn:focus-visible {
+  outline: 3px solid #ff4d4f !important;
   outline-offset: 3px;
 }
 
-.btn-primary {
-  background: linear-gradient(135deg, #ff4d4f, #ff6b6b);
-  color: #ffffff;
-  box-shadow: 0 14px 28px rgba(255, 77, 79, 0.4);
+.glass-modal .btn-primary {
+  background: linear-gradient(135deg, #ff4d4f, #ff6b6b) !important;
+  color: #ffffff !important;
+  box-shadow: 0 14px 28px rgba(255, 77, 79, 0.4) !important;
 }
 
-.btn-primary:hover {
+.glass-modal .btn-primary:hover {
   transform: translateY(-1px);
-  box-shadow: 0 18px 40px rgba(255, 77, 79, 0.55);
+  box-shadow: 0 18px 40px rgba(255, 77, 79, 0.55) !important;
 }
 
-/* Light red secondary */
-.btn-secondary {
-  background: #ffffff;
-  color: #ff4d4f;
-  border: 1px solid rgba(255, 77, 79, 0.6);
+.glass-modal .btn-secondary {
+  background: #ffffff !important;
+  color: #ff4d4f !important;
+  border: 1px solid rgba(255, 77, 79, 0.6) !important;
 }
 
-.btn-secondary:hover:not(.disabled) {
-  background: rgba(255, 77, 79, 0.08);
+.glass-modal .btn-secondary:hover:not(.disabled) {
+  background: rgba(255, 77, 79, 0.08) !important;
 }
 
-.full-width {
-  width: 100%;
-}
+.full-width { width: 100%; }
+.submit-btn { margin-top: 0.3rem; }
+.disabled { cursor: not-allowed; opacity: 0.7; }
 
-/* Submit button in modal */
-.submit-btn {
-  margin-top: 0.3rem;
-}
-
-/* Disabled state */
-.disabled {
-  cursor: not-allowed;
-  opacity: 0.7;
-}
-
-/* Error text */
-.error-message {
+.glass-modal .error-message {
   color: #c0392b;
   margin-top: 0.2rem;
   font-size: 0.85rem;
   text-align: center;
 }
 
-/* Divider */
-.divider {
+.glass-modal .divider {
   text-align: center;
   margin: 0.5rem 0;
-  font-size: 0.8rem;
+  font-size: var(--input-font) !important;
   color: #888;
   position: relative;
 }
 
-.divider::before,
-.divider::after {
+.glass-modal .divider::before,
+.glass-modal .divider::after {
   content: "";
   position: absolute;
   top: 50%;
@@ -166,37 +179,24 @@
   background: rgba(0, 0, 0, 0.1);
 }
 
-.divider::before {
-  left: 0;
-}
+.glass-modal .divider::before { left: 0; }
+.glass-modal .divider::after { right: 0; }
 
-.divider::after {
-  right: 0;
-}
-
-/* Info text */
-.info-text {
+.glass-modal .info-text {
   margin-top: 0.2rem;
-  font-size: 0.8rem;
+  font-size: var(--input-font) !important;
   color: #777;
   text-align: center;
 }
 
-/* Config error specific text */
-.config-error-text {
+.glass-modal .config-error-text {
   color: #c0392b;
-  font-size: 0.9rem;
+  font-size: var(--input-font) !important;
   margin-bottom: 0.75rem;
 }
 
-/* Small-screen tweaks */
 @media (max-width: 480px) {
   .modal.glass-modal {
     margin: 0 1.25rem;
-    padding: 1.75rem 1.5rem;
-  }
-
-  .modal-title {
-    font-size: 1.4rem;
   }
 }

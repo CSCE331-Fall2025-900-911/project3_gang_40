@@ -12,12 +12,14 @@ function Login({ onBack }) {
   const [customerEmail, setCustomerEmail] = useState(null);
   const [selectedLanguage, setSelectedLanguage] = useState('en');
   const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
+  const [largeMode, setLargeMode] = useState(false);
 
   if (customerEmail) {
     return (
       <Customer
         email={customerEmail}
         language={selectedLanguage}
+        largeMode={largeMode}
         onBack={() => {
           setCustomerEmail(null);
           setCurrentView('login')
@@ -42,8 +44,8 @@ function Login({ onBack }) {
 
   return (
     <>
-      <div className="login-page">
-        <div className="login-card">
+      <div className={`login-page ${largeMode ? 'login-page--large' : ''}`}>
+        <div className={`login-card ${largeMode ? 'login-card--large' : ''}`}>
           <header className="login-header">
             <img className="logo" src={logo} alt="Share Tea logo" />
           </header>
@@ -94,8 +96,12 @@ function Login({ onBack }) {
                   )}
                 </div>
 
-                <button className="btn btn-outline shortcuts">
-                  Accessibility
+                <button
+                  className="btn btn-outline shortcuts"
+                  onClick={() => { setLargeMode(prev => { return !prev; }); }}
+                  aria-pressed={largeMode}
+                >
+                  {largeMode ? 'Normal Size' : 'Large Size'}
                 </button>
               </div>
 
@@ -119,6 +125,7 @@ function Login({ onBack }) {
             onClose={() => setModalOpen(false)}
             onLoginSuccess={onLoginSuccess}
             translatedTexts={textKeys}
+            largeMode={largeMode}
           />
         )}
       </div>

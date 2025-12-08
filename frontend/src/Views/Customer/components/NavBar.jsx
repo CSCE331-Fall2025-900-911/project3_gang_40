@@ -2,7 +2,7 @@ import React from 'react';
 import textKeys from './text';
 import Weather from './Weather'
 
-function NavBar({ currentStep, cartCount, onCartClick, onExitClick, onStepClick, translatedTexts }) {
+function NavBar({ currentStep, cartCount, onCartClick, onExitClick, onStepClick, translatedTexts, largeMode }) {
   // Steps: 1 = drinks, 2 = customization, 3 = toppings, 4 = cart
   const steps = [
     { id: 1, label: translatedTexts.drinks || 'Drinks', active: currentStep === 1 },
@@ -12,15 +12,15 @@ function NavBar({ currentStep, cartCount, onCartClick, onExitClick, onStepClick,
   ];
 
   return (
-    <nav className="customer-navbar">
+    <nav className={`customer-navbar ${largeMode ? 'customer-navbar--large' : ''}`}>
 
-      <Weather />
+      <Weather largeMode={largeMode} /> 
       
-      <div className="navbar-steps">
+      <div className={`navbar-steps ${largeMode ? 'navbar-steps--large' : ''}`}>
         {steps.map(step => (
           <button
             key={step.id}
-            className={`navbar-step ${step.active ? 'active' : ''}`}
+            className={`navbar-step ${step.active ? 'active' : ''} ${largeMode ? 'navbar-step--large' : ''}`}
             onClick={() => onStepClick(step.id)}
             type="button"
           >
@@ -29,16 +29,16 @@ function NavBar({ currentStep, cartCount, onCartClick, onExitClick, onStepClick,
         ))}
       </div>
 
-      <div className="navbar-actions">
+      <div className={`navbar-actions ${largeMode ? 'navbar-actions--large' : ''}`}>
         <button
-          className="navbar-cart-btn"
+          className={`navbar-cart-btn ${largeMode ? 'navbar-cart-btn--large' : ''}`}
           onClick={onCartClick}
           title="View Cart"
         >
           {translatedTexts.cart || 'Cart'} ({cartCount})
         </button>
         <button
-          className="navbar-exit-btn"
+          className={`navbar-exit-btn ${largeMode ? 'navbar-exit-btn--large' : ''}`}
           onClick={onExitClick}
           title="Exit"
         >

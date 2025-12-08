@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import NavBar from "./components/NavBar";
 import textKeys from './components/text';
 
-function ToppingSelection({ drink, modifications, setModifications, onAddToCart, onBack, cart, onCartClick, currentStep, onStepClick, translatedTexts }) {
+function ToppingSelection({ drink, modifications, setModifications, onAddToCart, onBack, cart, onCartClick, currentStep, onStepClick, translatedTexts, largeMode }) {
   const [toppings, setToppings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -47,8 +47,8 @@ function ToppingSelection({ drink, modifications, setModifications, onAddToCart,
   };
 
   return (
-    <div className="topping-page">
-      <div className="topping-container">
+    <div className={`topping-page ${largeMode ? 'topping-page--large' : ''}`}>
+      <div className={`topping-container ${largeMode ? 'topping-container--large' : ''}`}>
         <div className="topping-header">
           <h2>{translatedTexts?.selectTopping || textKeys.selectTopping}</h2>
           <p>{drink.drink_name}</p>
@@ -96,7 +96,7 @@ function ToppingSelection({ drink, modifications, setModifications, onAddToCart,
         onExitClick={onBack}
         onStepClick={onStepClick}
         translatedTexts={translatedTexts}
-
+        largeMode={largeMode}
       />
     </div>
   );

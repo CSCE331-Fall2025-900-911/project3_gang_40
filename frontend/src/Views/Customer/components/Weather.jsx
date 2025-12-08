@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-function Weather() {
+function Weather({ largeMode }) {
   const [weather, setWeather] = useState(null);
   const [error, setError] = useState("");
   const API_KEY = import.meta.env.VITE_WEATHER_KEY;
@@ -36,12 +36,23 @@ function Weather() {
     loadWeather();
   }, []);
 
-  if (error) return <p>{error}</p>;
-  if (!weather) return <p>Loading...</p>;
+  if (error) return (
+    <p className={`weather-error ${largeMode ? 'weather-error--large' : ''}`}>
+      {error}
+    </p>
+  );
+
+  if (!weather) return (
+    <p className={`weather-loading ${largeMode ? 'weather-loading--large' : ''}`}>
+      Loading...
+    </p>
+  );
 
   return (
-    <div>
-      <p style={{ color: 'white' }}>{getWeatherIcon(weather.weather[0].icon)} {weather.main.temp} °F</p>
+    <div className={`weather-display ${largeMode ? 'weather-display--large' : ''}`}>
+      <p>
+        {getWeatherIcon(weather.weather[0].icon)} {weather.main.temp} °F
+      </p>
     </div>
   );
 }
