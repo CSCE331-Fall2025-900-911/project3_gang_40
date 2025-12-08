@@ -4,10 +4,10 @@ import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 
 function LoginModal({ onClose, onLoginSuccess, translatedTexts, largeMode }) {
   const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
-
   const [error, setError] = useState("");
   const [googleClicked, setGoogleClicked] = useState(false);
 
+  // If clientId is missing, show error
   if (!clientId) {
     return (
       <div className={`modal-overlay ${largeMode ? "large" : ""}`}>
@@ -20,39 +20,22 @@ function LoginModal({ onClose, onLoginSuccess, translatedTexts, largeMode }) {
             ✕
           </button>
           <h2>Configuration Error</h2>
-          <p className="config-error-text">
-            Google OAuth Client ID is missing. Add
-            <b> VITE_GOOGLE_CLIENT_ID </b>
-            to your .env file.
+          <p style={{ color: "red" }}>
+            Google OAuth Client ID is missing. Add{" "}
+            <b>VITE_GOOGLE_CLIENT_ID</b> to your .env file.
           </p>
-          <button className="btn btn-secondary full-width" onClick={onClose}>
-            Close
-          </button>
+          <button onClick={onClose}>Close</button>
         </div>
       </div>
     );
   }
 
   const handleGoogleClick = () => {
-    setError("");
     setGoogleClicked(true);
-
-    setTimeout(() => {
-      if (googleClicked) {
-        setError("Google login failed — no response received.");
-      }
-    }, 4000);
+    setError("");
   };
 
   const handleGoogleSuccess = (credentialResponse) => {
-    setGoogleClicked(false);
-    setError("");
-
-    if (!credentialResponse?.credential) {
-      setError("Google login failed — no credentials received.");
-      return;
-    }
-
     try {
       const jwt = credentialResponse.credential;
       const payload = JSON.parse(atob(jwt.split(".")[1]));
@@ -67,6 +50,8 @@ function LoginModal({ onClose, onLoginSuccess, translatedTexts, largeMode }) {
     } catch (err) {
       console.error(err);
       setError("Failed to process Google login.");
+    } finally {
+      setGoogleClicked(false);
     }
   };
 
@@ -90,17 +75,13 @@ function LoginModal({ onClose, onLoginSuccess, translatedTexts, largeMode }) {
             {translatedTexts?.loginTitle || "Login"}
           </h2>
 
-          <p className="modal-subtitle">
-            Sign in to earn Share Tea rewards.
-          </p>
+          <p className="modal-subtitle">Sign in to earn Share Tea rewards.</p>
 
           <div className="google-login-wrapper">
             <GoogleLogin
               onClick={handleGoogleClick}
               onSuccess={handleGoogleSuccess}
-              onError={() =>
-                setError("Google login was cancelled or failed.")
-              }
+              onError={() => setError("Google login was cancelled or failed.")}
             />
           </div>
 

@@ -17,6 +17,12 @@ router.post('/', async (req, res) => {
     res.json({ translatedText: result.text });
   } catch (err) {
     console.error('Translation error:', err);
+
+    if (err.code) {
+      // For errors like rate limit or HTTP errors
+      console.error('Error code:', err.code);
+    }
+
     res.status(500).json({ error: 'Failed to translate text' });
   }
 });
