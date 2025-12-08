@@ -5,13 +5,15 @@ import boba from './assets/boba.jpeg';
 import LoginModal from './components/LoginModal';
 import Customer from './Customer';
 import textKeys from './components/text';
+import GoogleTranslateWidget from './components/GoogleTranslateWidget';
 
 function Login({ onBack }) {
-  const [currentView, setCurrentView] = useState('login')
+  const [currentView, setCurrentView] = useState('login');
   const [modalOpen, setModalOpen] = useState(false);
   const [customerEmail, setCustomerEmail] = useState(null);
+
   const [selectedLanguage, setSelectedLanguage] = useState('en');
-  const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
+
   const [largeMode, setLargeMode] = useState(false);
   const [customerDiscount, setCustomerDiscount] = useState(false);
 
@@ -24,11 +26,11 @@ function Login({ onBack }) {
         customerDiscount={customerDiscount}
         onBack={() => {
           setCustomerEmail(null);
-          setCurrentView('login')
+          setCurrentView('login');
         }}
         onOrderComplete={() => {
           setCustomerEmail(null);
-          setLargeMode(false);             
+          setLargeMode(false);
           setCustomerDiscount(false);
         }}
       />
@@ -39,11 +41,6 @@ function Login({ onBack }) {
     console.log('Logged in user:', userEmail);
     setCustomerEmail(userEmail);
     setModalOpen(false);
-  }
-
-  function handleLanguageSelect(lang) {
-    setSelectedLanguage(lang);
-    setShowLanguageDropdown(false);
   }
 
   return (
@@ -74,35 +71,16 @@ function Login({ onBack }) {
               </button>
 
               <div className="accessibility">
-                <div className="language-wrapper">
-                  <button
-                    className="btn btn-outline language"
-                    onClick={() => setShowLanguageDropdown(prev => !prev)}
-                  >
-                    Language: {selectedLanguage.toUpperCase()}
-                  </button>
 
-                  {showLanguageDropdown && (
-                    <div className="language-dropdown">
-                      <button onClick={() => handleLanguageSelect('en')}>
-                        English
-                      </button>
-                      <button onClick={() => handleLanguageSelect('es')}>
-                        Spanish
-                      </button>
-                      <button onClick={() => handleLanguageSelect('fr')}>
-                        French
-                      </button>
-                      <button onClick={() => handleLanguageSelect('zh-CN')}>
-                        Chinese
-                      </button>
-                    </div>
-                  )}
-                </div>
+                <GoogleTranslateWidget
+                  includedLanguages="en,es,fr,zh-CN,vi,ko,ja,pt,de,it,ru,ar,hi,bn,pa,ur,tr,pl,nl,sv,da,no,fi,el,he,th,ms,id"
+                  className="my-gt-widget"
+                />
+
 
                 <button
                   className="btn btn-outline shortcuts"
-                  onClick={() => { setLargeMode(prev => { return !prev; }); }}
+                  onClick={() => setLargeMode(prev => !prev)}
                   aria-pressed={largeMode}
                 >
                   {largeMode ? 'Normal Size' : 'Large Size'}
@@ -110,9 +88,9 @@ function Login({ onBack }) {
               </div>
 
               <div className="secondary-actions">
-                <button 
+                <button
                   className="btn btn-secondary points"
-                  onClick={setCustomerDiscount}
+                  onClick={() => setCustomerDiscount(prev => !prev)}
                 >
                   {customerDiscount ? '10% Off!' : 'Earn Points'}
                 </button>
