@@ -164,6 +164,17 @@ function Employee({ onBack }) {
 
   //DELETE EMPLOYEE
   const deleteEmployee = async (employee) => {
+    const confirmDelete = window.confirm(
+      `Are you sure you want to delete ${employee.first_name} ${employee.last_name}?`
+    );
+    
+    if (!confirmDelete) {
+      console.log('Delete cancelled by user');
+      return;
+    }
+    
+    console.log('🗑️ Deleting employee:', employee);
+    
     try {
       const res = await fetch(`https://project3-gang-40-sjzu.onrender.com/api/employees/employeeManagement/${employee.employee_id}`, {
         method: 'DELETE',
@@ -171,15 +182,15 @@ function Employee({ onBack }) {
 
       if (!res.ok) {
         const errorData = await res.json();
-        console.log('Error response:', errorData);
+        console.log('❌ Error response:', errorData);
         throw new Error('Failed to delete employee');
       }
 
-      console.log('Employee deleted successfully');
+      console.log('✅ Employee deleted successfully');
       setSelectedEmployeeId(null);
       fetchEmployees();
     } catch (err) {
-      console.error('Error deleting employee:', err);
+      console.error('❌ Error deleting employee:', err);
       alert('Failed to delete employee');
     }
   };
@@ -268,28 +279,28 @@ function Employee({ onBack }) {
                 <td>{employee.role}</td>
                 <td>{employee.email}</td>
                 <td>
-                  {/* Edit button action: opens edit modal */}
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      openEditModal(employee);
-                    }}
-                    className="edit-btn"
-                  >
-                    Edit
-                  </button>
-                </td>
-                <td>
-                  {/* Delete button action */}
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      deleteEmployee(employee);
-                    }}
-                    className="delete-btn"
-                  >
-                    Delete
-                  </button>
+                  <div className="action-buttons">
+                    {/* Edit button action: opens edit modal */}
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        openEditModal(employee);
+                      }}
+                      className="edit-btn"
+                    >
+                      Edit
+                    </button>
+                    {/* Delete button action: deletes employee with confirmation */}
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        deleteEmployee(employee);
+                      }}
+                      className="delete-btn"
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))}
