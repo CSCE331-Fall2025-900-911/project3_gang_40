@@ -162,9 +162,28 @@ function Employee({ onBack }) {
   };
 
 
+  //DELETE EMPLOYEE
+  const deleteEmployee = async (employee) => {
+    try {
+      const res = await fetch(`https://project3-gang-40-sjzu.onrender.com/api/employees/employeeManagement/${employee.employee_id}`, {
+        method: 'DELETE',
+      });
 
+      if (!res.ok) {
+        const errorData = await res.json();
+        console.log('Error response:', errorData);
+        throw new Error('Failed to delete employee');
+      }
 
-  
+      console.log('Employee deleted successfully');
+      setSelectedEmployeeId(null);
+      fetchEmployees();
+    } catch (err) {
+      console.error('Error deleting employee:', err);
+      alert('Failed to delete employee');
+    }
+  };
+
   return (
     <>
       <div className="employee-page">
@@ -258,6 +277,18 @@ function Employee({ onBack }) {
                     className="edit-btn"
                   >
                     Edit
+                  </button>
+                </td>
+                <td>
+                  {/* Delete button action */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      deleteEmployee(employee);
+                    }}
+                    className="delete-btn"
+                  >
+                    Delete
                   </button>
                 </td>
               </tr>
