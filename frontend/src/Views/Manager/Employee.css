@@ -1,0 +1,106 @@
+/* Employee Management Page Styles */
+
+.employee-page {
+  padding: 2rem;
+}
+
+.employee-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.employee-header h1 {
+  margin: 0;
+  color: #333;
+  font-size: 2rem;
+}
+
+.exit-button {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+.exit-button:hover {
+  background-color: #c82333;
+}
+
+.loading-text {
+  font-size: 1.1rem;
+  color: #666;
+}
+
+.error-text {
+  color: #dc3545;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.employee-table {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.employee-table thead {
+  background-color: #f5f5f5;
+}
+
+.employee-table th {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 2px solid #ddd;
+  font-weight: 600;
+  color: #333;
+}
+
+.employee-table tbody tr {
+  border-bottom: 1px solid #eee;
+  transition: background-color 0.2s;
+}
+
+.employee-table tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+.employee-table td {
+  padding: 1rem;
+  color: #555;
+}
+
+.empty-state {
+  padding: 2rem;
+  text-align: center;
+  color: #999;
+  font-style: italic;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .employee-page {
+    padding: 1rem;
+  }
+
+  .employee-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .employee-table {
+    font-size: 0.9rem;
+  }
+
+  .employee-table th,
+  .employee-table td {
+    padding: 0.75rem 0.5rem;
+  }
+}

@@ -101,7 +101,7 @@ function Inventory({ onBack }) {
         name: i.name,
         quantity: i.quantity,
         unit: i.unit
-      }))
+      })) 
     );
   };
 
