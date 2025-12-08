@@ -87,10 +87,12 @@
   box-sizing: border-box;
 }
 
+/* UNUSED - no elements with language-dropdown class in component
 .login-card .language-dropdown button {
   font-size: var(--btn-size) !important;
   padding: 0.75rem 1rem;
 }
+*/
 
 /* Button variants */
 .login-card .btn-primary {
@@ -175,11 +177,13 @@
   gap: 0.8rem; 
 }
 
-.language, 
+
+
 .shortcuts { 
   flex: 1; 
 }
 
+/* UNUSED - no .language-wrapper class in component
 .language-wrapper { 
   position: relative; 
   flex: 1; 
@@ -210,6 +214,7 @@
 .language-dropdown button:focus-visible { 
   background: rgba(255, 123, 176, 0.08); 
 }
+*/
 
 .secondary-actions { 
   display: flex; 
