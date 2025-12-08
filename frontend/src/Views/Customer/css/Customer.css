@@ -145,6 +145,16 @@ body {
   padding-top: 1.5rem;
 }
 
+.loading-toppings {
+  color: white;
+  text-align: center;
+  font-size: 2.5rem;
+  text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.5);
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding-top: 5rem;
+}
+
 /* ========== DRINKS PAGE STYLES ========== */
 .drinks-header {
   text-align: center;
@@ -292,6 +302,38 @@ body {
   font-size: 1.3rem;
   font-weight: 700;
   color: #5dade2;
+}
+
+/* drink button image styles */
+.drink-image-wrapper {
+  width: 100%;
+  height: 150px; /* Adjust as needed */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(0,0,0,0.05);
+}
+
+.drink-btn-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* keeps full image visible */
+  transition: transform 0.3s ease;
+}
+
+.drink-item-btn:hover .drink-btn-image {
+  transform: scale(1.05);
+}
+
+.drink-info-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 0.5rem;
 }
 
 /* ========== CUSTOMIZATION PAGE STYLES ========== */
@@ -1144,4 +1186,45 @@ body {
   margin-right: 2%;
   vertical-align: middle;
   display: inline-block;
+}
+
+
+/* Thank You Screen After Submitting Order */
+.thank-you-page {
+  background: linear-gradient(135deg, #232526 0%, #414345 50%, #536976 100%);
+}
+
+.thank-you-container {
+  color: white;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.back-to-login-btn {
+  margin-top: 1rem;
+  background: rgba(255, 255, 255, 0.95);
+  color: #0f2027;
+  border: none;
+  padding: 0.7rem 1.4rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.phone-number-input {
+  width: 80%;
+  height: 2.5em;
+  font-size: large;
+  text-align: center;
+  margin: 10px;
 }

@@ -1,0 +1,172 @@
+import { useEffect, useState } from "react";
+
+function Inventory({ onBack }) {
+  const [drinks, setDrinks] = useState([]);
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState("");
+  const [ingredients, setIngredients] = useState([
+    { name: "", quantity: "", unit: "" },
+  ]);
+
+  useEffect(() => {
+    fetchDrinks();
+  }, []);
+
+  const fetchDrinks = async () => {
+    try {
+      const res = await fetch("https://project3-gang-40-sjzu.onrender.com/api/inventory/drinks");
+      const data = await res.json();
+      setDrinks(data);
+    } catch (err) {
+      console.error("Failed to load drinks:", err);
+    }
+  };
+
+  const handleIngredientChange = (index, field, value) => {
+    const updated = [...ingredients];
+    updated[index][field] = value;
+    setIngredients(updated);
+  };
+
+  const addIngredientRow = () => {
+    setIngredients([...ingredients, { name: "", quantity: "", unit: "" }]);
+  };
+
+  const removeIngredientRow = (index) => {
+    const updated = ingredients.filter((_, i) => i !== index);
+    setIngredients(updated);
+  };
+
+  const handleAddDrink = async () => {
+    if (!name || price === "") {
+      alert("Drink name and price are required.");
+      return;
+    }
+    for (const ing of ingredients) {
+      if (!ing.name || ing.quantity === "" || !ing.unit) {
+        alert("All ingredient fields must be filled.");
+        return;
+      }
+    }
+    const payload = {
+      name,
+      price: Number(price),
+      ingredients: ingredients.map((i) => ({
+        name: i.name,
+        quantity: Number(i.quantity),
+        unit: i.unit,
+      })),
+    };
+    try {
+      await fetch("https://project3-gang-40-sjzu.onrender.com/api/inventory/drinks", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      // Reset form
+      setName("");
+      setPrice("");
+      setIngredients([{ name: "", quantity: "", unit: "" }]);
+      // Reload drinks
+      fetchDrinks();
+    } catch (err) {
+      console.error("Failed to add drink:", err);
+    }
+  };
+
+  return (
+    <div style={{ padding: "20px" }}>
+      <h1>Inventory</h1>
+      <button onClick={onBack}>Exit</button>
+      <div style={{ marginTop: "25px" }}>
+        <h3>Add New Drink</h3>
+        <input
+          type="text"
+          placeholder="Drink Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <input
+          type="number"
+          placeholder="Price"
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
+          style={{ marginLeft: "10px" }}
+        />
+        <div style={{ marginTop: "15px" }}>
+          <h4>Ingredients</h4>
+          {ingredients.map((ing, index) => (
+            <div key={index} style={{ marginBottom: "8px" }}>
+              <input
+                placeholder="Ingredient Name"
+                value={ing.name}
+                onChange={(e) =>
+                  handleIngredientChange(index, "name", e.target.value)
+                }
+              />
+              <input
+                type="number"
+                placeholder="Qty"
+                value={ing.quantity}
+                onChange={(e) =>
+                  handleIngredientChange(index, "quantity", e.target.value)
+                }
+                style={{ marginLeft: "6px", width: "80px" }}
+              />
+              <input
+                placeholder="Unit"
+                value={ing.unit}
+                onChange={(e) =>
+                  handleIngredientChange(index, "unit", e.target.value)
+                }
+                style={{ marginLeft: "6px", width: "80px" }}
+              />
+              <button
+                onClick={() => removeIngredientRow(index)}
+                style={{ marginLeft: "6px" }}
+              >
+                - Remove Ingredient
+              </button>
+            </div>
+          ))}
+          <button onClick={addIngredientRow}>+ Add Ingredient</button>
+        </div>
+        <button onClick={handleAddDrink} style={{ marginTop: "10px" }}>
+          Save Drink
+        </button>
+      </div>
+
+      <table
+        border="1"
+        width="100%"
+        style={{ marginTop: "30px", borderCollapse: "collapse" }}
+      >
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Drink</th>
+            <th>Price</th>
+            <th>Ingredients</th>
+          </tr>
+        </thead>
+        <tbody>
+          {drinks.map((drink) => (
+            <tr key={drink.drink_id}>
+              <td>{drink.drink_id}</td>
+              <td>{drink.drink_name}</td>
+              <td>${Number(drink.base_price).toFixed(2)}</td>
+              <td>
+                {drink.ingredients?.map((ing, i) => (
+                  <div key={i}>
+                    {ing.name} — {ing.quantity} {ing.unit}
+                  </div>
+                ))}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+export default Inventory;

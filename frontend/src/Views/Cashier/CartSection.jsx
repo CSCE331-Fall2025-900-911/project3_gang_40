@@ -26,13 +26,13 @@ function CartSection({ cart, sizes, removeFromCart, addAnotherDrink, openModal, 
                       : ' + No Toppings'})
                     </span>
                     <br />
-                    <span className="cart-item-price">${itemPrice.toFixed(2)}</span>
+                    <span className="cashier-cart-item-price">${itemPrice.toFixed(2)}</span>
                   </span>
                   {/* editing buttons for drink in cart */}
                   <div className="cart-item-buttons">
-                    <button className='remove-btn' onClick={() => removeFromCart(idx)}>-</button>
-                    <button className='add-btn' onClick={() => addAnotherDrink(idx)}>+</button>
-                    <button className='edit-btn' onClick={() => openModal(item.drink, item, idx)}>Edit</button>
+                    <button className='cart-remove-btn' onClick={() => removeFromCart(idx)}>-</button>
+                    <button className='cart-add-btn' onClick={() => addAnotherDrink(idx)}>+</button>
+                    <button className='cart-edit-btn' onClick={() => openModal(item.drink, item, idx)}>Edit</button>
                   </div>
                 </li>
               );
@@ -48,7 +48,7 @@ function CartSection({ cart, sizes, removeFromCart, addAnotherDrink, openModal, 
         <h3>Total: ${(totalPrice * 1.0825).toFixed(2)}</h3>
         <div className='cart-controls'>
           <button className='clear-btn' onClick={clearCart}>Clear Cart</button>
-          <button className='submit-btn' onClick={() => setShowPaymentModal(true)}>Submit Order</button>
+          <button className='cashier-submit-btn' onClick={() => setShowPaymentModal(true)}>Submit Order</button>
         </div>
       </div>
     </div>

@@ -3,7 +3,8 @@ import NavBar from "./components/NavBar";
 import textKeys from './components/text';
 
 
-function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem, translatedTexts }) {
+
+function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem, translatedTexts, onOrderComplete, email  }) {
   const [showPaymentModal, setShowPaymentModal] = useState(false);
 
   const calculateItemTotal = (item) => {
@@ -30,6 +31,7 @@ function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem, tra
     setCart(cart.filter((_, i) => i !== index));
   };
 
+
   const handleCheckout = async (paymentMethod) => {
     try {
       const orderData = {
@@ -38,7 +40,9 @@ function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem, tra
         customer_id: Math.floor(Math.random() * 200) + 1,
         payment_method: paymentMethod,
         sale_type: 'Sale',
-        tax: 1.0825
+        tax: 1.0825,
+        isCustomerOrder: true,
+        customerEmail: email 
       };
 
       console.log('====== CUSTOMER CHECKOUT ======');
@@ -63,9 +67,9 @@ function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem, tra
       if (response.ok) {
         console.log('Order submitted successfully. Sales ID:', data.salesId);
         alert(`Order submitted successfully. Sales ID: ${data.salesId}`);
-        setShowPaymentModal(false);
-        setCart([]);
-        onBack();
+
+        if (onOrderComplete) onOrderComplete(); 
+        return;
       } else {
         console.error('Failed to submit order:', data.message);
         alert(`Failed to submit order: ${data.message}`);
@@ -160,13 +164,17 @@ function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem, tra
             <div className="payment-options">
               <button
                 className="payment-btn payment-cash"
-                onClick={() => handleCheckout('Cash')}
+                onClick={() => {
+                  handleCheckout('Cash')
+                 }}
               >
                 {translatedTexts.cash || textKeys.cash}
               </button>
               <button
                 className="payment-btn payment-card"
-                onClick={() => handleCheckout('Card')}
+                onClick={() => {
+                  handleCheckout('Card')
+                 }}
               >
                 {translatedTexts.card || textKeys.card}
               </button>
@@ -174,13 +182,14 @@ function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem, tra
 
             <button
               className="payment-cancel-btn"
-              onClick={() => setShowPaymentModal(false)}
+              onClick={() => {setShowPaymentModal(false)}}
             >
               {translatedTexts.cancel || textKeys.cancel}
             </button>
           </div>
         </div>
-      )}
+      )} 
+
     </div>
   );
 }

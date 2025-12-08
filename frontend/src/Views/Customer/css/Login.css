@@ -1,72 +1,227 @@
-.logo {
-    width: 7em;
-    padding: 1em;
+/* Page background */
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, #232526 0%, #414345 50%, #536976 100%);
+}
 
+/* Card container */
+.login-card {
+  width: 100%;
+  max-width: 900px;
+  border-radius: 24px;
+  padding: 2.5rem;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Header logo */
+.login-header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.logo {
+  width: 6rem;
+}
+
+/* Main content layout */
+.login-content {
+  display: flex;
+  gap: 2.5rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.login-hero {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
 }
 
 .boba {
-    width: 30em;
-    border-radius: 10em;
+  width: 9rem;
+  height: 9rem;
+  border-radius: 999px;
+  object-fit: cover;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
 }
 
-.left {
-    display: flex;
-    padding: 2em;
-    align-items: center;
-    justify-content: center;
+.text_1 {
+  font-size: 1.9rem;
+  margin: 0 0 0.3rem;
 }
 
-.text {
-    margin-left: 1.5em;
+.text_2 {
+  margin: 0;
+  color: #555;
+  font-size: 1rem;
 }
 
-.bottom {
-    display: flex;
-    padding: 2em;
-    
-    align-items: center;
-    justify-content: center;
-    gap:2em;
+/* Right side actions */
+.login-actions {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
 }
 
-.left-box {
-    display: flex;
+/* Generic button styles */
+.btn {
+  border: none;
+  cursor: pointer;
+  border-radius: 999px;
+  font-size: 1rem;
+  padding: 0.9rem 1.6rem;
+  font-weight: 600;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.1s ease;
+  outline: none;
+}
+
+/* Red focus ring */
+.btn:focus-visible {
+  outline: 3px solid #ff4d4f;
+  outline-offset: 3px;
+}
+
+/* Variants - red theme */
+.btn-primary {
+  background: linear-gradient(135deg, #ff4d4f, #ff6b6b);
+  color: #ffffff;
+  box-shadow: 0 14px 28px rgba(255, 77, 79, 0.4);
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 18px 40px rgba(255, 77, 79, 0.55);
+}
+
+/* Light red secondary */
+.btn-secondary {
+  background: #ffffff;
+  color: #ff4d4f;
+  border: 1px solid rgba(255, 77, 79, 0.6);
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 77, 79, 0.08);
+}
+
+/* Outline (neutral) */
+.btn-outline {
+  background: transparent;
+  color: #ff4d4f;
+  border: 1px solid rgba(255, 77, 79, 0.4);
+}
+
+.btn-outline:hover {
+  background: rgba(255, 77, 79, 0.06);
+}
+
+/* Strong danger / exit */
+.btn-danger {
+  background: #d9363e;
+  color: #ffffff;
+}
+
+.btn-danger:hover {
+  background: #b52c33;
+}
+
+/* Specific buttons */
+.login-btn {
+  width: 100%;
+  justify-content: center;
+  display: inline-flex;
+}
+
+.accessibility {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.language,
+.shortcuts {
+  flex: 1;
+}
+
+/* Language dropdown */
+.language-wrapper {
+  position: relative;
+  flex: 1;
+}
+
+.language-dropdown {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.16);
+  padding: 0.4rem;
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+}
+
+.language-dropdown button {
+  border: none;
+  background: transparent;
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.language-dropdown button:hover,
+.language-dropdown button:focus-visible {
+  background: rgba(255, 123, 176, 0.08);
+}
+
+/* Secondary actions (points/exit) */
+.secondary-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.points,
+.customer-exit-btn {
+  flex: 1;
+  justify-content: center;
+  display: inline-flex;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .login-card {
+    padding: 1.75rem;
+  }
+
+  .login-content {
     flex-direction: column;
-    gap: 1em;
-}
+  }
 
-.right-box {
-    display: flex;
-    align-items: center;
-}
-
-.login-btn{
-    padding: 2em;
+  .login-hero {
+    justify-content: center;
     text-align: center;
-    font-size: 1em;
-    width: 354.56px;
+  }
 
-}
-
-.accessibility{
-    display: flex;
-    gap:1.5em;
-}
-
-.language{
-    padding: 2em;
-    width: 12em;
-
-}
-
-.shortcuts{
-    padding: 2em;
-    width:12em;
-
-}
-
-.points{
-    padding:2em;
-    height:234.52px;
-    font-size: 1.4em;
+  .login-actions {
+    width: 100%;
+  }
 }

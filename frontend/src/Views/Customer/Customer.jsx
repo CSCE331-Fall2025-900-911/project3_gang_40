@@ -6,9 +6,29 @@ import '../Customer/css/Customer.css'
 import textKeys from './components/text';
 import Cart from './Cart';
 import cartFeedback from "./assets/cart_feedback.png"
+import berryLychee from "/assets/images/berry_lychee.png"
+import classicPearl from "/assets/images/classic_pearl_milk_tea.png"
+import classicTea from "/assets/images/classic_tea-removebg-preview.png"
+import coconutPearlMilkTea from "/assets/images/coconut_pearl_milk_tea-removebg-preview.png"
+import coffeeCreama from "/assets/images/coffee_creama-removebg-preview.png"
+import coffeeMilkTeaWCoffeeJelly from "/assets/images/coffee_milk_tea_w_coffee_jelly-removebg-preview.png"
+import goldenRetriever from "/assets/images/golden_retriever-removebg-preview.png"
+import HokkaidoPearlMilkTea from "/assets/images/hokkaido_pearl_milk_tea-removebg-preview.png"
+import honeyLemonade from "/assets/images/honey_lemonade-removebg-preview.png"
+import honeyPearlMilkTea from "/assets/images/honey_pearl_milk_tea-removebg-preview.png"
+import honeyTea from "/assets/images/honey_tea-removebg-preview.png"
+import mangoPassionFruitTea from "/assets/images/mango_&_passion_fruit_tea-removebg-preview.png"
+import mangoGreenMilkTea from "/assets/images/mango_green_milk_tea-removebg-preview.png"
+import mangoGreenTea from "/assets/images/mango_green_tea-removebg-preview.png"
+import passionChess from "/assets/images/passion_chess-removebg-preview.png"
+import peachTeaWHoneyJelly from "/assets/images/peach_tea_w_honey_jelly-removebg-preview.png"
+import taroPearlMilkTea from "/assets/images/taro_pearl_milk_tea-removebg-preview.png"
+import thaiPearlMilkTea from "/assets/images/thai_pearl_milk_tea-removebg-preview.png"
+import tigerBoba from "/assets/images/tiger_boba-removebg-preview.png"
+import defaultDrink from "/assets/images/bubble-tea-clipart.png"
+import ThankYouScreen from './ThankYouScreen';
 
-
-function Customer({ onBack, email, language = 'en' }) {
+function Customer({ onBack, onOrderComplete, email, language = 'en' }) {
   const [currentView, setCurrentView] = useState('customer');
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedDrink, setSelectedDrink] = useState(null);
@@ -18,6 +38,8 @@ function Customer({ onBack, email, language = 'en' }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editingIndex, setEditingIndex] = useState(null);
   const [translatedTexts, setTranslatedTexts] = useState({});
+  const [showThankYou, setShowThankYou] = useState(false)
+  const [lastPhoneNumber, setLastPhoneNumber] = useState(null);
 
   const [modifications, setModifications] = useState({
     size_id: 2,
@@ -27,6 +49,34 @@ function Customer({ onBack, email, language = 'en' }) {
     quantity: 1
   });
   const [showFeedback, setShowFeedback] = useState(false);
+  const DRINK_IMAGE_MAP = {
+    // Classic Drinks
+    11: classicTea,
+    12: honeyTea,
+
+    // Milky Drinks
+    1: classicPearl,
+    2: honeyPearlMilkTea,
+    3: coffeeCreama,
+    4: coffeeMilkTeaWCoffeeJelly,
+    5: HokkaidoPearlMilkTea,
+    6: thaiPearlMilkTea,
+    7: taroPearlMilkTea,
+    8: mangoGreenMilkTea,
+    9: goldenRetriever,
+    10: coconutPearlMilkTea,
+    19: tigerBoba,
+
+    // Fruity Drinks
+    13: mangoGreenTea,
+    18: honeyLemonade,
+    46: passionChess,
+    47: berryLychee,
+    48: peachTeaWHoneyJelly,
+    49: mangoPassionFruitTea,
+
+    // Note: If a drink_id is missing, the fallback logic will ensure it still displays the defaultDrink image.
+  };
 
   useEffect(() => {
     fetch('https://project3-gang-40-sjzu.onrender.com/api/drinks')
@@ -74,32 +124,6 @@ function Customer({ onBack, email, language = 'en' }) {
     }
   };
 
-  // useEffect(() => {
-  //   const translateTexts = async () => {
-  //     try {
-  //       const res = await fetch('http://localhost:5001/translation', {
-  //         method: 'POST',
-  //         headers: { 'Content-Type': 'application/json' },
-  //         body: JSON.stringify({
-  //           text: Object.values(textKeys).join('||'),
-  //           targetLang: language
-  //         })
-  //       });
-  //       const data = await res.json();
-  //       const translatedArray = data.translatedText.split('||');
-  //       const translatedObj = {};
-  //       Object.keys(textKeys).forEach((key, i) => {
-  //         translatedObj[key] = translatedArray[i];
-  //       });
-  //       setTranslatedTexts(translatedObj);
-  //     } catch (err) {
-  //       console.error('Translation error:', err);
-  //       setTranslatedTexts(textKeys); // fallback
-  //     }
-  //   };
-  //   translateTexts();
-  // }, [language]);
-
   useEffect(() => {
   const translateTexts = async () => {
     try {
@@ -137,20 +161,38 @@ function Customer({ onBack, email, language = 'en' }) {
   translateTexts();
 }, [language]);
 
+  if (showThankYou) {
+    return (
+      <ThankYouScreen
+        onBackToLogin={() => {
+          setShowThankYou(false); 
+          onOrderComplete(); 
+        }}
+        userEmail={email}
+      />
+    );
+  }
 
   return (
+    
     <>
+    
       <div id="google_translate_element"></div>
 
       {currentView === 'cart' && (
         <Cart
           cart={cart}
           setCart={setCart}
-          onBack={() => setCurrentView('customer')}
+          onBack={() => setCurrentView('customer')}        
+          onOrderComplete={() => {                     
+              setShowThankYou(true)
+              setCart([])
+          }}
           currentStep={4}
           onStepClick={handleStepClick}
           onEditItem={handleEditItem}
           translatedTexts={translatedTexts}
+          email={email}
         />
       )}
 
@@ -181,7 +223,7 @@ function Customer({ onBack, email, language = 'en' }) {
             setShowFeedback(true);
             setTimeout(() => {
               setShowFeedback(false);
-            }, 20000); //
+            }, 5000); //
 
 
             setModifications({
@@ -249,6 +291,7 @@ function Customer({ onBack, email, language = 'en' }) {
               </button>
             </div>
 
+
             <div className='drink-container'>
               <h2>{selectedCategory
                 ? `${translatedTexts[selectedCategory.toLowerCase()] || selectedCategory} ${translatedTexts.drinks || 'Drinks'}`
@@ -256,19 +299,35 @@ function Customer({ onBack, email, language = 'en' }) {
 
               <div className='drink-group-customer'>
                 {filteredDrinks.length > 0 ? (
-                  filteredDrinks.map(drink => (
-                    <button
-                      key={drink.drink_id}
-                      className='drink-item-btn'
-                      onClick={() => {
-                        setSelectedDrink(drink);
-                        setCurrentView('customization');
-                      }}
-                    >
-                      <div className='drink-name'>{drink.drink_name}</div>
-                      <div className='drink-price'>${Number(drink.base_price).toFixed(2)}</div>
-                    </button>
-                  ))
+                  filteredDrinks.map(drink => {
+                    // Determine the image URL using drink_id lookup
+                    const imageUrl = DRINK_IMAGE_MAP[drink.drink_id] || defaultDrink;
+
+                    return (
+                      <button
+                        key={drink.drink_id}
+                        className='drink-item-btn'
+                        onClick={() => {
+                          setSelectedDrink(drink);
+                          setCurrentView('customization');
+                        }}
+                      >
+                        {/* Display Image */}
+                        <div className='drink-image-wrapper'>
+                          <img 
+                            src={imageUrl} 
+                            alt={drink.drink_name} 
+                            className="drink-btn-image" 
+                          />
+                        </div>
+                        {/* Display Name and Price */}
+                        <div className='drink-info-container'>
+                          <div className='drink-name'>{drink.drink_name}</div>
+                          <div className='drink-price'>${Number(drink.base_price).toFixed(2)}</div>
+                        </div>
+                      </button>
+                    )
+                  })
                 ) : (
                   <p>{translatedTexts.noDrinks || 'No drinks found'}</p>
                 )}
@@ -287,6 +346,8 @@ function Customer({ onBack, email, language = 'en' }) {
         </div>
       )}
 
+      
+
       {/* visual feedback */}
       {showFeedback && (
         <div className="cart-feedback-animation">
@@ -298,4 +359,7 @@ function Customer({ onBack, email, language = 'en' }) {
   );
 }
 
+
+
 export default Customer;
+

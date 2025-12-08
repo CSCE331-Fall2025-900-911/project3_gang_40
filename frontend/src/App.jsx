@@ -3,6 +3,7 @@ import './App.css'
 import Display from './Views/MenuBoard/Display'
 import Cashier from './Views/Cashier/Cashier'
 import Login from './Views/Customer/Login'
+import Manager from './Views/Manager/Manager'
 
 
 
@@ -20,7 +21,15 @@ function App() {
       )}
 
       {currentView === 'customer' && (
+        <Customer onBack={() => setCurrentView('main')} />
+      )}
+
+      {currentView === 'login' && (
         <Login onBack={() => setCurrentView('main')} />
+      )}
+
+      {currentView === 'manager' && (
+        <Manager onBack={() => setCurrentView('main')} />
       )}
 
 
@@ -29,22 +38,28 @@ function App() {
           <h1 className="home-title">Boba Shop</h1>
           <div className="home-nav-items">
             <button 
-              className="nav-button cashier-button"
+              className="home-nav-button cashier-button"
               onClick={() => setCurrentView('cashier')}
             >
               Cashier
             </button>
             <button 
-              className="nav-button menu-button"
+              className="home-nav-button menu-button"
               onClick={() => setCurrentView('display')}
             >
               Menu
             </button>
             <button 
-              className="nav-button menu-button"
-              onClick={() => setCurrentView('customer')}
+              className="home-nav-button customer-button"
+              onClick={() => setCurrentView('login')}
             >
               Customer
+            </button>
+            <button 
+              className="home-nav-button manager-button"
+              onClick={() => setCurrentView('manager')}
+            >
+              Manager
             </button>
           </div>
         </div>

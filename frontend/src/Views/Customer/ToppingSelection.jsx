@@ -27,7 +27,11 @@ function ToppingSelection({ drink, modifications, setModifications, onAddToCart,
   }, []);
 
   if (loading) {
-    return <div className="topping-container"><p>Loading toppings...</p></div>;
+    return <div className="topping-page">
+        <div className="loading-toppings">
+          <p>Loading Toppings...</p>
+        </div>       
+      </div>;
   }
 
   if (error) {
