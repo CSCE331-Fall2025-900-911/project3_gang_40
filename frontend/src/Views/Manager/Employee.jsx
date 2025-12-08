@@ -46,8 +46,8 @@ function Employee({ onBack }) {
 
   //ADD EMPLOYEE
   const handleAddEmployee = async () => {
-    console.log("🔵 Add Employee button clicked!");
-    console.log("📋 Form data:", {
+    console.log("Add Employee button clicked!");
+    console.log("Form data:", {
       firstName,
       lastName,
       role,
@@ -56,12 +56,12 @@ function Employee({ onBack }) {
     });
     
     if (!firstName || !lastName || !email || !password) {
-      console.log("❌ Validation failed - missing fields");
+      console.log("Validation failed - missing fields");
       alert('All fields are required');
       return;
     }
     
-    console.log("✅ Validation passed, sending POST request...");
+    console.log("Validation passed, sending POST request...");
     
     try {
       const payload = {
@@ -72,7 +72,7 @@ function Employee({ onBack }) {
         password: password
       };
       
-      console.log("📤 Payload being sent:", payload);
+      console.log("Payload being sent:", payload);
       
       const res = await fetch("https://project3-gang-40-sjzu.onrender.com/api/employees/employeeManagement", {
         method: 'POST',
@@ -80,17 +80,17 @@ function Employee({ onBack }) {
         body: JSON.stringify(payload)
       });
       
-      console.log("📥 Response status:", res.status);
-      console.log("📥 Response ok:", res.ok);
+      console.log("Response status:", res.status);
+      console.log("Response ok:", res.ok);
       
       if (!res.ok) {
         const errorData = await res.json();
-        console.log("❌ Error response:", errorData);
+        console.log("Error response:", errorData);
         throw new Error('Failed to add employee');
       }
       
       const responseData = await res.json();
-      console.log("✅ Employee added successfully:", responseData);
+      console.log("Employee added successfully:", responseData);
       
       // Clear form
       setFirstName('');
@@ -99,18 +99,18 @@ function Employee({ onBack }) {
       setEmail('');
       setPassword('');
       
-      console.log("🔄 Reloading employees...");
+      console.log("Reloading employees...");
       // Reload employees
       fetchEmployees();
     } catch (err) {
-      console.error('❌ Error adding employee:', err);
+      console.error('Error adding employee:', err);
       alert('Failed to add employee');
     }
   };
 
   // edit employee modal
   const openEditModal = (employee) => {
-    console.log('📝 Opening edit modal for employee:', employee);
+    console.log('Opening edit modal for employee:', employee);
     setEditingEmployee(employee);
     setEditFirstName(employee.first_name);
     setEditLastName(employee.last_name);
@@ -120,7 +120,7 @@ function Employee({ onBack }) {
 
   //EDIT EMPLOYEE - update and save
   const saveEdit = async () => {
-    console.log('💾 Saving employee edit...');
+    console.log('Saving employee edit...');
     console.log('Employee ID:', editingEmployee.employee_id);
     console.log('Updated data:', {
       first_name: editFirstName,
@@ -141,22 +141,22 @@ function Employee({ onBack }) {
         })
       });
       
-      console.log('📥 Edit response status:', res.status);
+      console.log('Edit response status:', res.status);
       
       if (!res.ok) {
         const errorData = await res.json();
-        console.log('❌ Error response:', errorData);
+        console.log('Error response:', errorData);
         throw new Error('Failed to update employee');
       }
       
       const responseData = await res.json();
-      console.log('✅ Employee updated successfully:', responseData);
+      console.log('Employee updated successfully:', responseData);
       
       setEditingEmployee(null);
       setSelectedEmployeeId(null);
       fetchEmployees();
     } catch (err) {
-      console.error('❌ Error updating employee:', err);
+      console.error('Error updating employee:', err);
       alert('Failed to update employee');
     }
   };
@@ -173,7 +173,7 @@ function Employee({ onBack }) {
       return;
     }
     
-    console.log('🗑️ Deleting employee:', employee);
+    console.log('Deleting employee:', employee);
     
     try {
       const res = await fetch(`https://project3-gang-40-sjzu.onrender.com/api/employees/employeeManagement/${employee.employee_id}`, {
@@ -182,15 +182,15 @@ function Employee({ onBack }) {
 
       if (!res.ok) {
         const errorData = await res.json();
-        console.log('❌ Error response:', errorData);
+        console.log('Error response:', errorData);
         throw new Error('Failed to delete employee');
       }
 
-      console.log('✅ Employee deleted successfully');
+      console.log('Employee deleted successfully');
       setSelectedEmployeeId(null);
       fetchEmployees();
     } catch (err) {
-      console.error('❌ Error deleting employee:', err);
+      console.error('Error deleting employee:', err);
       alert('Failed to delete employee');
     }
   };
