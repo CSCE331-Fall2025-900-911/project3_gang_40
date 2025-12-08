@@ -5,6 +5,8 @@ import './Manager.css'
 import SalesByHourChart from './charts/salesByHour'
 import SalesByDayChart from './charts/salesByDay'
 import DrinkTypePieChart from './charts/salesByDrinkType'
+import TopSellingDrinks from './charts/topSellingDrinks'
+import ProductUsageReport from './charts/productUsageReport'
 
 
 function Manager({ onBack }) {
@@ -22,6 +24,8 @@ function Manager({ onBack }) {
           <SalesByHourChart/>
           <SalesByDayChart/>
           <DrinkTypePieChart/>
+          <TopSellingDrinks/>
+          <ProductUsageReport/>
 
         </div>
       )}
