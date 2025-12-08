@@ -16,6 +16,8 @@ function Employee({ onBack }) {
         const res = await fetch("https://project3-gang-40-sjzu.onrender.com/api/employees/employeeManagement");
         if (!res.ok) throw new Error('Failed to fetch employees');
         const data = await res.json();
+        console.log("Employees data:", data); // Debug log
+        console.log("First employee:", data[0]); // Check structure
         setEmployees(data);
         setError(null);
       } catch (err) {
