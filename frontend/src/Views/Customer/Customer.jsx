@@ -45,7 +45,7 @@ function Customer({ onBack, onOrderComplete, email, language = 'en', largeMode, 
     size_id: 2,
     sweetness: 'Normal (100%)',
     ice: 'Regular',
-    topping: null,
+    selected_toppings: [], 
     quantity: 1
   });
   const [showFeedback, setShowFeedback] = useState(false);
@@ -233,7 +233,7 @@ function Customer({ onBack, onOrderComplete, email, language = 'en', largeMode, 
               size_id: 2,
               sweetness: 'Normal (100%)',
               ice: 'Regular',
-              topping: null,
+              selected_toppings: [],
               quantity: 1
             });
             setCurrentView('cart');

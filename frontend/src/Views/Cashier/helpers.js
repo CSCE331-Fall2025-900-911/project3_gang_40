@@ -1,28 +1,25 @@
 // helpers.js
 
 // opens drink modal for modifications
-export const openModalHelper = (
-  drink,
-  cartItem,
-  index,
-  setSelectedDrink,
-  setModifications,
-  setIsEditing,
-  setEditingIndex
-) => {
-  setSelectedDrink(drink);
-
-  if (cartItem) {
-    setModifications(cartItem.modifications);
+export const openModalHelper = (drink, cartItem, index, setSelectedDrink, setModifications, setIsEditing, setEditingIndex) => {
+  console.log('openModalHelper:', { drink, cartItem, index });
+  
+  setSelectedDrink(drink || null);
+  
+  if (cartItem && cartItem.modifications) {
+    setModifications({
+      ...cartItem.modifications,
+      quantity: cartItem.modifications.quantity?.toString() || '1'
+    });
     setIsEditing(true);
     setEditingIndex(index);
   } else {
     setModifications({
-      size_id: 2,
-      sweetness: 'Normal (100%)',
-      ice: 'Regular',
-      topping: null,
-      quantity: '1'
+      size_id: 2, 
+      sweetness: 'Normal (100%)', 
+      ice: 'Regular', 
+      quantity: '1',
+      selected_toppings: []
     });
     setIsEditing(false);
     setEditingIndex(null);
@@ -30,13 +27,18 @@ export const openModalHelper = (
 };
 
 // adds a drink to the cart
-export const addToCartHelper = (selectedDrink, modifications, setCart, closeModal) => {
-  if (!selectedDrink) return;
-  setCart(prev => [
-    ...prev,
-    { drink: selectedDrink, modifications, quantity: modifications.quantity }
-  ]);
+export const addToCartHelper = (drink, modifications, setCart, closeModal) => {
+  const cartItem = {
+    drink,
+    modifications: {
+      ...modifications,
+      selected_toppings: modifications.selected_toppings || []
+    }
+  };
+  
+  setCart(prevCart => [...prevCart, cartItem]);
   closeModal();
+  console.log('Added to cart:', cartItem);
 };
 
 // removes one drink from cart
@@ -76,27 +78,55 @@ export const addAnotherDrinkHelper = (index, setCart) => {
 
 // saves edits done to existing drink
 export const saveEditsHelper = (editingIndex, modifications, setCart, closeModal) => {
+  if (editingIndex === null || editingIndex === undefined) {
+    console.error('saveEditsHelper called with invalid editingIndex:', editingIndex);
+    return;
+  }
+
   setCart(prev => {
+    if (!prev || prev.length === 0 || !prev[editingIndex]) {
+      console.error('Invalid cart state or index:', { prevLength: prev?.length, editingIndex });
+      return prev;
+    }
+
     const updated = [...prev];
     updated[editingIndex] = {
       ...updated[editingIndex],
-      modifications: modifications
+      modifications: {
+        ...updated[editingIndex].modifications,
+        ...modifications,
+        selected_toppings: modifications.selected_toppings || []
+      }
     };
+    
+    console.log('Cart updated successfully:', updated[editingIndex].modifications.selected_toppings);
     return updated;
   });
+  
   closeModal();
 };
+
 
 // clears the cart
 export const clearCartHelper = (setCart) => setCart([]);
 
 // calculates total price
 export const calculateTotalPrice = (cart, sizes) => {
-  return cart.reduce((sum, item) => {
-    const base = Number(item.drink.base_price);
-    const toppingPrice = Number(item.modifications.topping?.extra_cost || 0);
-    const sizeExtra = Number(sizes.find(s => s.size_id === item.modifications.size_id)?.extra_cost || 0);
-    const quantity = Number(item.modifications.quantity);
-    return sum + (base + toppingPrice + sizeExtra) * quantity;
+  return cart.reduce((total, item) => {
+    const size = sizes.find(s => s.size_id === item.modifications.size_id) || { extra_cost: 0 };
+    
+    // Sum ALL toppings extra_cost
+    const toppingsExtra = (item.modifications.selected_toppings || []).reduce(
+      (sum, topping) => sum + Number(topping.extra_cost || 0), 
+      0
+    );
+    
+    const itemTotal = (
+      Number(item.drink.base_price) + 
+      toppingsExtra + 
+      Number(size.extra_cost)
+    ) * Number(item.modifications.quantity);
+    
+    return total + itemTotal;
   }, 0);
 };

@@ -38,10 +38,33 @@ function ToppingSelection({ drink, modifications, setModifications, onAddToCart,
     return <div className="topping-container"><p>{error}</p></div>;
   }
 
+  // Toggle topping selected
+  const toggleTopping = (topping) => {
+    let newSelected = modifications.selected_toppings ? [...modifications.selected_toppings] : [];
+    const index = newSelected.findIndex(t => t.topping_id === topping.topping_id);
+    if (index > -1) {
+      // Remove topping
+      newSelected.splice(index, 1);
+    } else {
+      // Add topping
+      newSelected.push(topping);
+    }
+    // If no toppings selected, add No Toppings by default
+    if (newSelected.length === 0) {
+      const noToppingOption = toppings.find(t => t.topping_name === 'No Toppings');
+      if (noToppingOption) newSelected = [noToppingOption];
+    } else {
+      // Remove "No Toppings" if any other topping is selected
+      newSelected = newSelected.filter(t => t.topping_name !== 'No Toppings');
+    }
+    setModifications(prev => ({ ...prev, selected_toppings: newSelected }));
+  };
+
+  // Calculate total price including all selected toppings
   const calculateTotal = () => {
     let total = Number(drink.base_price) * modifications.quantity;
-    if (modifications.topping && modifications.topping.extra_cost) {
-      total += Number(modifications.topping.extra_cost) * modifications.quantity;
+    if (modifications.selected_toppings) {
+      total += modifications.selected_toppings.reduce((sum, t) => sum + Number(t.extra_cost || 0), 0) * modifications.quantity;
     }
     return total.toFixed(2);
   };
@@ -63,15 +86,10 @@ function ToppingSelection({ drink, modifications, setModifications, onAddToCart,
           {toppings.map(topping => (
             <label key={topping.topping_id} className="topping-option">
               <input
-                type="radio"
-                name="topping"
+                type="checkbox"
                 value={topping.topping_id}
-                checked={
-                  modifications.topping
-                    ? modifications.topping.topping_id === topping.topping_id
-                    : topping.topping_name === 'No Toppings'
-                }
-                onChange={() => setModifications(prev => ({ ...prev, topping }))}
+                checked={modifications.selected_toppings?.some(t => t.topping_id === topping.topping_id) || false}
+                onChange={() => toggleTopping(topping)}
               />
               <span className="topping-name">{topping.topping_name}</span>
               <span className="topping-price">+${Number(topping.extra_cost).toFixed(2)}</span>
