@@ -56,40 +56,46 @@ export const addDrink = async (req, res, next) => {
     if (!name || price === undefined || !Array.isArray(ingredients)) {
       return res.status(400).json({ message: "Invalid drink data" });
     }
+    const cleanPrice = Number(price);
+    if (!Number.isFinite(cleanPrice) || cleanPrice < 0 || cleanPrice > 99999999.99) {
+      return res.status(400).json({ message: "Invalid price value", received: price });
+    }
     await client.query("BEGIN");
-    const drinkResult = await client.query(
+    const drinkInsert = await client.query(
       "INSERT INTO drinks (drink_name, base_price) VALUES ($1, $2) RETURNING drink_id",
-      [name, price]
+      [name.trim(), cleanPrice]
     );
-    const drinkId = drinkResult.rows[0].drink_id;
+    const drinkId = drinkInsert.rows[0].drink_id;
     for (const ing of ingredients) {
-      const { name, quantity, unit } = ing;
-      const findResult = await client.query(
-        "SELECT ingredient_id FROM ingredients WHERE ingredient_name = $1",
-        [name]
-      );
+      const { name: ingName, quantity, unit } = ing;
+      if (!ingName || quantity === undefined || !unit) {
+        await client.query("ROLLBACK");
+        return res.status(400).json({ message: "Invalid ingredient data" });
+      }
       let ingredientId;
-      if (findResult.rows.length > 0) {
-        ingredientId = findResult.rows[0].ingredient_id;
+      const findIng = await client.query(
+        "SELECT ingredient_id FROM ingredients WHERE ingredient_name = $1",
+        [ingName.trim()]
+      );
+      if (findIng.rows.length > 0) {
+        ingredientId = findIng.rows[0].ingredient_id;
       } else {
-        const insertIngredientResult = await client.query(
+        const insertIng = await client.query(
           "INSERT INTO ingredients (ingredient_name, stock_quantity, unit) VALUES ($1, $2, $3) RETURNING ingredient_id",
-          [name, quantity, unit]
+          [ingName.trim(), Number(quantity), unit.trim()]
         );
-        ingredientId = insertIngredientResult.rows[0].ingredient_id;
+        ingredientId = insertIng.rows[0].ingredient_id;
       }
       await client.query(
         "INSERT INTO drink_ingredients (drink_id, ingredient_id, quantity) VALUES ($1, $2, $3)",
-        [drinkId, ingredientId, quantity]
+        [drinkId, ingredientId, Number(quantity)]
       );
     }
     await client.query("COMMIT");
-    res.status(201).json({
-      message: "Drink added successfully",
-      drinkId,
-    });
+    res.status(201).json({ message: "Drink added successfully", drinkId });
   } catch (err) {
     await client.query("ROLLBACK");
+    console.error("ADD DRINK ERROR:", err);
     next(err);
   } finally {
     client.release();
@@ -98,27 +104,30 @@ export const addDrink = async (req, res, next) => {
 
 // update an existing drink in the database
 export const updateDrink = async (req, res, next) => {
+  const { id } = req.params;
+  const { name, price, ingredients } = req.body;
   const client = await pool.connect();
   try {
-    const { id } = req.params;
-    const { name, price, ingredients } = req.body;
     await client.query("BEGIN");
     await client.query(
       "UPDATE drinks SET drink_name = $1, base_price = $2 WHERE drink_id = $3",
       [name, price, id]
     );
+    await client.query(
+      "DELETE FROM drink_ingredients WHERE drink_id = $1",
+      [id]
+    );
     for (const ing of ingredients) {
       await client.query(
-        `UPDATE ingredients
-         SET ingredient_name = $1, stock_quantity = $2, unit = $3
-         WHERE ingredient_id = $4`,
-        [ing.name, ing.quantity, ing.unit, ing.ingredient_id]
-      );
-      await client.query(
-        `UPDATE drink_ingredients
-         SET quantity = $1
-         WHERE drink_id = $2 AND ingredient_id = $3`,
-        [ing.quantity, id, ing.ingredient_id]
+        `
+        INSERT INTO drink_ingredients (drink_id, ingredient_id, quantity)
+        VALUES (
+          $1,
+          (SELECT ingredient_id FROM ingredients WHERE ingredient_name = $2),
+          $3
+        )
+        `,
+        [id, ing.name, ing.quantity]
       );
     }
     await client.query("COMMIT");
