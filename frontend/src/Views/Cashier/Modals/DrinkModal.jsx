@@ -37,34 +37,32 @@ function DrinkModal({ drink, modifications, setModifications, toppings, sizes, i
           </select>
         </div>
 
-        {/* toppings button selector with no toppings as default */}
+        {/* toppings button selector with no toppings as default - UPDATED */}
         <div className="modal-section">
-        <label>Toppings:</label>
-        <div className="toppings-options">
-          {toppings.map(topping => {
-            const isNoToppings = topping.topping_name === 'No Toppings';
-            const isCurrentlySelected = modifications.selected_toppings?.some(t => t.topping_id === topping.topping_id) || false;
-            
-            return (
-              <label key={topping.topping_id} className="topping-checkbox">
-                <input
-                  type="checkbox"
-                  checked={isCurrentlySelected}
-                  onChange={(e) => {
-                    const isChecked = e.target.checked;
+          <label>Toppings:</label>
+          <div className="option-grid toppings">
+            {toppings.map(topping => {
+              const isNoToppings = topping.topping_name === 'No Toppings';
+              const isCurrentlySelected = modifications.selected_toppings?.some(t => t.topping_id === topping.topping_id) || false;
+              
+              return (
+                <button
+                  key={topping.topping_id}
+                  className={`option-btn ${isCurrentlySelected ? 'selected' : ''}`}
+                  onClick={() => {
                     setModifications(prev => {
                       let newSelectedToppings;
                       
-                      if (isNoToppings && isChecked) {
-                        // "No Toppings" selected → clear all others
+                      if (isNoToppings && !isCurrentlySelected) {
+                        // "No Toppings" clicked → clear all others
                         newSelectedToppings = [topping];
-                      } else if (isNoToppings && !isChecked) {
-                        // "No Toppings" deselected → keep others or empty
-                        newSelectedToppings = (prev.selected_toppings || []).filter(t => t.topping_id !== 11);
-                      } else if (!isNoToppings && isChecked) {
+                      } else if (isNoToppings && isCurrentlySelected) {
+                        // "No Toppings" deselected → empty array
+                        newSelectedToppings = [];
+                      } else if (!isNoToppings && !isCurrentlySelected) {
                         // Regular topping selected → remove "No Toppings" + add this one
                         newSelectedToppings = [
-                          ...(prev.selected_toppings || []).filter(t => t.topping_id !== 11),
+                          ...(prev.selected_toppings || []).filter(t => t.topping_name !== 'No Toppings'),
                           topping
                         ];
                       } else {
@@ -78,19 +76,22 @@ function DrinkModal({ drink, modifications, setModifications, toppings, sizes, i
                       };
                     });
                   }}
-                />
-                <span>{topping.topping_name} (+${Number(topping.extra_cost).toFixed(2)})</span>
-              </label>
-            );
-          })}
-        </div>
-        <div>
-          <div>Selected: {modifications.selected_toppings?.map(t => t.topping_name).join(', ') || 'None'}</div>
-          <div>
-            Total: +${(modifications.selected_toppings?.reduce((sum, t) => sum + Number(t.extra_cost), 0) || 0).toFixed(2)}
+                >
+                  <span className="topping-name">{topping.topping_name}</span>
+                  <span className="topping-price">${Number(topping.extra_cost).toFixed(2)}</span>
+                </button>
+              );
+            })}
+          </div>
+          
+          {/* Display selected toppings summary */}
+          <div style={{ marginTop: '12px', fontSize: '14px', color: 'var(--text-muted)' }}>
+            <div>Selected: {modifications.selected_toppings?.map(t => t.topping_name).join(', ') || 'None'}</div>
+            <div style={{ color: 'var(--blue-400)', fontWeight: '500' }}>
+              Total: +${(modifications.selected_toppings?.reduce((sum, t) => sum + Number(t.extra_cost), 0) || 0).toFixed(2)}
+            </div>
           </div>
         </div>
-      </div>
 
         {/* quantity slider with 1 as default */}
         <div className="modal-section">
@@ -106,8 +107,8 @@ function DrinkModal({ drink, modifications, setModifications, toppings, sizes, i
 
         {/* save changes or cancel button at bottom */}
         <div className="modal-actions">
-          {isEditing ? <button onClick={saveEdits}>Save Changes</button> : <button onClick={addToCart}>Add to Cart</button>}
-          <button onClick={closeModal}>Cancel</button>
+          {isEditing ? <button className="confirm" onClick={saveEdits}>Save Changes</button> : <button className="confirm" onClick={addToCart}>Add to Cart</button>}
+          <button className="cancel" onClick={closeModal}>Cancel</button>
         </div>
       </div>
     </div>
