@@ -11,6 +11,7 @@ function Inventory({ onBack }) {
   const [editName, setEditName] = useState("");
   const [editPrice, setEditPrice] = useState("");
   const [editIngredients, setEditIngredients] = useState([]);
+  const [selectedDrinkId, setSelectedDrinkId] = useState(null);
 
   useEffect(() => {
     fetchDrinks();
@@ -107,6 +108,28 @@ function Inventory({ onBack }) {
     fetchDrinks(); // reload table
   };
 
+  const handleDeleteDrink = async (drinkId) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this drink?");
+    if (!confirmDelete) return;
+    try {
+      const res = await fetch(
+        `https://project3-gang-40-sjzu.onrender.com/api/inventory/drinks/${drinkId}`,
+        {
+          method: "DELETE",
+        }
+      );
+      if (!res.ok) {
+        const err = await res.json();
+        console.error("Delete failed:", err);
+        alert("Failed to delete drink");
+        return;
+      }
+      fetchDrinks();
+    } catch (err) {
+      console.error("Delete error:", err);
+    }
+  };
+
   return (
     <div style={{ padding: "20px" }}>
       <h1>Inventory</h1>
@@ -180,11 +203,20 @@ function Inventory({ onBack }) {
             <th>Drink</th>
             <th>Price</th>
             <th>Ingredients</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {drinks.map((drink) => (
-            <tr key={drink.drink_id} onDoubleClick={() => openEditModal(drink)}>
+            <tr
+              key={drink.drink_id}
+              onClick={() => setSelectedDrinkId(drink.drink_id)}
+              style={{
+                backgroundColor:
+                  selectedDrinkId === drink.drink_id ? "#d6ebff" : "white",
+                cursor: "pointer",
+              }}
+            >
               <td>{drink.drink_id}</td>
               <td>{drink.drink_name}</td>
               <td>${Number(drink.base_price).toFixed(2)}</td>
@@ -194,6 +226,25 @@ function Inventory({ onBack }) {
                     {ing.name} — {ing.quantity} {ing.unit}
                   </div>
                 ))}
+              </td>
+              <td>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    openEditModal(drink);
+                  }}
+                  style={{ marginRight: "8px" }}
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDeleteDrink(drink.drink_id);
+                  }}
+                >
+                  Delete
+                </button>
               </td>
             </tr>
           ))}
