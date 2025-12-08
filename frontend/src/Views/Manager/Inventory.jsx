@@ -114,7 +114,7 @@ function Inventory({ onBack }) {
   const saveEdit = async () => {
     try {
       const res = await fetch(
-        `http://localhost:5001/api/inventory/drinks/${editingDrink.drink_id}`,
+        `https://project3-gang-40-sjzu.onrender.com/api/inventory/drinks/${editingDrink.drink_id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
