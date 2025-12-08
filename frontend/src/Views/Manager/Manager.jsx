@@ -2,7 +2,9 @@ import { useState, useEffect } from 'react'
 import Employee from './Employee';
 import Inventory from './Inventory';
 import './Manager.css'
-import Weather from '../Customer/components/Weather'
+import SalesByHourChart from './charts/salesByHour'
+import SalesByDayChart from './charts/salesByDay'
+import DrinkTypePieChart from './charts/salesByDrinkType'
 
 
 function Manager({ onBack }) {
@@ -16,6 +18,11 @@ function Manager({ onBack }) {
           <button onClick={onBack}>Exit</button>
           <button onClick={() => setCurrentView('employee')}>Employee</button>
           <button onClick={() => setCurrentView('inventory')}>Inventory</button>    
+
+          <SalesByHourChart/>
+          <SalesByDayChart/>
+          <DrinkTypePieChart/>
+
         </div>
       )}
       

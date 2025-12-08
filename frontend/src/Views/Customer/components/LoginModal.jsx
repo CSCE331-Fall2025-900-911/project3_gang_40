@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../css/LoginModal.css";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 
-function LoginModal({ onClose, onLoginSuccess, translatedTexts }) {
+function LoginModal({ onClose, onLoginSuccess, translatedTexts, largeMode }) {
   const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
   const [error, setError] = useState("");
   const [googleClicked, setGoogleClicked] = useState(false);
@@ -10,8 +10,15 @@ function LoginModal({ onClose, onLoginSuccess, translatedTexts }) {
   // If clientId is missing, show error
   if (!clientId) {
     return (
-      <div className="modal-overlay">
-        <div className="modal">
+      <div className={`modal-overlay ${largeMode ? "large" : ""}`}>
+        <div className={`modal glass-modal ${largeMode ? "modal-large" : ""}`} role="dialog">
+          <button
+            className="close-btn"
+            onClick={onClose}
+            aria-label="Close configuration error dialog"
+          >
+            ✕
+          </button>
           <h2>Configuration Error</h2>
           <p style={{ color: "red" }}>
             Google OAuth Client ID is missing. Add{" "}
@@ -50,11 +57,10 @@ function LoginModal({ onClose, onLoginSuccess, translatedTexts }) {
 
   return (
     <GoogleOAuthProvider clientId={clientId}>
-      <div className="modal-overlay">
-        <div
-          className="modal glass-modal"
-          role="dialog"
-          aria-modal="true"
+      <div className={`modal-overlay ${largeMode ? "large" : ""}`}>
+        <div className={`modal glass-modal ${largeMode ? "modal-large" : ""}`} 
+          role="dialog" 
+          aria-modal="true" 
           aria-labelledby="login-modal-title"
         >
           <button

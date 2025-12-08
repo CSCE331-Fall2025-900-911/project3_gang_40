@@ -2,7 +2,7 @@ import { useState } from "react";
 import NavBar from "./components/NavBar";
 import textKeys from './components/text';
 
-function DrinksCustomization({ drink, modifications, setModifications, onNext, onBack, cart, onCartClick, currentStep, onStepClick, sizes, translatedTexts }) {
+function DrinksCustomization({ drink, modifications, setModifications, onNext, onBack, cart, onCartClick, currentStep, onStepClick, sizes, translatedTexts, largeMode }) {
   const handleDictation = () => {
     const SpeechRecognition =
       window.webkitSpeechRecognition || window.SpeechRecognition;
@@ -58,8 +58,8 @@ function DrinksCustomization({ drink, modifications, setModifications, onNext, o
   };
 
   return (
-    <div className="customization-page">
-      <div className="customization-container">
+    <div className={`customization-page ${largeMode ? 'customization-page--large' : ''}`}>
+      <div className={`customization-container ${largeMode ? 'customization-container--large' : ''}`}>
         <div className="customization-header">
           <h2>{(translatedTexts.customizeDrink || textKeys.customizeDrink)} {drink.drink_name}</h2>
           <p>{translatedTexts.basePrice || textKeys.basePrice}: ${Number(drink.base_price).toFixed(2)}</p>
@@ -156,6 +156,7 @@ function DrinksCustomization({ drink, modifications, setModifications, onNext, o
         onExitClick={onBack}
         onStepClick={onStepClick}
         translatedTexts={translatedTexts}
+        largeMode={largeMode}
       />
     </div>
   );

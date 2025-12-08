@@ -15,6 +15,7 @@ import checkoutRoutes from './routes/checkout.js';
 import returnsRoutes from './routes/returns.js';
 import translationRouter from './routes/translation.js';
 import emailRoutes from "./routes/email.js";
+import salesChartsRoutes from './routes/salesCharts.js'
 
 // Error 
 import errorHandler from './errorHandler.js';
@@ -36,7 +37,7 @@ app.use('/api/returns', returnsRoutes);
 app.use('/translation', translationRouter);
 
 app.use("/api", emailRoutes);
-
+app.use("/api", salesChartsRoutes)
 
 // Simple health check
 app.get('/', (req, res) => {

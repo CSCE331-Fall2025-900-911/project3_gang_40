@@ -28,7 +28,7 @@ import tigerBoba from "/assets/images/tiger_boba-removebg-preview.png"
 import defaultDrink from "/assets/images/bubble-tea-clipart.png"
 import ThankYouScreen from './ThankYouScreen';
 
-function Customer({ onBack, onOrderComplete, email, language = 'en' }) {
+function Customer({ onBack, onOrderComplete, email, language = 'en', largeMode, customerDiscount }) {
   const [currentView, setCurrentView] = useState('customer');
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedDrink, setSelectedDrink] = useState(null);
@@ -169,6 +169,7 @@ function Customer({ onBack, onOrderComplete, email, language = 'en' }) {
           onOrderComplete(); 
         }}
         userEmail={email}
+        largeMode={largeMode}
       />
     );
   }
@@ -193,6 +194,8 @@ function Customer({ onBack, onOrderComplete, email, language = 'en' }) {
           onEditItem={handleEditItem}
           translatedTexts={translatedTexts}
           email={email}
+          largeMode={largeMode}
+          customerDiscount={customerDiscount}
         />
       )}
 
@@ -241,6 +244,7 @@ function Customer({ onBack, onOrderComplete, email, language = 'en' }) {
           currentStep={3}
           onStepClick={handleStepClick}
           translatedTexts={translatedTexts}
+          largeMode={largeMode}
         />
       )}
 
@@ -257,12 +261,13 @@ function Customer({ onBack, onOrderComplete, email, language = 'en' }) {
           onStepClick={handleStepClick}
           sizes={sizes}
           translatedTexts={translatedTexts}
+          largeMode={largeMode}
         />
       )}
 
       {currentView === 'customer' && (
-        <div className='customer-page'>
-          <div className='customer-container'>
+        <div className={`customer-page ${largeMode ? 'customer-page--large' : ''}`}>
+          <div className={`customer-container ${largeMode ? 'customer-container--large' : ''}`}>
             <div className='drinks-header'>
               <h1>{translatedTexts.pageTitle || textKeys.pageTitle}</h1>
               <p>{translatedTexts.selectDrink || textKeys.selectDrink}</p>
@@ -342,6 +347,7 @@ function Customer({ onBack, onOrderComplete, email, language = 'en' }) {
             onExitClick={onBack}
             onStepClick={handleStepClick}
             translatedTexts={translatedTexts}
+            largeMode={largeMode}
           />
         </div>
       )}

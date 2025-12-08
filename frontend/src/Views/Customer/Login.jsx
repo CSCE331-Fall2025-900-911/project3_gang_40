@@ -12,18 +12,24 @@ function Login({ onBack }) {
   const [customerEmail, setCustomerEmail] = useState(null);
   const [selectedLanguage, setSelectedLanguage] = useState('en');
   const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
+  const [largeMode, setLargeMode] = useState(false);
+  const [customerDiscount, setCustomerDiscount] = useState(false);
 
   if (customerEmail) {
     return (
       <Customer
         email={customerEmail}
         language={selectedLanguage}
+        largeMode={largeMode}
+        customerDiscount={customerDiscount}
         onBack={() => {
           setCustomerEmail(null);
           setCurrentView('login')
         }}
         onOrderComplete={() => {
           setCustomerEmail(null);
+          setLargeMode(false);             
+          setCustomerDiscount(false);
         }}
       />
     );
@@ -42,8 +48,8 @@ function Login({ onBack }) {
 
   return (
     <>
-      <div className="login-page">
-        <div className="login-card">
+      <div className={`login-page ${largeMode ? 'login-page--large' : ''}`}>
+        <div className={`login-card ${largeMode ? 'login-card--large' : ''}`}>
           <header className="login-header">
             <img className="logo" src={logo} alt="Share Tea logo" />
           </header>
@@ -94,14 +100,21 @@ function Login({ onBack }) {
                   )}
                 </div>
 
-                <button className="btn btn-outline shortcuts">
-                  Accessibility
+                <button
+                  className="btn btn-outline shortcuts"
+                  onClick={() => { setLargeMode(prev => { return !prev; }); }}
+                  aria-pressed={largeMode}
+                >
+                  {largeMode ? 'Normal Size' : 'Large Size'}
                 </button>
               </div>
 
               <div className="secondary-actions">
-                <button className="btn btn-secondary points">
-                  Earn Points
+                <button 
+                  className="btn btn-secondary points"
+                  onClick={setCustomerDiscount}
+                >
+                  {customerDiscount ? '10% Off!' : 'Earn Points'}
                 </button>
                 <button
                   className="btn btn-danger customer-exit-btn"
@@ -119,6 +132,7 @@ function Login({ onBack }) {
             onClose={() => setModalOpen(false)}
             onLoginSuccess={onLoginSuccess}
             translatedTexts={textKeys}
+            largeMode={largeMode}
           />
         )}
       </div>

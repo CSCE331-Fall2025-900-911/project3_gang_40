@@ -1,4 +1,3 @@
-/* Page background */
 .login-page {
   min-height: 100vh;
   display: flex;
@@ -8,220 +7,224 @@
   background: linear-gradient(135deg, #232526 0%, #414345 50%, #536976 100%);
 }
 
-/* Card container */
 .login-card {
   width: 100%;
   max-width: 900px;
-  border-radius: 24px;
-  padding: 2.5rem;
+  border-radius: 1.5rem;
+  padding: 1.5rem;
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(18px);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.12);
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-/* Header logo */
-.login-header {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-}
-
-.logo {
-  width: 6rem;
-}
-
-/* Main content layout */
-.login-content {
-  display: flex;
-  gap: 2.5rem;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.login-hero {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-}
-
-.boba {
-  width: 9rem;
-  height: 9rem;
-  border-radius: 999px;
-  object-fit: cover;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
-}
-
-.text_1 {
-  font-size: 1.9rem;
-  margin: 0 0 0.3rem;
-}
-
-.text_2 {
-  margin: 0;
-  color: #555;
-  font-size: 1rem;
-}
-
-/* Right side actions */
-.login-actions {
-  flex: 1;
+  box-shadow: 0 1.5rem 3.75rem rgba(0, 0, 0, 0.12);
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
+  font-size: 16px;
+
+  
+  /* CSS Variables for scaling  */
+  --base-size: 1rem;
+  --title-size: 1.9rem;
+  --body-size: 1rem;
+  --btn-size: 1rem;
+  --btn-padding: 0.5625rem 1rem;
+  --logo-size: 3.75rem;    
+  --boba-size: 5.625rem;  
+  --card-padding: 1.5rem;   
+  --gap-large: 1.25rem;    
 }
 
-/* Generic button styles */
-.btn {
+.login-card--large {
+  font-size: 24px !important;
+  --base-size: 1.25rem;
+  --title-size: 2.4rem;
+  --body-size: 1.25rem;
+  --btn-size: 1.5rem !important;
+  --btn-padding: 1rem 2rem !important;
+  --logo-size: 5.5rem !important;     
+  --boba-size: 8rem !important;        
+  --card-padding: 2.5rem !important;   
+  --gap-large: 2rem !important;
+  max-width: 1100px !important;     
+}
+
+/* Apply scaled variables */
+.login-card {
+  padding: var(--card-padding);
+  gap: var(--gap-large);
+}
+
+.logo { 
+  width: var(--logo-size); 
+}
+
+.boba { 
+  width: var(--boba-size); 
+  height: var(--boba-size); 
+  border-radius: 999px; 
+  object-fit: cover; 
+  box-shadow: 0 0.75rem 1.875rem rgba(0, 0, 0, 0.18);
+}
+
+.text_1 { 
+  font-size: var(--title-size); 
+  margin: 0 0 0.3rem; 
+}
+.text_2 { 
+  font-size: var(--body-size); 
+  margin: 0; 
+  color: #555; 
+}
+
+.login-card .btn {
   border: none;
   cursor: pointer;
   border-radius: 999px;
-  font-size: 1rem;
-  padding: 0.9rem 1.6rem;
+  font-size: var(--btn-size) !important;
+  padding: var(--btn-padding) !important;
   font-weight: 600;
-  transition:
-    background-color 0.2s ease,
-    color 0.2s ease,
-    box-shadow 0.2s ease,
-    transform 0.1s ease;
+  transition: all 0.2s ease;
   outline: none;
+  box-sizing: border-box;
 }
 
-/* Red focus ring */
-.btn:focus-visible {
-  outline: 3px solid #ff4d4f;
-  outline-offset: 3px;
+.login-card .language-dropdown button {
+  font-size: var(--btn-size) !important;
+  padding: 0.75rem 1rem;
 }
 
-/* Variants - red theme */
-.btn-primary {
+/* Button variants */
+.login-card .btn-primary {
   background: linear-gradient(135deg, #ff4d4f, #ff6b6b);
   color: #ffffff;
   box-shadow: 0 14px 28px rgba(255, 77, 79, 0.4);
 }
-
-.btn-primary:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 18px 40px rgba(255, 77, 79, 0.55);
+.login-card .btn-primary:hover { 
+  transform: translateY(-1px); 
+  box-shadow: 0 18px 40px rgba(255, 77, 79, 0.55); 
 }
 
-/* Light red secondary */
-.btn-secondary {
-  background: #ffffff;
-  color: #ff4d4f;
+.login-card .btn-secondary { 
+  background: #ffffff; 
+  color: #ff4d4f; 
   border: 1px solid rgba(255, 77, 79, 0.6);
 }
 
-.btn-secondary:hover {
-  background: rgba(255, 77, 79, 0.08);
+.login-card .btn-secondary:hover { 
+  background: rgba(255, 77, 79, 0.08); 
 }
 
-/* Outline (neutral) */
-.btn-outline {
-  background: transparent;
-  color: #ff4d4f;
-  border: 1px solid rgba(255, 77, 79, 0.4);
+.login-card .btn-outline { 
+  background: transparent; 
+  color: #ff4d4f; 
+  border: 1px solid rgba(255, 77, 79, 0.4); 
 }
 
-.btn-outline:hover {
-  background: rgba(255, 77, 79, 0.06);
+.login-card .btn-outline:hover { 
+  background: rgba(255, 77, 79, 0.06); 
 }
 
-/* Strong danger / exit */
-.btn-danger {
-  background: #d9363e;
-  color: #ffffff;
+.login-card .btn-danger { 
+  background: #d9363e; 
+  color: #ffffff; 
 }
 
-.btn-danger:hover {
-  background: #b52c33;
+.login-card .btn-danger:hover { 
+  background: #b52c33; 
 }
 
-/* Specific buttons */
-.login-btn {
-  width: 100%;
-  justify-content: center;
-  display: inline-flex;
+.login-card .btn:focus-visible { 
+  outline: 3px solid #ff4d4f; 
+  outline-offset: 3px; 
 }
 
-.accessibility {
-  display: flex;
-  gap: 0.8rem;
+/* Layout */
+.login-header { 
+  display: flex; 
+  justify-content: flex-start; 
+  align-items: center; 
 }
 
-.language,
-.shortcuts {
-  flex: 1;
+.login-content { 
+  display: flex; 
+  gap: 1.5rem; 
+  align-items: center; 
+  justify-content: space-between; 
 }
 
-/* Language dropdown */
-.language-wrapper {
-  position: relative;
-  flex: 1;
+.login-hero { 
+  flex: 1; 
+  display: flex; 
+  align-items: center; 
+  gap: 0.9375rem; 
+}
+
+.login-actions { 
+  flex: 1; 
+  display: flex; 
+  flex-direction: column; 
+  gap: 1.25rem; 
+}
+
+.login-btn { 
+  width: 100%; 
+  justify-content: center; 
+  display: inline-flex; 
+}
+.accessibility { 
+  display: flex; 
+  gap: 0.8rem; 
+}
+
+.language, 
+.shortcuts { 
+  flex: 1; 
+}
+
+.language-wrapper { 
+  position: relative; 
+  flex: 1; 
 }
 
 .language-dropdown {
-  position: absolute;
-  top: 110%;
-  left: 0;
+  position: absolute; 
+  top: 110%; 
+  left: 0; 
   right: 0;
-  background: #ffffff;
-  border-radius: 14px;
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.16);
-  padding: 0.4rem;
-  display: flex;
-  flex-direction: column;
+  background: #ffffff; 
+  border-radius: 0.875rem; 
+  padding: 0.25rem;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.16); 
+  display: flex; 
+  flex-direction: column; 
   z-index: 10;
 }
 
-.language-dropdown button {
-  border: none;
-  background: transparent;
-  padding: 0.5rem 0.75rem;
-  text-align: left;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 0.95rem;
+.language-dropdown button { 
+  border: none; 
+  background: transparent; 
+  text-align: left; 
+  border-radius: 10px; cursor: pointer; 
 }
 
-.language-dropdown button:hover,
-.language-dropdown button:focus-visible {
-  background: rgba(255, 123, 176, 0.08);
+.language-dropdown button:hover, 
+.language-dropdown button:focus-visible { 
+  background: rgba(255, 123, 176, 0.08); 
 }
 
-/* Secondary actions (points/exit) */
-.secondary-actions {
-  display: flex;
-  gap: 0.75rem;
+.secondary-actions { 
+  display: flex; 
+  gap: 0.75rem; 
 }
 
-.points,
-.customer-exit-btn {
-  flex: 1;
-  justify-content: center;
-  display: inline-flex;
+.points, 
+.customer-exit-btn { 
+  flex: 1; 
+  justify-content: center;  
 }
 
-/* Responsive tweaks */
 @media (max-width: 768px) {
-  .login-card {
-    padding: 1.75rem;
-  }
-
-  .login-content {
-    flex-direction: column;
-  }
-
-  .login-hero {
-    justify-content: center;
-    text-align: center;
-  }
-
-  .login-actions {
-    width: 100%;
-  }
+  .login-card { padding: 1.75rem; }
+  .login-content { flex-direction: column; }
+  .login-hero { justify-content: center; text-align: center; }
+  .login-actions { width: 100%; }
 }

@@ -95,3 +95,38 @@ export const addDrink = async (req, res, next) => {
     client.release();
   }
 };
+
+// update an existing drink in the database
+export const updateDrink = async (req, res, next) => {
+  const client = await pool.connect();
+  try {
+    const { id } = req.params;
+    const { name, price, ingredients } = req.body;
+    await client.query("BEGIN");
+    await client.query(
+      "UPDATE drinks SET drink_name = $1, base_price = $2 WHERE drink_id = $3",
+      [name, price, id]
+    );
+    for (const ing of ingredients) {
+      await client.query(
+        `UPDATE ingredients
+         SET ingredient_name = $1, stock_quantity = $2, unit = $3
+         WHERE ingredient_id = $4`,
+        [ing.name, ing.quantity, ing.unit, ing.ingredient_id]
+      );
+      await client.query(
+        `UPDATE drink_ingredients
+         SET quantity = $1
+         WHERE drink_id = $2 AND ingredient_id = $3`,
+        [ing.quantity, id, ing.ingredient_id]
+      );
+    }
+    await client.query("COMMIT");
+    res.json({ message: "Drink updated successfully" });
+  } catch (err) {
+    await client.query("ROLLBACK");
+    next(err);
+  } finally {
+    client.release();
+  }
+};
