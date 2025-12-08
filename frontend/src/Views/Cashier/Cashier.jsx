@@ -97,13 +97,21 @@ function Cashier({ onBack }) {
   const addAnotherDrink = (index) => addAnotherDrinkHelper(index, setCart);
 
   // saves edits to cart
-  const saveEdits = () => saveEditsHelper(editingIndex, modifications, setCart, () => setSelectedDrink(null));
+  const saveEdits = () => {
+    console.log('DrinkModal saveEdits called - isEditing:', isEditing, 'editingIndex:', editingIndex);
+    if (isEditing && editingIndex !== null) {
+      saveEditsHelper(editingIndex, modifications, setCart, closeModal);
+    } else {
+      addToCart();
+    }
+  };
 
   // clears entire cart
   const clearCart = () => setCart([])
 
   // sumits order to database
   const submitOrder = async (paymentMethod = null, isVoid = false) => {
+    console.log('🚀 SUBMITTING ORDER - full cart:', JSON.stringify(cart, null, 2));
     if (!currentEmployee) {
       alert('Employee not selected');
       return;

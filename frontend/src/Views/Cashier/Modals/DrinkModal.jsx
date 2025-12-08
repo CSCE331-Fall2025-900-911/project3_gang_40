@@ -39,26 +39,58 @@ function DrinkModal({ drink, modifications, setModifications, toppings, sizes, i
 
         {/* toppings button selector with no toppings as default */}
         <div className="modal-section">
-          <label>Toppings:</label>
-          <div className="toppings-options">
-            {toppings.map(topping => (
-              <label key={topping.topping_id}>
+        <label>Toppings:</label>
+        <div className="toppings-options">
+          {toppings.map(topping => {
+            const isNoToppings = topping.topping_name === 'No Toppings';
+            const isCurrentlySelected = modifications.selected_toppings?.some(t => t.topping_id === topping.topping_id) || false;
+            
+            return (
+              <label key={topping.topping_id} className="topping-checkbox">
                 <input
-                  type="radio"
-                  name="topping"
-                  value={topping.topping_name}
-                  checked={
-                  modifications.topping
-                    ? modifications.topping.topping_id === topping.topping_id
-                    : topping.topping_name === 'No Toppings'
-                }
-                  onChange={() => setModifications(prev => ({ ...prev, topping }))}
-                /> 
-                {topping.topping_name} (+${Number(topping.extra_cost).toFixed(2)})
+                  type="checkbox"
+                  checked={isCurrentlySelected}
+                  onChange={(e) => {
+                    const isChecked = e.target.checked;
+                    setModifications(prev => {
+                      let newSelectedToppings;
+                      
+                      if (isNoToppings && isChecked) {
+                        // "No Toppings" selected → clear all others
+                        newSelectedToppings = [topping];
+                      } else if (isNoToppings && !isChecked) {
+                        // "No Toppings" deselected → keep others or empty
+                        newSelectedToppings = (prev.selected_toppings || []).filter(t => t.topping_id !== 11);
+                      } else if (!isNoToppings && isChecked) {
+                        // Regular topping selected → remove "No Toppings" + add this one
+                        newSelectedToppings = [
+                          ...(prev.selected_toppings || []).filter(t => t.topping_id !== 11),
+                          topping
+                        ];
+                      } else {
+                        // Regular topping deselected → just remove it
+                        newSelectedToppings = (prev.selected_toppings || []).filter(t => t.topping_id !== topping.topping_id);
+                      }
+                      
+                      return { 
+                        ...prev, 
+                        selected_toppings: newSelectedToppings 
+                      };
+                    });
+                  }}
+                />
+                <span>{topping.topping_name} (+${Number(topping.extra_cost).toFixed(2)})</span>
               </label>
-            ))}
+            );
+          })}
+        </div>
+        <div>
+          <div>Selected: {modifications.selected_toppings?.map(t => t.topping_name).join(', ') || 'None'}</div>
+          <div>
+            Total: +${(modifications.selected_toppings?.reduce((sum, t) => sum + Number(t.extra_cost), 0) || 0).toFixed(2)}
           </div>
         </div>
+      </div>
 
         {/* quantity slider with 1 as default */}
         <div className="modal-section">

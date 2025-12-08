@@ -8,20 +8,21 @@ function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem, tra
   const [showPaymentModal, setShowPaymentModal] = useState(false);
 
   const calculateItemTotal = (item) => {
-    let total = Number(item.drink.base_price);
-
-    // Add size extra cost
-    if (item.modifications.size_extra_cost) {
-      total += Number(item.modifications.size_extra_cost);
-    }
-
-    // Add topping extra cost
-    if (item.modifications.topping?.extra_cost) {
-      total += Number(item.modifications.topping.extra_cost);
-    }
-
-    return (total * item.quantity).toFixed(2);
-  };
+  let total = Number(item.drink.base_price);
+  
+  // Add size extra cost
+  if (item.modifications.size_extra_cost) {
+    total += Number(item.modifications.size_extra_cost);
+  }
+  
+  if (item.modifications.selected_toppings) {
+    total += item.modifications.selected_toppings.reduce((sum, topping) => {
+      return sum + Number(topping.extra_cost || 0);
+    }, 0);
+  }
+  
+  return (total * item.quantity).toFixed(2);
+};
 
   const calculateCartTotal = () => {
     return ((cart.reduce((sum, item) => sum + parseFloat(calculateItemTotal(item)), 0)) * 1.0825).toFixed(2);
@@ -57,7 +58,7 @@ function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem, tra
       console.log('Sending to database...');
       console.log('Order Data:', orderData);
 
-      const response = await fetch('https://project3-gang-40-sjzu.onrender.com/api/checkout', {
+      const response = await fetch('https://project3-gang-40-sjzu.onrender.com//api/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(orderData)
@@ -121,14 +122,14 @@ function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem, tra
                     <p><strong>{translatedTexts.sweetness || textKeys.sweetness}:</strong> {item.modifications.sweetness}</p>
                     <p><strong>{translatedTexts.ice || textKeys.ice}:</strong> {item.modifications.ice}</p>
                     <p>
-                      <p>
-                        <strong>{translatedTexts.topping || textKeys.topping}:</strong> {item.modifications.topping ? item.modifications.topping.topping_name : 'None'}
-                      </p>
-                      {item.modifications.topping && item.modifications.topping.extra_cost > 0 &&
-                        ` (+$${Number(item.modifications.topping.extra_cost).toFixed(2)})`
+                      <strong>{translatedTexts.topping || textKeys.topping}:</strong> 
+                      {(item.modifications.selected_toppings || []).length > 0 
+                        ? (item.modifications.selected_toppings || []).map(t => t.topping_name).join(', ')
+                        : 'None'
                       }
                     </p>
                   </div>
+
 
                   <div className="cart-item-footer">
                     <span className="cart-item-price">${calculateItemTotal(item)}</span>
