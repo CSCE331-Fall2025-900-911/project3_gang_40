@@ -20,7 +20,7 @@ const SalesByHourChart = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:5001/api/sales-by-hour')
+    fetch('https://project3-gang-40-sjzu.onrender.com/api/sales-by-hour')
       .then(res => res.json())
       .then(data => {
         // Parse strings to numbers and create labels

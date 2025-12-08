@@ -20,7 +20,7 @@ const SalesByDayChart = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:5001/api/sales-by-day')
+    fetch('https://project3-gang-40-sjzu.onrender.com/api/sales-by-day')
       .then(res => res.json())
       .then(data => {
         // Parse strings to numbers and create labels
