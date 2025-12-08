@@ -22,4 +22,22 @@ export const getCashiers = async (req, res, next) => {
 };
 
 export const addEmployee = async (req, res, next) => {
+  try {
+    const { first_name, last_name, role, email, password } = req.body;
+    
+    // Validate required fields
+    if (!first_name || !last_name || !role || !email || !password) {
+      return res.status(400).json({ error: 'All fields are required' });
+    }
+    
+    // Insert new employee into database
+    const result = await pool.query(
+      "INSERT INTO employees (first_name, last_name, role, email, password) VALUES ($1, $2, $3, $4, $5) RETURNING *",
+      [first_name, last_name, role, email, password]
+    );
+    
+    res.status(201).json(result.rows[0]);
+  } catch (err) {
+    next(err);
+  }
 };
