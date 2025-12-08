@@ -41,3 +41,29 @@ export const addEmployee = async (req, res, next) => {
     next(err);
   }
 };
+
+export const editEmployee = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { first_name, last_name, role, email } = req.body;
+    
+    // Validate required fields
+    if (!first_name || !last_name || !role || !email) {
+      return res.status(400).json({ error: 'All fields are required' });
+    }
+    
+    // Update employee in database
+    const result = await pool.query(
+      "UPDATE employees SET first_name = $1, last_name = $2, role = $3, email = $4 WHERE employee_id = $5 RETURNING *",
+      [first_name, last_name, role, email, id]
+    );
+    
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Employee not found' });
+    }
+    
+    res.json(result.rows[0]);
+  } catch (err) {
+    next(err);
+  }
+};
