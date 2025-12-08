@@ -42,6 +42,18 @@ function Inventory({ onBack }) {
     setIngredients(updated);
   };
 
+  const addEditIngredientRow = () => {
+    setEditIngredients([
+      ...editIngredients,
+      { name: "", quantity: "", unit: "" }
+    ]);
+  };
+
+  const removeEditIngredientRow = (index) => {
+    const updated = editIngredients.filter((_, i) => i !== index);
+    setEditIngredients(updated);
+  };
+
   const handleAddDrink = async () => {
     if (!name || price === "") {
       alert("Drink name and price are required.");
@@ -94,18 +106,35 @@ function Inventory({ onBack }) {
   };
 
   const saveEdit = async () => {
-    await fetch(`http://localhost:5001/api/inventory/drinks/${editingDrink.drink_id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: editName,
-        price: editPrice,
-        ingredients: editIngredients
-      }),
-    });
-
-    setEditingDrink(null);
-    fetchDrinks(); // reload table
+    try {
+      const res = await fetch(
+        `http://localhost:5001/api/inventory/drinks/${editingDrink.drink_id}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: editName,
+            price: Number(editPrice),
+            ingredients: editIngredients.map((i) => ({
+              ingredient_id: i.ingredient_id || null,
+              name: i.name,
+              quantity: Number(i.quantity),
+              unit: i.unit,
+            })),
+          }),
+        }
+      );
+      if (!res.ok) {
+        const err = await res.json();
+        console.error("Edit failed:", err);
+        alert("Failed to save edits");
+        return;
+      }
+      setEditingDrink(null);
+      fetchDrinks();
+    } catch (err) {
+      console.error("Edit request failed:", err);
+    }
   };
 
   const handleDeleteDrink = async (drinkId) => {
@@ -146,8 +175,9 @@ function Inventory({ onBack }) {
           type="number"
           placeholder="Price"
           value={price}
-          onChange={(e) => setPrice(e.target.value)}
-          style={{ marginLeft: "10px" }}
+          step="0.01"
+          min="0"
+          onChange={(e) => setPrice(e.target.value === "" ? "" : Number(e.target.value))}
         />
         <div style={{ marginTop: "15px" }}>
           <h4>Ingredients</h4>
@@ -262,14 +292,17 @@ function Inventory({ onBack }) {
             <input
               type="number"
               value={editPrice}
-              onChange={(e) => setEditPrice(e.target.value)}
+              onChange={(e) => setEditPrice(
+                e.target.value === "" ? "" : Number(e.target.value)
+              )}
               placeholder="Price"
             />
             <h3>Ingredients</h3>
             {editIngredients.map((ing, idx) => (
-              <div key={idx} className="ingredient-row">
+              <div key={idx} className="ingredient-row" style={{ marginBottom: "8px" }}>
                 <input
                   value={ing.name}
+                  placeholder="Ingredient Name"
                   onChange={(e) => {
                     const copy = [...editIngredients];
                     copy[idx].name = e.target.value;
@@ -279,22 +312,35 @@ function Inventory({ onBack }) {
                 <input
                   type="number"
                   value={ing.quantity}
+                  placeholder="Qty"
                   onChange={(e) => {
                     const copy = [...editIngredients];
-                    copy[idx].quantity = e.target.value;
+                    copy[idx].quantity = Number(e.target.value);
                     setEditIngredients(copy);
                   }}
+                  style={{ marginLeft: "6px", width: "80px" }}
                 />
                 <input
                   value={ing.unit}
+                  placeholder="Unit"
                   onChange={(e) => {
                     const copy = [...editIngredients];
                     copy[idx].unit = e.target.value;
                     setEditIngredients(copy);
                   }}
+                  style={{ marginLeft: "6px", width: "80px" }}
                 />
+                <button
+                  onClick={() => removeEditIngredientRow(idx)}
+                  style={{ marginLeft: "6px" }}
+                >
+                  - Remove Ingredient
+                </button>
               </div>
             ))}
+            <button onClick={addEditIngredientRow} style={{ marginTop: "8px" }}>
+              + Add Ingredient
+            </button>
             <button onClick={saveEdit}>Save</button>
             <button onClick={() => setEditingDrink(null)}>Cancel</button>
           </div>
