@@ -28,7 +28,7 @@ import tigerBoba from "/assets/images/tiger_boba-removebg-preview.png"
 import defaultDrink from "/assets/images/bubble-tea-clipart.png"
 import ThankYouScreen from './ThankYouScreen';
 
-function Customer({ onBack, onOrderComplete, email, language = 'en', largeMode }) {
+function Customer({ onBack, onOrderComplete, email, language = 'en', largeMode, customerDiscount }) {
   const [currentView, setCurrentView] = useState('customer');
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedDrink, setSelectedDrink] = useState(null);
@@ -195,6 +195,7 @@ function Customer({ onBack, onOrderComplete, email, language = 'en', largeMode }
           translatedTexts={translatedTexts}
           email={email}
           largeMode={largeMode}
+          customerDiscount={customerDiscount}
         />
       )}
 
