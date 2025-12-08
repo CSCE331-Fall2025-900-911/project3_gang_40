@@ -412,6 +412,55 @@
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4) !important;
 }
 
+/* ========== DYNAMIC NAVBAR BUTTON SPACING ========== */
+/* Base page padding */
+.customer-page,
+.customization-page,
+.topping-page,
+.cart-page {
+  padding-bottom: 110px !important; 
+}
+
+.customer-page--large,
+.customization-page--large,
+.topping-page--large,
+.cart-page--large {
+  padding-bottom: 180px !important; 
+}
+
+.customization-actions,
+.topping-actions,
+.cart-actions {
+  margin-bottom: 2rem !important;
+}
+
+.customization-page--large .customization-actions,
+.customization-container--large .customization-actions,
+.topping-page--large .topping-actions,
+.topping-container--large .topping-actions,
+.cart-page--large .cart-actions,
+.cart-view--large .cart-actions {
+  margin-bottom: 4rem !important; 
+}
+
+.back-btn,
+.next-btn,
+.add-to-cart-btn,
+.checkout-btn,
+.continue-shopping-btn {
+  margin-bottom: 1rem !important;
+}
+
+.customer-page--large .back-btn,
+.customer-page--large .next-btn,
+.customer-page--large .add-to-cart-btn,
+.topping-page--large .back-btn,
+.topping-page--large .add-to-cart-btn,
+.customization-page--large .back-btn,
+.customization-page--large .next-btn {
+  margin-bottom: 2.5rem !important;  
+}
+
 /* ========== WEATHER LARGE MODE ========== */
 .weather-display {
   color: white;

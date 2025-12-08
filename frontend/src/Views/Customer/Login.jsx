@@ -13,6 +13,7 @@ function Login({ onBack }) {
   const [selectedLanguage, setSelectedLanguage] = useState('en');
   const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
   const [largeMode, setLargeMode] = useState(false);
+  const [customerDiscount, setCustomerDiscount] = useState(false);
 
   if (customerEmail) {
     return (
@@ -20,12 +21,15 @@ function Login({ onBack }) {
         email={customerEmail}
         language={selectedLanguage}
         largeMode={largeMode}
+        customerDiscount={customerDiscount}
         onBack={() => {
           setCustomerEmail(null);
           setCurrentView('login')
         }}
         onOrderComplete={() => {
           setCustomerEmail(null);
+          setLargeMode(false);             
+          setCustomerDiscount(false);
         }}
       />
     );
@@ -106,8 +110,11 @@ function Login({ onBack }) {
               </div>
 
               <div className="secondary-actions">
-                <button className="btn btn-secondary points">
-                  Earn Points
+                <button 
+                  className="btn btn-secondary points"
+                  onClick={setCustomerDiscount}
+                >
+                  {customerDiscount ? '10% Off!' : 'Earn Points'}
                 </button>
                 <button
                   className="btn btn-danger customer-exit-btn"
