@@ -52,19 +52,19 @@ export const getDrinks = async (req, res, next) => {
 export const addDrink = async (req, res, next) => {
   const client = await pool.connect();
   try {
-    const { name, price, ingredients } = req.body;
-    if (!name || price === undefined || !Array.isArray(ingredients)) {
-      return res.status(400).json({ message: "Invalid drink data" });
-    }
+    const { name, price, ingredients, drink_type } = req.body;
+    if (!name || price === undefined || !drink_type || !Array.isArray(ingredients)) {
+        return res.status(400).json({ message: "Invalid drink data" });
+        }
     const cleanPrice = Number(price);
     if (!Number.isFinite(cleanPrice) || cleanPrice < 0 || cleanPrice > 99999999.99) {
       return res.status(400).json({ message: "Invalid price value", received: price });
     }
     await client.query("BEGIN");
     const drinkInsert = await client.query(
-      "INSERT INTO drinks (drink_name, base_price) VALUES ($1, $2) RETURNING drink_id",
-      [name.trim(), cleanPrice]
-    );
+        "INSERT INTO drinks (drink_name, base_price, drink_type) VALUES ($1, $2, $3) RETURNING drink_id",
+        [name.trim(), cleanPrice, drink_type]
+        );
     const drinkId = drinkInsert.rows[0].drink_id;
     for (const ing of ingredients) {
       const { name: ingName, quantity, unit } = ing;
@@ -105,13 +105,13 @@ export const addDrink = async (req, res, next) => {
 // update an existing drink in the database
 export const updateDrink = async (req, res, next) => {
   const { id } = req.params;
-  const { name, price, ingredients } = req.body;
+  const { name, price, ingredients, drink_type } = req.body;
   const client = await pool.connect();
   try {
     await client.query("BEGIN");
     await client.query(
-      "UPDATE drinks SET drink_name = $1, base_price = $2 WHERE drink_id = $3",
-      [name, price, id]
+      "UPDATE drinks SET drink_name = $1, base_price = $2, drink_type = $3 WHERE drink_id = $4",
+      [name, price, drink_type, id]
     );
     await client.query(
       "DELETE FROM drink_ingredients WHERE drink_id = $1",
