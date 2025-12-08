@@ -3,7 +3,6 @@ import textKeys from './text';
 import Weather from './Weather'
 
 function NavBar({ currentStep, cartCount, onCartClick, onExitClick, onStepClick, translatedTexts, largeMode }) {
-  // Steps: 1 = drinks, 2 = customization, 3 = toppings, 4 = cart
   const steps = [
     { id: 1, label: translatedTexts.drinks || 'Drinks', active: currentStep === 1 },
     { id: 2, label: translatedTexts.customize || 'Customize', active: currentStep === 2 },

@@ -1510,277 +1510,498 @@ body {
   }
 }
 
-/* ========== RESPONSIVE DESIGN ========== */
-@media (max-width: 768px) {
-  .drink-group-customer {
-    grid-template-columns: repeat(auto-fit, minmax(180px, 180px));
-    gap: 1.5rem;
+/* ========== ENHANCED MOBILE RESPONSIVENESS ========== */
+
+/* Mobile: 320px - 480px (Small phones) */
+@media (max-width: 480px) {
+  /* Drinks Page */
+  .customer-container,
+  .customization-container,
+  .topping-container,
+  .cart-view {
+    padding: 1rem;
   }
 
   .drinks-header h1 {
-    font-size: 2.5rem;
+    font-size: 2rem !important;
+  }
+
+  .drinks-header p {
+    font-size: 0.9rem !important;
+  }
+
+  .drinks-bar {
+    gap: 0.4rem;
+  }
+
+  .drinks-bar button {
+    padding: 0.5rem 0.8rem !important;
+    font-size: 0.75rem !important;
+  }
+
+  .drink-container h2 {
+    font-size: 1.5rem !important;
+  }
+
+  .drink-group-customer {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+    max-width: 100% !important;
+  }
+
+  .drink-item-btn {
+    padding: 1rem !important;
+    min-height: 120px !important;
+  }
+
+  .drink-image-wrapper {
+    height: 120px !important;
+  }
+
+  .drink-name {
+    font-size: 0.95rem !important;
+  }
+
+  .drink-price {
+    font-size: 1.1rem !important;
+  }
+
+  /* Customization Page */
+  .customization-header h2 {
+    font-size: 1.8rem !important;
+  }
+
+  .customization-header p {
+    font-size: 0.9rem !important;
+  }
+
+  .customization-content {
+    gap: 1.5rem !important;
+    padding: 0 0.5rem !important;
+  }
+
+  .customization-section {
+    padding: 1rem !important;
+  }
+
+  .customization-section label {
+    font-size: 0.95rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  .size-btn,
+  .sweetness-btn,
+  .ice-btn {
+    padding: 0.6rem 0.8rem !important;
+    font-size: 0.8rem !important;
+    min-width: fit-content !important;
+  }
+
+  .quantity-input button {
+    width: 40px !important;
+    height: 40px !important;
+    font-size: 1.1rem !important;
+  }
+
+  .quantity-input input {
+    width: 60px !important;
+    height: 40px !important;
+    font-size: 1rem !important;
+  }
+
+  .dictation-btn {
+    padding: 0.8rem 1.2rem !important;
+    font-size: 0.85rem !important;
+  }
+
+  .customization-actions {
+    gap: 0.5rem !important;
+  }
+
+  .back-btn,
+  .next-btn {
+    padding: 0.7rem 1.2rem !important;
+    font-size: 0.85rem !important;
+    min-width: 120px !important;
+  }
+
+  /* Topping Page */
+  .topping-header h2 {
+    font-size: 1.8rem !important;
+  }
+
+  .topping-header p {
+    font-size: 0.9rem !important;
+  }
+
+  .topping-summary {
+    font-size: 0.8rem !important;
+  }
+
+  .toppings-list {
+    padding: 1rem !important;
+    gap: 0.8rem !important;
+  }
+
+  .topping-option {
+    padding: 0.8rem !important;
+    gap: 8px !important;
+  }
+
+  .topping-option input[type="radio"] {
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  .topping-name {
+    font-size: 0.9rem !important;
+  }
+
+  .topping-price {
+    font-size: 0.85rem !important;
+    min-width: 60px !important;
+  }
+
+  .topping-summary-footer {
+    padding: 0.8rem 1rem !important;
+    max-width: 250px !important;
+  }
+
+  .topping-summary-footer p {
+    font-size: 1rem !important;
+  }
+
+  .topping-actions {
+    gap: 0 !important;
+    margin-top: 1rem !important;
+  }
+
+  .topping-actions .back-btn,
+  .topping-actions .add-to-cart-btn {
+    padding: 0.7rem 1rem !important;
+    font-size: 0.85rem !important;
+    min-width: 100px !important;
+  }
+
+  /* Cart Page */
+  .cart-header {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0 0.5rem !important;
+  }
+
+  .cart-header h2 {
+    font-size: 1.8rem !important;
+  }
+
+  .cart-back-btn {
+    padding: 0.5rem 0.8rem !important;
+    font-size: 0.8rem !important;
+  }
+
+  .cart-items {
+    gap: 1rem !important;
+  }
+
+  .cart-item {
+    padding: 1rem !important;
+  }
+
+  .cart-item-header h3 {
+    font-size: 1rem !important;
+  }
+
+  .cart-item-quantity {
+    padding: 0.3rem 0.6rem !important;
+    font-size: 0.8rem !important;
+  }
+
+  .cart-item-customization p {
+    font-size: 0.85rem !important;
+    margin: 0.4rem 0 !important;
+  }
+
+  .cart-item-footer {
+    flex-direction: column;
+    gap: 0.75rem !important;
+    align-items: stretch !important;
+  }
+
+  .cart-item-price {
+    font-size: 1.1rem !important;
+    text-align: center !important;
+  }
+
+  .cart-item-actions {
+    width: 100%;
+    gap: 0.5rem !important;
+  }
+
+  .edit-btn,
+  .delete-btn {
+    padding: 0.6rem 0.5rem !important;
+    font-size: 0.8rem !important;
+    height: 38px !important;
+  }
+
+  .cart-total {
+    padding: 0.8rem 1rem !important;
+    max-width: 250px !important;
+  }
+
+  .cart-total h3 {
+    font-size: 1.1rem !important;
+  }
+
+  .cart-actions {
+    gap: 0 !important;
+    margin-top: 1rem !important;
+  }
+
+  .cart-actions .continue-shopping-btn,
+  .cart-actions .checkout-btn {
+    padding: 0.7rem 1rem !important;
+    font-size: 0.85rem !important;
+    min-width: 100px !important;
+  }
+
+  /* Navbar */
+  .customer-navbar {
+    padding: 10px 12px !important;
+    gap: 8px !important;
+    flex-wrap: wrap !important;
+  }
+
+  .navbar-steps {
+    gap: 8px !important;
+    min-width: auto !important;
+    width: 100% !important;
+    justify-content: space-evenly !important;
+  }
+
+  .navbar-step {
+    padding: 5px 8px !important;
+    font-size: 0.7rem !important;
+    gap: 4px !important;
+  }
+
+  .step-number {
+    width: 18px !important;
+    height: 18px !important;
+    font-size: 0.7rem !important;
+  }
+
+  .step-label {
+    display: none !important;
+  }
+
+  .navbar-actions {
+    gap: 8px !important;
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  .navbar-cart-btn,
+  .navbar-exit-btn {
+    padding: 8px 12px !important;
+    font-size: 0.8rem !important;
+    flex: 1 !important;
+    max-width: 150px !important;
+  }
+
+  /* Payment Modal */
+  .payment-modal {
+    padding: 1.5rem !important;
+    min-width: 280px !important;
+    max-width: 90% !important;
+    margin: 1rem !important;
+  }
+
+  .payment-modal h2 {
+    font-size: 1.4rem !important;
+  }
+
+  .payment-modal p {
+    font-size: 0.95rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  .payment-options {
+    flex-direction: column !important;
+    gap: 0.8rem !important;
+  }
+
+  .payment-btn {
+    width: 100% !important;
+    padding: 1rem !important;
+    font-size: 0.9rem !important;
+  }
+
+  .payment-cancel-btn {
+    padding: 0.7rem !important;
+    font-size: 0.85rem !important;
+  }
+
+  /* Thank You Page */
+  .thank-you-container h1 {
+    font-size: 2.5rem !important;
+  }
+
+  .thank-you-container p {
+    font-size: 1.2rem !important;
+    padding: 0 1rem !important;
+  }
+
+  .thank-you-container p strong {
+    font-size: 1.4rem !important;
+  }
+
+  .back-to-login-btn {
+    padding: 1rem 2rem !important;
+    font-size: 1rem !important;
+    min-width: 200px !important;
+  }
+
+  /* Page padding adjustments */
+  .customer-page,
+  .customization-page,
+  .topping-page,
+  .cart-page {
+    padding-bottom: 140px !important;
+  }
+
+  /* Cart feedback animation */
+  .cart-feedback-animation {
+    width: 90% !important;
+    max-width: 95% !important;
+  }
+
+  .cart-feedback-animation .feedback-message {
+    font-size: 1.8vh !important;
+    padding: 2% 3% !important;
+  }
+
+  .cart-feedback-image {
+    width: 30% !important;
+    min-width: 80px !important;
+  }
+
+  /* Weather display */
+  .weather-display {
+    font-size: 0.9rem !important;
+  }
+
+  /* Phone number input */
+  .phone-number-input {
+    width: 90% !important;
+    height: 2em !important;
+    font-size: medium !important;
+  }
+}
+
+/* Tablet: 481px - 768px */
+@media (min-width: 481px) and (max-width: 768px) {
+  .drink-group-customer {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1.5rem !important;
+  }
+
+  .drinks-header h1 {
+    font-size: 2.5rem !important;
   }
 
   .customization-header h2,
   .topping-header h2,
   .cart-header h2 {
-    font-size: 1.8rem;
-  }
-
-  .drinks-bar {
-    gap: 0.5rem;
-  }
-
-  .drinks-bar button {
-    padding: 0.6rem 1rem;
-    font-size: 0.85rem;
-  }
-
-  .customer-navbar {
-    flex-direction: column;
-    gap: 12px;
-    padding: 12px 15px;
-  }
-
-  .navbar-steps {
-    flex: none;
-    min-width: auto;
+    font-size: 2rem !important;
   }
 
   .navbar-step {
-    padding: 6px 10px;
-    font-size: 0.75rem;
+    padding: 7px 12px !important;
+    font-size: 0.8rem !important;
   }
 
   .step-number {
-    width: 20px;
-    height: 20px;
-    font-size: 0.75rem;
+    width: 22px !important;
+    height: 22px !important;
+  }
+
+  .navbar-cart-btn,
+  .navbar-exit-btn {
+    padding: 10px 14px !important;
+    font-size: 0.85rem !important;
+  }
+
+  .customer-page,
+  .customization-page,
+  .topping-page,
+  .cart-page {
+    padding-bottom: 120px !important;
   }
 }
 
-/* ========== PAYMENT MODAL STYLES ========== */
-.payment-modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 200;
-  animation: fadeIn 0.3s ease;
-}
-
-.payment-modal {
-  background: white;
-  padding: 2.5rem;
-  border-radius: 20px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-  text-align: center;
-  min-width: 320px;
-  max-width: 420px;
-  animation: fadeInUp 0.4s ease;
-}
-
-.payment-modal h2 {
-  color: #333;
-  margin-bottom: 0.8rem;
-  font-size: 1.8rem;
-}
-
-.payment-modal p {
-  color: #666;
-  font-size: 1.1rem;
-  margin-bottom: 2rem;
-  font-weight: 600;
-}
-
-.payment-options {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.payment-btn {
-  flex: 1;
-  min-width: 120px;
-  padding: 1.2rem 1.5rem;
-  font-size: 1rem;
-  font-weight: 700;
-  border: none;
-  border-radius: 15px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
-
-.payment-cash {
-  background-color: #52b788;
-}
-
-.payment-cash:hover {
-  background-color: #40916c;
-  transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(82, 183, 136, 0.4);
-}
-
-.payment-card {
-  background-color: #5dade2;
-}
-
-.payment-card:hover {
-  background-color: #3d7ca8;
-  transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(93, 173, 226, 0.4);
-}
-
-.payment-cancel-btn {
-  width: 100%;
-  padding: 0.8rem;
-  background-color: #6c757d;
-  color: white;
-  border: none;
-  border-radius: 15px;
-  font-size: 0.95rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
-
-.payment-cancel-btn:hover {
-  background-color: #5a6268;
-  transform: translateY(-2px);
-}
-
-.dictation-btn {
-  margin-bottom: 8px;
-  padding: 10px 16px;
-  background-color: #3d7ca8;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 500;
-  transition: background-color 0.2s;
-}
-
-.dictation-btn:hover {
-  background-color: #3730a3;
-}
-
-.dictation-btn:active {
-  background-color: #312e81;
-}
-
-/* ====== CART FEEDBACK ANIMATION ====== */
-.cart-feedback-animation {
-  position: fixed;
-  top: 20%;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 300;
-  pointer-events: none;
-  animation: slideUpFade 3.5s ease forwards; /* increased duration */
-  width: 70%;
-  max-width: 90%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 2%;
-}
-
-.cart-feedback-animation .feedback-message {
-  background: rgba(40, 167, 69, 0.95);
-  color: #fff;
-  padding: 1.5% 2%;
-  border-radius: 5%;
-  box-shadow: 0 4% 12% rgba(40, 167, 69, 0.18);
-  font-weight: 700;
-  font-size: 2.2vh;
-  display: inline-block;
-  transform: translateY(0);
-  width: auto;
-  text-align: center;
-}
-
-@keyframes slideUpFade {
-  0% {
-    opacity: 0;
-    transform: translate(-50%, 3%) scale(0.96);
+/* Landscape mode adjustments for small phones */
+@media (max-height: 500px) and (orientation: landscape) {
+  .customer-navbar {
+    padding: 8px 15px !important;
   }
-  25% {
-    opacity: 1;
-    transform: translate(-50%, -2.5%) scale(1.03);
+
+  .navbar-step {
+    padding: 4px 8px !important;
   }
-  80% {
-    opacity: 1;
-    transform: translate(-50%, -8%) scale(1);
+
+  .drinks-header,
+  .customization-header,
+  .topping-header {
+    margin-bottom: 1rem !important;
   }
-  100% {
-    opacity: 0;
-    transform: translate(-50%, -12%) scale(0.98);
+
+  .drinks-header h1,
+  .customization-header h2,
+  .topping-header h2 {
+    font-size: 1.5rem !important;
+    margin-bottom: 0.3rem !important;
+  }
+
+  .customer-page,
+  .customization-page,
+  .topping-page,
+  .cart-page {
+    padding-bottom: 80px !important;
   }
 }
 
-.cart-feedback-image {
-  width: 25%;
-  min-width: 200px;
-  height: auto;
-  margin-right: 2%;
-  vertical-align: middle;
-  display: inline-block;
-}
+/* Touch-friendly adjustments for all mobile */
+@media (max-width: 768px) {
+  /* Larger touch targets */
+  button,
+  .drink-item-btn,
+  .topping-option {
+    min-height: 44px;
+    touch-action: manipulation;
+  }
 
+  /* Prevent zoom on input focus */
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
 
-/* Thank You Screen After Submitting Order */
-.thank-you-page {
-  background: linear-gradient(135deg, #232526 0%, #414345 50%, #536976 100%);
-}
+  /* Better scrolling */
+  .customer-container,
+  .customization-container,
+  .topping-container,
+  .cart-view,
+  .cart-items,
+  .toppings-list {
+    -webkit-overflow-scrolling: touch;
+  }
 
-.thank-you-container {
-  color: white;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  font-size: 2rem;
-  text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.5);
-}
-
-.back-to-login-btn {
-  margin-top: 1rem;
-  background: rgba(255, 255, 255, 0.95);
-  color: #0f2027;
-  border: none;
-  padding: 0.7rem 1.4rem;
-  font-size: 0.95rem;
-  font-weight: 600;
-  border-radius: 25px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.phone-number-input {
-  width: 80%;
-  height: 2.5em;
-  font-size: large;
-  text-align: center;
-  margin: 10px;
+  /* Hide scrollbars on mobile for cleaner look */
+  .customer-container::-webkit-scrollbar,
+  .cart-items::-webkit-scrollbar,
+  .toppings-list::-webkit-scrollbar {
+    display: none;
+  }
 }

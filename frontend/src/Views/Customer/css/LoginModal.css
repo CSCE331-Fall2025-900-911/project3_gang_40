@@ -195,8 +195,289 @@
   margin-bottom: 0.75rem;
 }
 
+/* Mobile: 320px - 480px (Small phones) */
 @media (max-width: 480px) {
+  .modal-overlay {
+    padding: 1rem;
+    align-items: flex-start;
+    padding-top: 10vh;
+  }
+
   .modal.glass-modal {
-    margin: 0 1.25rem;
+    margin: 0 !important;
+    padding: 1.5rem 1.25rem !important;
+    max-width: 100% !important;
+    width: calc(100% - 2rem) !important;
+    --modal-padding: 1.5rem 1.25rem !important;
+    --modal-gap: 0.75rem !important;
+    --font-title: 1.3rem !important;
+    --font-subtitle: 0.85rem !important;
+    --font-btn: 0.9rem !important;
+    --btn-padding: 0.75rem 1.2rem !important;
+    --input-font: 0.9rem !important;
+    --input-padding: 0.7rem 0.8rem !important;
+    --close-size: 1.1rem !important;
+    --close-top: 0.75rem !important;
+    --close-right: 0.75rem !important;
+    border-radius: 1.25rem !important;
+  }
+
+  /* Large mode on mobile */
+  .modal-large {
+    font-size: 20px !important;
+    padding: 2rem 1.5rem !important;
+    --font-title: 1.8rem !important;
+    --font-subtitle: 1.1rem !important;
+    --font-btn: 1.2rem !important;
+    --btn-padding: 1rem 1.8rem !important;
+    --input-font: 1.1rem !important;
+    --input-padding: 0.9rem 1rem !important;
+    --close-size: 1.5rem !important;
+  }
+
+  .glass-modal .modal-title {
+    font-size: var(--font-title) !important;
+    margin: 0.5rem 0 0.2rem !important;
+    padding-right: 2rem;
+  }
+
+  .glass-modal .modal-subtitle {
+    font-size: var(--font-subtitle) !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .glass-modal .input-field {
+    padding: var(--input-padding) !important;
+    font-size: var(--input-font) !important;
+    min-height: 44px;
+    border-radius: 12px;
+  }
+
+  .glass-modal .btn {
+    font-size: var(--font-btn) !important;
+    padding: var(--btn-padding) !important;
+    min-height: 44px;
+    width: 100%;
+  }
+
+  .glass-modal .google-login-wrapper {
+    margin: 0.5rem 0 0.25rem;
+  }
+
+  .glass-modal .divider {
+    margin: 0.75rem 0 !important;
+    font-size: 0.85rem !important;
+  }
+
+  .glass-modal .divider::before,
+  .glass-modal .divider::after {
+    width: 38%;
+  }
+
+  .glass-modal .info-text,
+  .glass-modal .config-error-text {
+    font-size: 0.85rem !important;
+  }
+
+  .glass-modal .error-message {
+    font-size: 0.8rem !important;
+  }
+
+  .submit-btn {
+    margin-top: 0.5rem !important;
+  }
+}
+
+/* Tablet: 481px - 768px */
+@media (min-width: 481px) and (max-width: 768px) {
+  .modal.glass-modal {
+    max-width: 450px !important;
+    padding: 1.75rem 2rem !important;
+    --modal-padding: 1.75rem 2rem !important;
+    --font-title: 1.5rem !important;
+    --font-subtitle: 0.9rem !important;
+    --font-btn: 0.95rem !important;
+    --input-font: 0.95rem !important;
+  }
+
+  .modal-large {
+    max-width: 550px !important;
+    padding: 2.5rem 3rem !important;
+    --font-title: 2.2rem !important;
+    --font-subtitle: 1.3rem !important;
+    --font-btn: 1.3rem !important;
+    --input-font: 1.3rem !important;
+  }
+
+  .glass-modal .input-field,
+  .glass-modal .btn {
+    min-height: 46px;
+  }
+}
+
+/* Landscape mode for phones */
+@media (max-height: 600px) and (orientation: landscape) {
+  .modal-overlay {
+    padding: 0.5rem;
+    padding-top: 5vh;
+    overflow-y: auto;
+  }
+
+  .modal.glass-modal {
+    padding: 1.25rem 1.5rem !important;
+    margin: 0.5rem !important;
+    max-height: 90vh;
+    overflow-y: auto;
+    --modal-gap: 0.6rem !important;
+  }
+
+  .glass-modal .modal-title {
+    font-size: 1.2rem !important;
+    margin: 0.25rem 0 0.1rem !important;
+  }
+
+  .glass-modal .modal-subtitle {
+    font-size: 0.8rem !important;
+  }
+
+  .glass-modal .input-field {
+    padding: 0.6rem 0.8rem !important;
+    min-height: 40px;
+  }
+
+  .glass-modal .btn {
+    padding: 0.7rem 1.2rem !important;
+    min-height: 40px;
+    font-size: 0.85rem !important;
+  }
+
+  .glass-modal .google-login-wrapper {
+    margin: 0.4rem 0 0.2rem;
+  }
+
+  .glass-modal .divider {
+    margin: 0.4rem 0 !important;
+  }
+
+  .submit-btn {
+    margin-top: 0.25rem !important;
+  }
+}
+
+/* Very small phones (320px width) */
+@media (max-width: 360px) {
+  .modal.glass-modal {
+    padding: 1.25rem 1rem !important;
+    --font-title: 1.2rem !important;
+    --font-subtitle: 0.8rem !important;
+    --font-btn: 0.85rem !important;
+    --input-font: 0.85rem !important;
+    --btn-padding: 0.7rem 1rem !important;
+    --input-padding: 0.65rem 0.75rem !important;
+  }
+
+  .glass-modal .close-btn {
+    --close-size: 1rem !important;
+    --close-top: 0.6rem !important;
+    --close-right: 0.6rem !important;
+  }
+
+  .glass-modal .divider::before,
+  .glass-modal .divider::after {
+    width: 35%;
+  }
+}
+
+/* Touch-friendly adjustments for all mobile */
+@media (max-width: 768px) {
+  /* Smooth scrolling for modal */
+  .modal.glass-modal {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Better tap highlighting */
+  .glass-modal .btn,
+  .glass-modal .input-field,
+  .glass-modal .close-btn {
+    -webkit-tap-highlight-color: rgba(255, 77, 79, 0.2);
+  }
+
+  /* Ensure buttons are touch-friendly */
+  .glass-modal .btn {
+    touch-action: manipulation;
+    min-height: 44px;
+  }
+
+  /* Prevent zoom on input focus */
+  .glass-modal .input-field {
+    font-size: 16px !important;
+  }
+
+  /* Close button easier to tap */
+  .glass-modal .close-btn {
+    padding: 0.5rem;
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Better focus states for touch */
+  .glass-modal .btn:active {
+    transform: scale(0.98);
+  }
+
+  .glass-modal .input-field:focus {
+    border-color: rgba(255, 77, 79, 0.6);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 77, 79, 0.1);
+  }
+}
+
+/* High DPI / Retina displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .glass-modal {
+    backdrop-filter: blur(20px);
+  }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .glass-modal,
+  .glass-modal .btn {
+    transition: none !important;
+  }
+}
+
+/* Dark mode support (if device prefers dark mode) */
+@media (prefers-color-scheme: dark) {
+  .modal-overlay {
+    background: rgba(0, 0, 0, 0.7);
+  }
+
+  .modal.glass-modal {
+    background: rgba(40, 40, 50, 0.95);
+    color: #e0e0e0;
+  }
+
+  .glass-modal .modal-subtitle,
+  .glass-modal .divider,
+  .glass-modal .info-text {
+    color: #b0b0b0;
+  }
+
+  .glass-modal .input-field {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #e0e0e0;
+  }
+
+  .glass-modal .close-btn {
+    color: #b0b0b0;
+  }
+
+  .glass-modal .close-btn:hover {
+    color: #e0e0e0;
   }
 }
