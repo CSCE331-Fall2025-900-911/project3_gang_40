@@ -12,6 +12,8 @@ function Inventory({ onBack }) {
   const [editPrice, setEditPrice] = useState("");
   const [editIngredients, setEditIngredients] = useState([]);
   const [selectedDrinkId, setSelectedDrinkId] = useState(null);
+  const [drinkType, setDrinkType] = useState("");
+  const [editDrinkType, setEditDrinkType] = useState("");
 
   useEffect(() => {
     fetchDrinks();
@@ -68,6 +70,7 @@ function Inventory({ onBack }) {
     const payload = {
       name,
       price: Number(price),
+      drink_type: drinkType,
       ingredients: ingredients.map((i) => ({
         name: i.name,
         quantity: Number(i.quantity),
@@ -83,6 +86,7 @@ function Inventory({ onBack }) {
       // Reset form
       setName("");
       setPrice("");
+      setDrinkType("");
       setIngredients([{ name: "", quantity: "", unit: "" }]);
       // Reload drinks
       fetchDrinks();
@@ -95,6 +99,7 @@ function Inventory({ onBack }) {
     setEditingDrink(drink);
     setEditName(drink.drink_name);
     setEditPrice(drink.base_price);
+    setEditDrinkType(drink.drink_type);
     setEditIngredients(
       drink.ingredients.map(i => ({
         ingredient_id: i.ingredient_id,
@@ -115,6 +120,7 @@ function Inventory({ onBack }) {
           body: JSON.stringify({
             name: editName,
             price: Number(editPrice),
+            drink_type: editDrinkType,
             ingredients: editIngredients.map((i) => ({
               ingredient_id: i.ingredient_id || null,
               name: i.name,
@@ -179,6 +185,16 @@ function Inventory({ onBack }) {
           min="0"
           onChange={(e) => setPrice(e.target.value === "" ? "" : Number(e.target.value))}
         />
+        <select
+          value={drinkType}
+          onChange={(e) => setDrinkType(e.target.value)}
+        >
+          <option value="">Select Type</option>
+          <option value="Classic">Classic</option>
+          <option value="Milky">Milky</option>
+          <option value="Fruity">Fruity</option>
+          <option value="Seasonal">Seasonal</option>
+        </select>
         <div style={{ marginTop: "15px" }}>
           <h4>Ingredients</h4>
           {ingredients.map((ing, index) => (
@@ -232,6 +248,7 @@ function Inventory({ onBack }) {
             <th>ID</th>
             <th>Drink</th>
             <th>Price</th>
+            <th>Type</th>
             <th>Ingredients</th>
             <th>Actions</th>
           </tr>
@@ -250,6 +267,7 @@ function Inventory({ onBack }) {
               <td>{drink.drink_id}</td>
               <td>{drink.drink_name}</td>
               <td>${Number(drink.base_price).toFixed(2)}</td>
+              <td>{drink.drink_type}</td>
               <td>
                 {drink.ingredients?.map((ing, i) => (
                   <div key={i}>
@@ -297,6 +315,16 @@ function Inventory({ onBack }) {
               )}
               placeholder="Price"
             />
+            <select
+              value={editDrinkType}
+              onChange={(e) => setEditDrinkType(e.target.value)}
+            >
+              <option value="">Select Type</option>
+              <option value="Classic">Classic</option>
+              <option value="Milky">Milky</option>
+              <option value="Fruity">Fruity</option>
+              <option value="Seasonal">Seasonal</option>
+            </select>
             <h3>Ingredients</h3>
             {editIngredients.map((ing, idx) => (
               <div key={idx} className="ingredient-row" style={{ marginBottom: "8px" }}>
