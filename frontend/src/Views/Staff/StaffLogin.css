@@ -7,7 +7,7 @@
   align-items: center;
   justify-content: center;
   padding: 2rem;
-  background: linear-gradient(135deg, #1a3a4a 0%, #2d5a6b 50%, #3d7a8b 100%);
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f1419 100%);
   position: relative;
   animation: fadeIn 0.5s ease;
 }
@@ -25,14 +25,15 @@
   transition: all 0.3s ease;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   letter-spacing: 1px;
-  background: linear-gradient(135deg, #2d774e 0%, #3a9063 100%);
+  background: linear-gradient(135deg, var(--blue-400), var(--blue-500));
   color: white;
   z-index: 100;
 }
 
 .login-back-button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, var(--blue-400), var(--blue-500));
+  transform: scale(1.05);
+  box-shadow: var(--shadow-glow-blue);
 }
 
 .login-back-button:active {

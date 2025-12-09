@@ -27,6 +27,8 @@ const DrinkTypePieChart = () => {
           'rgba(255, 99, 132, 0.8)',  // Milky
           'rgba(54, 162, 235, 0.8)',  // Fruity  
           'rgba(255, 206, 86, 0.8)',  // Classic
+          'rgba(97, 17, 111, 0.8)',  // Special
+          'rgba(7, 150, 22, 0.8)',  // Blended
         ];
 
         setChartData({

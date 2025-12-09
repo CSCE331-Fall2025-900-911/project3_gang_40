@@ -3,7 +3,7 @@ import './MenuItem.css';
 
 // MenuItem Component
 // This component renders a single menu item card with its image, name, price, and optional toppings.
-const MenuItem = ({ image, name, price, toppings }) => {
+const MenuItem = ({ image, name, price }) => {
   return (
     <div className="menu-item">
       <img 
@@ -13,9 +13,6 @@ const MenuItem = ({ image, name, price, toppings }) => {
       />
       <h3 className="menu-item-name">{name}</h3>
       <p className="menu-item-price">${price}</p>
-      {toppings && (
-        <span className="menu-item-toppings">w/ {toppings}</span>
-      )}
     </div>
   );
 };

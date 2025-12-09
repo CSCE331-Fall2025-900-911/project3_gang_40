@@ -9,19 +9,19 @@
   align-items: center;
   justify-content: center;
   padding: 2rem;
-  background: linear-gradient(135deg, #232526 0%, #414345 50%, #536976 100%);
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f1419 100%);
   position: relative;
   animation: fadeIn 0.5s ease;
 }
 
 /* Customer menu background variation */
 .customer-menu-bg {
-  background: linear-gradient(135deg, #4a1a1a 0%, #6b3838 50%, #8b4f4f 100%);
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f1419 100%);
 }
 
 /* Staff menu background variation */
 .staff-menu-bg {
-  background: linear-gradient(135deg, #1a3a4a 0%, #2d5a6b 50%, #3d7a8b 100%);
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f1419 100%);
 }
 
 .home-container .home-title {
@@ -53,18 +53,19 @@
 }
 
 .customer-back {
-  background: linear-gradient(135deg, #ab5050 0%, #c16868 100%);
+  background: linear-gradient(135deg, var(--blue-400), var(--blue-500));
   color: white;
 }
 
 .staff-back {
-  background: linear-gradient(135deg, #2d774e 0%, #3a9063 100%);
+  background: linear-gradient(135deg, var(--blue-500), var(--blue-600));
   color: white;
 }
 
 .back-button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, var(--blue-400), var(--blue-500));
+  transform: scale(1.05);
+  box-shadow: var(--shadow-glow-blue);
 }
 
 .back-button:active {
@@ -124,42 +125,43 @@
 
 /* Customer Theme - Warm Colors */
 .customer-main-button {
-  background: linear-gradient(135deg, #c44e4e 0%, #d67272 50%, #e89696 100%);
+  background: linear-gradient(135deg, var(--blue-500), var(--blue-600));
   color: white;
 }
 
 .customer-button {
-  background: linear-gradient(135deg, #ab5050 0%, #c16868 50%, #d68585 100%);
+  background: linear-gradient(135deg, var(--blue-500), var(--blue-600));
   color: white;
 }
 
 /* Staff Theme - Professional Colors */
 .staff-main-button {
-  background: linear-gradient(135deg, #2d774e 0%, #3a9063 50%, #47a876 100%);
+  background: linear-gradient(135deg, var(--blue-500), var(--blue-600));
   color: white;
 }
 
 .cashier-button {
-  background: linear-gradient(135deg, #2d774e 0%, #3a9063 50%, #47a876 100%);
+  background: linear-gradient(135deg, var(--blue-500), var(--blue-600));
   color: white;
 }
 
 /* Menu/Display Button - Blue theme from Display.css */
 .menu-button {
-  background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 50%, #93c5fd 100%);
+  background: linear-gradient(135deg, var(--blue-500), var(--blue-600));
   color: white;
 }
 
 /* Manager Button - Gold theme */
 .manager-button {
-  background: linear-gradient(135deg, #af8746 0%, #d4a94f 50%, #f5bf5c 100%);
+  background: linear-gradient(135deg, var(--blue-500), var(--blue-600));
   color: white;
 }
 
 /* Hover Effects */
 .home-container .home-nav-button:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, var(--blue-400), var(--blue-500));
+  transform: scale(1.05);
+  box-shadow: var(--shadow-glow-blue);
 }
 
 .home-container .home-nav-button:active {

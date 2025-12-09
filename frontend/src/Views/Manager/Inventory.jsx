@@ -214,7 +214,7 @@ function Inventory({ onBack }) {
               <td>{drink.ingredients?.map((i, idx) => <div key={idx}>{i.name} — {i.quantity} {i.unit}</div>)}</td>
               <td>
                 <div className="action-buttons">
-                  <button className="edit-btn" onClick={(e) => { e.stopPropagation(); openEditModal(drink); }}>Edit</button>
+                  <button className="inventory-edit-btn" onClick={(e) => { e.stopPropagation(); openEditModal(drink); }}>Edit</button>
                   <button className="delete-btn" onClick={(e) => { e.stopPropagation(); handleDeleteDrink(drink.drink_id); }}>Delete</button>
                 </div>
               </td>
