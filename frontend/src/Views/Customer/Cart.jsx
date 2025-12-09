@@ -4,7 +4,7 @@ import textKeys from './components/text';
 
 
 
-function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem, translatedTexts, onOrderComplete, email, largeMode, customerDiscount  }) {
+function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem, translatedTexts, onOrderComplete, email, largeMode, }) {
   const [showPaymentModal, setShowPaymentModal] = useState(false);
 
   const calculateItemTotal = (item) => {
@@ -143,19 +143,7 @@ function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem, tra
             </div>
 
             <div className="cart-total">
-              {customerDiscount ? (
-                <>
-                  <h3>{translatedTexts.total || textKeys.total}: ${calculateCartTotal()}</h3>
-                  <h4 style={{ color: '#52b788', margin: '0.5rem 0' }}>
-                    10% Discount: -${(calculateCartTotal() * 0.10).toFixed(2)}
-                  </h4>
-                  <h3 style={{ color: '#28a745', fontSize: '1.3em' }}>
-                    Final Total: ${(calculateCartTotal() * 0.90).toFixed(2)}
-                  </h3>
-                </>
-              ) : (
-                <h3>{translatedTexts.total || textKeys.total}: ${calculateCartTotal()}</h3>
-              )}
+              <h3>{translatedTexts.total || textKeys.total}: ${calculateCartTotal()}</h3>
             </div>
 
             <div className="cart-actions">
