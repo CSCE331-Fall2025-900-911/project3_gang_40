@@ -6,7 +6,9 @@ import SalesByHourChart from './charts/salesByHour'
 import SalesByDayChart from './charts/salesByDay'
 import DrinkTypePieChart from './charts/salesByDrinkType'
 import TopSellingDrinks from './charts/topSellingDrinks'
-import ProductUsageReport from './charts/productUsageReport'
+import ProductUsageReport from './reports/productUsageReport'
+import XReport from './reports/XReport'
+import ZReport from './reports/ZReport'
 
 
 function Manager({ onBack }) {
@@ -26,6 +28,8 @@ function Manager({ onBack }) {
           <DrinkTypePieChart/>
           <TopSellingDrinks/>
           <ProductUsageReport/>
+          <XReport/>
+          <ZReport/>
 
         </div>
       )}

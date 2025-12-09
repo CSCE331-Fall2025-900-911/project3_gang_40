@@ -16,6 +16,7 @@ import returnsRoutes from './routes/returns.js';
 import translationRouter from './routes/translation.js';
 import emailRoutes from "./routes/email.js";
 import salesChartsRoutes from './routes/salesCharts.js'
+import reportsRoutes from './routes/reports.js';
 
 // Error 
 import errorHandler from './errorHandler.js';
@@ -38,6 +39,7 @@ app.use('/translation', translationRouter);
 
 app.use("/api", emailRoutes);
 app.use("/api", salesChartsRoutes)
+app.use("/api", reportsRoutes);
 
 // Simple health check
 app.get('/', (req, res) => {
