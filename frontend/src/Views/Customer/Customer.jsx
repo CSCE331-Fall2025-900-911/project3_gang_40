@@ -28,7 +28,7 @@ import tigerBoba from "/assets/images/tiger_boba-removebg-preview.png"
 import defaultDrink from "/assets/images/bubble-tea-clipart.png"
 import ThankYouScreen from './ThankYouScreen';
 
-function Customer({ onBack, onOrderComplete, email, language = 'en', largeMode }) {
+function Customer({ onLogout, onOrderComplete, email, language = 'en', largeMode, customerEmail }) {
   const [currentView, setCurrentView] = useState('customer');
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedDrink, setSelectedDrink] = useState(null);
@@ -122,6 +122,11 @@ function Customer({ onBack, onOrderComplete, email, language = 'en', largeMode }
       default:
         break;
     }
+  };
+
+  const handleExit = () => {
+    // Call the onLogout callback to return to login
+    onLogout();
   };
 
   useEffect(() => {
@@ -343,7 +348,7 @@ function Customer({ onBack, onOrderComplete, email, language = 'en', largeMode }
             currentStep={1}
             cartCount={cart.length}
             onCartClick={() => setCurrentView('cart')}
-            onExitClick={onBack}
+            onExitClick={handleExit}
             onStepClick={handleStepClick}
             translatedTexts={translatedTexts}
             largeMode={largeMode}
