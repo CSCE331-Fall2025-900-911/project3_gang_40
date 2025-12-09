@@ -1,570 +1,721 @@
+/* ============================================
+   LOGIN PAGE - COMPLETE RESTRUCTURE
+   ============================================ */
+
+/* Page Container */
 .login-page {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 2rem;
-  background: linear-gradient(135deg, #232526 0%, #414345 50%, #536976 100%);
+  background: linear-gradient(135deg, #6b3838 0%, #8b4f4f 50%, #a66363 100%);
+  position: relative;
 }
 
+/* Main Card */
 .login-card {
   width: 100%;
-  max-width: 900px;
-  border-radius: 1.5rem;
-  padding: 1.5rem;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(18px);
-  box-shadow: 0 1.5rem 3.75rem rgba(0, 0, 0, 0.12);
+  max-width: 600px;
+  background: rgba(20, 20, 20, 0.95);
+  border-radius: 32px;
+  padding: 3rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
-  font-size: 16px;
-
-  
-  /* CSS Variables for scaling  */
-  --base-size: 1rem;
-  --title-size: 1.9rem;
-  --body-size: 1rem;
-  --btn-size: 1rem;
-  --btn-padding: 0.5625rem 1rem;
-  --logo-size: 3.75rem;    
-  --boba-size: 5.625rem;  
-  --card-padding: 1.5rem;   
-  --gap-large: 1.25rem;    
+  align-items: center;
+  gap: 2rem;
+  position: relative;
+  animation: fadeInUp 0.8s ease;
 }
 
+/* Large Mode Scaling */
 .login-card--large {
-  font-size: 24px !important;
-  --base-size: 1.25rem;
-  --title-size: 2.4rem;
-  --body-size: 1.25rem;
-  --btn-size: 1.5rem !important;
-  --btn-padding: 1rem 2rem !important;
-  --logo-size: 5.5rem !important;     
-  --boba-size: 8rem !important;        
-  --card-padding: 2.5rem !important;   
-  --gap-large: 2rem !important;
-  max-width: 1100px !important;     
+  max-width: 750px;
+  padding: 4rem;
+  gap: 2.5rem;
 }
 
-/* Apply scaled variables */
-.login-card {
-  padding: var(--card-padding);
-  gap: var(--gap-large);
+.login-card--large .hero-title {
+  font-size: 3.5rem;
 }
 
-.logo { 
-  width: var(--logo-size); 
+.login-card--large .hero-subtitle {
+  font-size: 1.5rem;
 }
 
-.boba { 
-  width: var(--boba-size); 
-  height: var(--boba-size); 
-  border-radius: 999px; 
-  object-fit: cover; 
-  box-shadow: 0 0.75rem 1.875rem rgba(0, 0, 0, 0.18);
+.login-card--large .btn {
+  font-size: 1.4rem;
+  padding: 1.2rem 2.5rem;
+  min-height: 65px;
 }
 
-.text_1 { 
-  font-size: var(--title-size); 
-  margin: 0 0 0.3rem; 
-}
-.text_2 { 
-  font-size: var(--body-size); 
-  margin: 0; 
-  color: #555; 
+.login-card--large .boba-image {
+  width: 10rem;
+  height: 10rem;
 }
 
-.login-card .btn {
-  border: none;
-  cursor: pointer;
-  border-radius: 999px;
-  font-size: var(--btn-size) !important;
-  padding: var(--btn-padding) !important;
-  font-weight: 600;
-  transition: all 0.2s ease;
-  outline: none;
-  box-sizing: border-box;
+.login-card--large .logo {
+  width: 6rem;
 }
 
-/* UNUSED - no elements with language-dropdown class in component
-.login-card .language-dropdown button {
-  font-size: var(--btn-size) !important;
-  padding: 0.75rem 1rem;
+/* ============================================
+   LOGO BADGE
+   ============================================ */
+.login-logo-badge {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
 }
-*/
 
-/* Button variants */
-.login-card .btn-primary {
-  background: linear-gradient(135deg, #ff4d4f, #ff6b6b);
+.logo {
+  width: 4.5rem;
+  height: auto;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+/* ============================================
+   HERO SECTION
+   ============================================ */
+.login-hero-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  text-align: center;
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.boba-image {
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  border: 4px solid rgba(255, 255, 255, 0.1);
+}
+
+.hero-title {
+  font-size: 2.5rem;
+  font-weight: 700;
   color: #ffffff;
-  box-shadow: 0 14px 28px rgba(255, 77, 79, 0.4);
-}
-.login-card .btn-primary:hover { 
-  transform: translateY(-1px); 
-  box-shadow: 0 18px 40px rgba(255, 77, 79, 0.55); 
+  margin: 0;
+  line-height: 1.2;
+  text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.5);
 }
 
-.login-card .btn-secondary { 
-  background: #ffffff; 
-  color: #ff4d4f; 
-  border: 1px solid rgba(255, 77, 79, 0.6);
+.hero-subtitle {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+  line-height: 1.5;
 }
 
-.login-card .btn-secondary:hover { 
-  background: rgba(255, 77, 79, 0.08); 
+/* ============================================
+   PRIMARY ACTION SECTION
+   ============================================ */
+.primary-action-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
-.login-card .btn-outline { 
-  background: transparent; 
-  color: #ff4d4f; 
-  border: 1px solid rgba(255, 77, 79, 0.4); 
+/* ============================================
+   SECONDARY ACTIONS SECTION
+   ============================================ */
+.secondary-actions-section {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
 }
 
-.login-card .btn-outline:hover { 
-  background: rgba(255, 77, 79, 0.06); 
+/* ============================================
+   BOTTOM-LEFT BUTTONS CONTAINER
+   ============================================ */
+
+.bottom-left-buttons {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  display: flex;
+  gap: 12px;
+  z-index: 1000;
+  align-items: center;
 }
 
-.login-card .btn-danger { 
-  background: #d9363e; 
-  color: #ffffff; 
+/* ============================================
+   ACCESSIBILITY ICON BUTTON - NOW ON LEFT
+   ============================================ */
+
+.accessibility-icon-button {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  background: rgba(30, 30, 30, 0.9);
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+  order: 1;
 }
 
-.login-card .btn-danger:hover { 
-  background: #b52c33; 
+.accessibility-icon-button:hover {
+  transform: scale(1.1);
+  background: rgba(40, 40, 40, 0.95);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
 }
 
-.login-card .btn:focus-visible { 
-  outline: 3px solid #ff4d4f; 
-  outline-offset: 3px; 
+.accessibility-icon-button:active {
+  transform: scale(1.05);
 }
 
-/* Layout */
-.login-header { 
-  display: flex; 
-  justify-content: flex-start; 
-  align-items: center; 
+.accessibility-icon-button.active {
+  background: rgba(196, 78, 78, 0.9);
+  border-color: rgba(255, 255, 255, 0.6);
 }
 
-.login-content { 
-  display: flex; 
-  gap: 1.5rem; 
-  align-items: center; 
-  justify-content: space-between; 
+.accessibility-icon-button.active:hover {
+  background: rgba(208, 86, 86, 0.95);
 }
 
-.login-hero { 
-  flex: 1; 
-  display: flex; 
-  align-items: center; 
-  gap: 0.9375rem; 
+/* Icon Image - FIXED SIZING */
+.accessibility-icon-img {
+  width: 30px !important;
+  height: 30px !important;
+  max-width: 30px;
+  max-height: 30px;
+  object-fit: contain;
+  pointer-events: none;
+  display: block;
 }
 
-.login-actions { 
-  flex: 1; 
-  display: flex; 
-  flex-direction: column; 
-  gap: 1.25rem; 
+/* ============================================
+   TRANSLATE WIDGET CONTAINER - NOW ON RIGHT
+   ============================================ */
+
+.translate-widget-container {
+  position: relative;
+  order: 2;
 }
 
-.login-btn { 
-  width: 100%; 
-  justify-content: center; 
-  display: inline-flex; 
-}
-.accessibility { 
-  display: flex; 
-  gap: 0.8rem; 
+/* Style the original Google Translate button to match the icon */
+.translate-widget-container .gt-translate-wrapper {
+  width: auto;
 }
 
-/* UNUSED - no .language class in component
-.language, 
-.shortcuts { 
-  flex: 1; 
-}
-*/
-
-.shortcuts { 
-  flex: 1; 
-}
-
-/* UNUSED - no .language-wrapper class in component
-.language-wrapper { 
-  position: relative; 
-  flex: 1; 
-}
-
-.language-dropdown {
-  position: absolute; 
-  top: 110%; 
-  left: 0; 
-  right: 0;
-  background: #ffffff; 
-  border-radius: 0.875rem; 
-  padding: 0.25rem;
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.16); 
-  display: flex; 
-  flex-direction: column; 
-  z-index: 10;
+.translate-widget-container .gt-btn {
+  min-width: 60px;
+  height: 60px;
+  min-height: 60px;
+  padding: 0 1rem;
+  background: rgba(30, 30, 30, 0.9);
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
 }
 
-.language-dropdown button { 
-  border: none; 
-  background: transparent; 
-  text-align: left; 
-  border-radius: 10px; cursor: pointer; 
+.translate-widget-container .gt-btn:hover {
+  transform: scale(1.05);
+  background: rgba(40, 40, 40, 0.95);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
 }
 
-.language-dropdown button:hover, 
-.language-dropdown button:focus-visible { 
-  background: rgba(255, 123, 176, 0.08); 
-}
-*/
-
-.secondary-actions { 
-  display: flex; 
-  gap: 0.75rem; 
+.translate-widget-container .gt-language-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
-.points, 
-.qr-toggle-btn,
-.customer-exit-btn { 
-  flex: 1; 
-  justify-content: center;  
+/* Position dropdown above the button */
+.translate-widget-container .gt-language-dropdown {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  top: auto;
+  left: 0;
+  right: auto;
+  min-width: 200px;
+  background: rgba(30, 30, 30, 0.98);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 0.5rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  display: none;
+  z-index: 999;
+  max-height: 300px;
+  overflow-y: auto;
 }
 
-/* QR Code Styles */
-.qr-code-wrapper {
+.translate-widget-container .gt-translate-wrapper:hover .gt-language-dropdown,
+.translate-widget-container .gt-translate-wrapper:focus-within .gt-language-dropdown {
+  display: block;
+}
+
+.translate-widget-container .gt-lang-option {
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  padding: 0.9rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.translate-widget-container .gt-lang-option:hover,
+.translate-widget-container .gt-lang-option:focus {
+  background: rgba(196, 78, 78, 0.3);
+  color: #ffffff;
+}
+
+/* ============================================
+   QR CODE SECTION
+   ============================================ */
+.qr-code-section {
+  width: 100%;
   display: flex;
   justify-content: center;
-  margin-top: 1rem;
+  padding-top: 1.5rem;
+  border-top: 2px solid rgba(255, 255, 255, 0.1);
 }
 
 .qr-code-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
-  padding: 1rem;
-  background: #ffffff;
-  border-radius: 1rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  gap: 1rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
 .qr-code-canvas {
-  border-radius: 0.5rem;
+  border-radius: 8px;
 }
 
 .qr-code-text {
   margin: 0;
-  font-size: 0.875rem;
-  color: #666;
+  font-size: 1rem;
+  color: #333;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* ============================================
+   BUTTON STYLES
+   ============================================ */
+.btn {
+  width: 100%;
+  border: none;
+  cursor: pointer;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  padding: 1rem 2rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  outline: none;
+  box-sizing: border-box;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  min-height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* Primary Button */
+.btn-primary {
+  background: linear-gradient(135deg, #c44e4e 0%, #e28080 100%);
+  color: #ffffff;
+  box-shadow: 0 8px 20px rgba(196, 78, 78, 0.4);
+  font-size: 1.3rem;
+  padding: 1.2rem 2.5rem;
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(196, 78, 78, 0.5);
+  background: linear-gradient(135deg, #d05656 0%, #e89696 100%);
+}
+
+.btn-primary:active {
+  transform: translateY(-1px);
+}
+
+/* Secondary Button */
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.95);
+  color: #c44e4e;
+  border: 2px solid transparent;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+}
+
+.btn-secondary:hover {
+  background: #ffffff;
+  color: #d05656;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(255, 255, 255, 0.3);
+}
+
+/* Outline Button */
+.btn-outline {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.9);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+}
+
+.btn-outline:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.7);
+  color: #ffffff;
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn:focus-visible {
+  outline: 3px solid rgba(196, 78, 78, 0.5);
+  outline-offset: 3px;
+}
+
+/* ============================================
+   GOOGLE TRANSLATE WIDGET
+   ============================================ */
+.gt-translate-wrapper {
+  font-family: inherit;
+  display: block;
+  position: relative;
+  width: 100%;
+}
+
+.gt-btn {
+  width: 100%;
+  border: none;
+  cursor: pointer;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  padding: 1rem 2rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  outline: none;
+  box-sizing: border-box;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.9);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  min-height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.gt-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.7);
+  color: #ffffff;
+}
+
+.gt-language-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.gt-language-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  background: rgba(30, 30, 30, 0.98);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 0.5rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  display: none;
+  z-index: 999;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.gt-translate-wrapper:hover .gt-language-dropdown,
+.gt-translate-wrapper:focus-within .gt-language-dropdown {
+  display: block;
+}
+
+.gt-lang-option {
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  padding: 0.9rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.gt-lang-option:hover,
+.gt-lang-option:focus {
+  background: rgba(196, 78, 78, 0.3);
+  color: #ffffff;
+}
+
+.gt-status {
+  margin-top: 6px;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
   text-align: center;
 }
 
-/* ========== ENHANCED MOBILE RESPONSIVENESS ========== */
+.gt-error {
+  color: #ff6b6b;
+  font-size: 0.85rem;
+}
 
-/* Mobile: 320px - 480px (Small phones) */
-@media (max-width: 480px) {
-  .login-page {
-    padding: 1rem;
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
   }
-
-  .login-card {
-    padding: 1.25rem !important;
-    gap: 1rem !important;
-    max-width: 100% !important;
-  }
-
-  .login-content {
-    flex-direction: column;
-    gap: 1.25rem !important;
-  }
-
-  .login-hero {
-    justify-content: center;
-    text-align: center;
-    flex-direction: column;
-    gap: 1rem !important;
-  }
-
-  .logo {
-    width: 3rem !important;
-  }
-
-  .boba {
-    width: 4.5rem !important;
-    height: 4.5rem !important;
-  }
-
-  .text_1 {
-    font-size: 1.5rem !important;
-  }
-
-  .text_2 {
-    font-size: 0.9rem !important;
-  }
-
-  .login-actions {
-    width: 100%;
-    gap: 1rem !important;
-  }
-
-  .login-card .btn {
-    font-size: 0.9rem !important;
-    padding: 0.6rem 1rem !important;
-  }
-
-  .accessibility {
-    flex-direction: column;
-    gap: 0.6rem !important;
-  }
-
-  .gt-translate-wrapper,
-  .shortcuts {
-    width: 100%;
-  }
-
-  .secondary-actions {
-    flex-direction: column;
-    gap: 0.6rem !important;
-  }
-
-  .points,
-  .qr-toggle-btn,
-  .customer-exit-btn {
-    width: 100%;
-  }
-
-  /* QR Code on mobile */
-  .qr-code-wrapper {
-    margin-top: 0.75rem;
-  }
-
-  .qr-code-container {
-    padding: 0.75rem;
-    width: 100%;
-    max-width: 280px;
-  }
-
-  .qr-code-canvas {
-    max-width: 100%;
-    height: auto !important;
-  }
-
-  .qr-code-text {
-    font-size: 0.8rem;
-  }
-
-  /* Google Translate on mobile */
-  .gt-btn {
-    font-size: 0.9rem !important;
-    padding: 0.6rem 1rem !important;
-    width: 100%;
-  }
-
-  .gt-language-dropdown {
-    min-width: 100%;
-    left: 0;
-    right: 0;
-  }
-
-  .gt-lang-option {
-    padding: 0.65rem 0.8rem;
-    font-size: 0.9rem !important;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-/* Tablet: 481px - 768px */
-@media (min-width: 481px) and (max-width: 768px) {
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+/* Tablet */
+@media (max-width: 768px) {
   .login-page {
     padding: 1.5rem;
   }
 
   .login-card {
-    padding: 1.5rem;
+    padding: 2.5rem 2rem;
+    gap: 1.75rem;
+    max-width: 100%;
   }
 
-  .login-content {
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
-  .login-hero {
-    justify-content: center;
-    text-align: center;
+  .login-logo-badge {
+    top: 1.5rem;
+    right: 1.5rem;
   }
 
   .logo {
     width: 3.5rem;
   }
 
-  .boba {
+  .login-hero-section {
+    margin-top: 1.5rem;
+    gap: 1.25rem;
+  }
+
+  .boba-image {
+    width: 6rem;
+    height: 6rem;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.05rem;
+  }
+
+  .btn {
+    font-size: 1rem;
+    padding: 0.9rem 1.75rem;
+    min-height: 52px;
+  }
+
+  .btn-primary {
+    font-size: 1.15rem;
+    padding: 1rem 2rem;
+  }
+
+  .secondary-actions-section {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .bottom-left-buttons {
+    bottom: 15px;
+    left: 15px;
+    gap: 10px;
+  }
+
+  .translate-widget-container .gt-btn {
+    min-width: 55px;
+    height: 55px;
+    min-height: 55px;
+    font-size: 0.85rem;
+    padding: 0 0.85rem;
+  }
+
+  .accessibility-icon-button {
+    width: 55px;
+    height: 55px;
+  }
+
+  .accessibility-icon-img {
+    width: 28px !important;
+    height: 28px !important;
+    max-width: 28px;
+    max-height: 28px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .login-page {
+    padding: 1rem;
+  }
+
+  .login-card {
+    padding: 2rem 1.5rem;
+    gap: 1.5rem;
+    border-radius: 24px;
+  }
+
+  .login-logo-badge {
+    top: 1rem;
+    right: 1rem;
+  }
+
+  .logo {
+    width: 3rem;
+  }
+
+  .login-hero-section {
+    margin-top: 1rem;
+    gap: 1rem;
+  }
+
+  .boba-image {
     width: 5rem;
     height: 5rem;
   }
 
-  .text_1 {
-    font-size: 1.7rem;
+  .hero-title {
+    font-size: 1.75rem;
   }
 
-  .text_2 {
+  .hero-subtitle {
     font-size: 0.95rem;
   }
 
-  .login-actions {
-    width: 100%;
-    max-width: 400px;
-    margin: 0 auto;
+  .btn {
+    font-size: 0.95rem;
+    padding: 0.85rem 1.5rem;
+    min-height: 50px;
   }
 
-  .accessibility {
-    gap: 0.6rem;
-  }
-
-  .secondary-actions {
-    gap: 0.6rem;
+  .btn-primary {
+    font-size: 1.1rem;
+    padding: 0.95rem 1.75rem;
   }
 
   .qr-code-container {
-    max-width: 250px;
+    padding: 1.25rem;
+    max-width: 95%;
+  }
+
+  .bottom-left-buttons {
+    bottom: 12px;
+    left: 12px;
+    gap: 8px;
+  }
+
+  .translate-widget-container .gt-btn {
+    min-width: 50px;
+    height: 50px;
+    min-height: 50px;
+    font-size: 0.8rem;
+    padding: 0 0.75rem;
+    border-width: 2px;
+  }
+
+  .accessibility-icon-button {
+    width: 50px;
+    height: 50px;
+    border-width: 2px;
+  }
+
+  .accessibility-icon-img {
+    width: 25px !important;
+    height: 25px !important;
+    max-width: 25px;
+    max-height: 25px;
   }
 }
 
-/* Landscape mode for phones */
-@media (max-height: 500px) and (orientation: landscape) {
-  .login-page {
-    padding: 0.5rem;
-  }
-
-  .login-card {
-    padding: 1rem !important;
-    max-height: 95vh;
-    overflow-y: auto;
-  }
-
-  .login-content {
-    flex-direction: row;
-    gap: 1rem !important;
-  }
-
-  .login-hero {
-    flex-direction: row;
-    gap: 0.5rem !important;
-  }
-
-  .boba {
-    width: 3.5rem !important;
-    height: 3.5rem !important;
-  }
-
-  .text_1 {
-    font-size: 1.2rem !important;
-  }
-
-  .text_2 {
-    font-size: 0.8rem !important;
-  }
-
-  .login-actions {
-    gap: 0.75rem !important;
-  }
-
-  .login-card .btn {
-    padding: 0.5rem 0.8rem !important;
-    font-size: 0.85rem !important;
-  }
-
-  .qr-code-container {
-    padding: 0.5rem;
-    max-width: 180px;
-  }
-}
-
-/* Touch-friendly adjustments */
+/* Large Mode Mobile */
 @media (max-width: 768px) {
-  /* Larger touch targets */
-  .login-card .btn {
-    min-height: 44px;
+  .login-card--large {
+    max-width: 100%;
+    padding: 3rem 2rem;
+  }
+
+  .login-card--large .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .login-card--large .hero-subtitle {
+    font-size: 1.2rem;
+  }
+
+  .login-card--large .btn {
+    font-size: 1.2rem;
+    padding: 1rem 2rem;
+  }
+}
+
+/* Touch Optimization */
+@media (max-width: 768px) {
+  .btn {
     touch-action: manipulation;
   }
 
-  /* Prevent zoom on focus */
-  input,
-  select,
-  button {
-    font-size: 16px !important;
-  }
-
-  /* Better tap highlighting */
   * {
-    -webkit-tap-highlight-color: rgba(255, 77, 79, 0.2);
+    -webkit-tap-highlight-color: rgba(196, 78, 78, 0.2);
   }
 
-  /* Smooth scrolling */
   .login-card {
     -webkit-overflow-scrolling: touch;
   }
 }
-
-/* Google-Translate custom-styled dropdown (gt- prefix) */
-.gt-translate-wrapper { font-family: inherit; display: inline-block; }
-
-.gt-btn {
-  border: none;
-  cursor: pointer;
-  border-radius: 999px;
-  font-size: var(--btn-size, 1rem);
-  padding: var(--btn-padding, 0.5625rem 1rem);
-  font-weight: 600;
-  transition: all 0.2s ease;
-  outline: none;
-  box-sizing: border-box;
-  background: transparent;
-  color: #ff4d4f;
-  border: 1px solid rgba(255, 77, 79, 0.4);
-}
-
-/* Outline variant (similar to your .btn-outline) */
-.gt-btn-outline { background: transparent; }
-
-/* the visible language button */
-.gt-language-btn { display: inline-flex; align-items: center; justify-content: center; }
-
-/* Dropdown panel */
-.gt-language-dropdown {
-  position: absolute;
-  top: calc(100% + 8px);
-  left: 0;
-  min-width: 160px;
-  background: #ffffff;
-  border-radius: 0.875rem;
-  padding: 0.25rem;
-  box-shadow: 0 18px 40px rgba(0,0,0,0.16);
-  display: none; /* hidden by default — we toggle it below with :hover/focus styles */
-  z-index: 999;
-}
-
-/* Show dropdown when wrapper is hovered or focused-within */
-.gt-translate-wrapper:hover .gt-language-dropdown,
-.gt-translate-wrapper:focus-within .gt-language-dropdown { display: block; }
-
-/* Options */
-.gt-lang-option {
-  width: 100%;
-  text-align: left;
-  background: transparent;
-  border: none;
-  padding: 0.75rem 0.9rem;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: var(--btn-size, 1rem);
-}
-.gt-lang-option:hover,
-.gt-lang-option:focus { background: rgba(255, 123, 176, 0.08); }
-
-
-.gt-status { margin-top: 6px; font-size: 12px; color: #666; }
-.gt-error { color: crimson; font-size: 12px; }
-
-.login-card--large .gt-btn { font-size: var(--btn-size) !important; padding: var(--btn-padding) !important; }
