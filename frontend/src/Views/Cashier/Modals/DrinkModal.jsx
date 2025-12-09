@@ -24,6 +24,7 @@ function DrinkModal({ drink, modifications, setModifications, toppings, sizes, i
             <option>Half (50%)</option>
             <option>Less (80%)</option>
             <option>Normal (100%)</option>
+            <option>Extra (150%)</option>
           </select>
         </div>
 
@@ -34,6 +35,7 @@ function DrinkModal({ drink, modifications, setModifications, toppings, sizes, i
             <option>No Ice</option>
             <option>Less</option>
             <option>Regular</option>
+            <option>Hot</option>
           </select>
         </div>
 

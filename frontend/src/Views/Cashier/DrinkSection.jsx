@@ -11,7 +11,7 @@ function DrinkSection({ drinks, openModal }) {
   }, {});
 
   // Define category order for consistent display
-  const categoryOrder = ['Classic', 'Fruity', 'Milky', 'Special', 'Other'];
+  const categoryOrder = ['Classic', 'Fruity', 'Milky', 'Special', 'Blended'];
 
   return (
     <div className='drink-section'>
