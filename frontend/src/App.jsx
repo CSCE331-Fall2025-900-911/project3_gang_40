@@ -4,9 +4,21 @@ import Display from './Views/MenuBoard/Display'
 import Cashier from './Views/Cashier/Cashier'
 import Login from './Views/Customer/Login'
 import Manager from './Views/Manager/Manager'
+import StaffLogin from './Views/Staff/StaffLogin'
 
 function App() {
   const [currentView, setCurrentView] = useState('main')
+  const [userRole, setUserRole] = useState(null) // 'employee' or 'manager'
+
+  const handleStaffLogin = (role) => {
+    setUserRole(role)
+    setCurrentView('staffMenu')
+  }
+
+  const handleLogout = () => {
+    setUserRole(null)
+    setCurrentView('main')
+  }
 
   return (
     <>
@@ -22,11 +34,17 @@ function App() {
       {currentView === 'manager' && (
         <Manager onBack={() => setCurrentView('staffMenu')} />
       )}
+      {currentView === 'staffLogin' && (
+        <StaffLogin 
+          onLoginSuccess={handleStaffLogin}
+          onBack={() => setCurrentView('main')}
+        />
+      )}
 
       {/* Main Landing - Choose Customer or Staff */}
       {currentView === 'main' && (
         <div className="home-container">
-          <h1 className="home-title">Welcome to Boba Shop</h1>
+          <h1 className="home-title">Boba Shop</h1>
           <div className="home-nav-items main-choice">
             <button 
               className="home-nav-button main-choice-button customer-main-button"
@@ -36,7 +54,7 @@ function App() {
             </button>
             <button 
               className="home-nav-button main-choice-button staff-main-button"
-              onClick={() => setCurrentView('staffMenu')}
+              onClick={() => setCurrentView('staffLogin')}
             >
               Manager/Staff View
             </button>
@@ -51,7 +69,7 @@ function App() {
             className="back-button customer-back"
             onClick={() => setCurrentView('main')}
           >
-            ← Back
+            Back
           </button>
           <h1 className="home-title">Customer Options</h1>
           <div className="home-nav-items sub-menu">
@@ -71,29 +89,35 @@ function App() {
         </div>
       )}
 
-      {/* Staff Sub-Menu */}
+      {/* Staff Sub-Menu - Role-based access */}
       {currentView === 'staffMenu' && (
         <div className="home-container staff-menu-bg">
-          <button 
-            className="back-button staff-back"
-            onClick={() => setCurrentView('main')}
-          >
-            ← Back
-          </button>
-          <h1 className="home-title">Manager/Staff Options</h1>
-          <div className="home-nav-items sub-menu">
+          <div className="staff-menu-header">
+            <button 
+              className="back-button staff-back"
+              onClick={handleLogout}
+            >
+              Logout
+            </button>
+          </div>
+          <h1 className="home-title">
+            {userRole === 'manager' ? 'Manager/Staff Options' : 'Cashier Dashboard'}
+          </h1>
+          <div className={`home-nav-items ${userRole === 'manager' ? 'sub-menu' : 'single-option'}`}>
             <button 
               className="home-nav-button sub-button cashier-button"
               onClick={() => setCurrentView('cashier')}
             >
               Cashier
             </button>
-            <button 
-              className="home-nav-button sub-button manager-button"
-              onClick={() => setCurrentView('manager')}
-            >
-              Manager Dashboard
-            </button>
+            {userRole === 'manager' && (
+              <button 
+                className="home-nav-button sub-button manager-button"
+                onClick={() => setCurrentView('manager')}
+              >
+                Manager Dashboard
+              </button>
+            )}
           </div>
         </div>
       )}
