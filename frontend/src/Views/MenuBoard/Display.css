@@ -103,7 +103,7 @@
   font-weight: 200; /* CHANGED: Thin weight instead of 700 */
   margin-bottom: 0.5rem;
   text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.5);
-  letter-spacing: 4px; /* CHANGED: Increased spacing for sleek look */
+  letter-spacing: 4px; 
   animation: fadeInDown 0.8s ease;
 }
 
