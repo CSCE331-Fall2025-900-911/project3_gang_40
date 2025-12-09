@@ -1,11 +1,12 @@
-/* MenuItem.css */
+/* MenuItem.css - Cashier Theme */
 
 .menu-item {
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 20px;
+  background: linear-gradient(135deg, var(--bg-dark, #1a1a1a), var(--bg-darkest, #0a0a0a));
+  border: 1px solid var(--border-base, rgba(59, 130, 246, 0.2));
+  border-radius: 16px;
   padding: 1.5rem;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.6);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
   display: flex;
   flex-direction: column;
@@ -17,26 +18,10 @@
   width: 100%;
 }
 
-.menu-item::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, rgba(79, 172, 254, 0.1), rgba(0, 242, 254, 0.1));
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  z-index: 0;
-}
-
 .menu-item:hover {
-  transform: translateY(-10px) scale(1.02);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-}
-
-.menu-item:hover::before {
-  opacity: 1;
+  transform: translateY(-5px);
+  box-shadow: 0 20px 25px -5px rgba(59, 130, 246, 0.3);
+  border-color: var(--blue-500, #3b82f6);
 }
 
 .menu-item-image {
@@ -52,13 +37,13 @@
 }
 
 .menu-item:hover .menu-item-image {
-  transform: scale(1.1) rotate(2deg);
+  transform: scale(1.08);
 }
 
 .menu-item-name {
   font-size: 1.2rem;
   font-weight: 600;
-  color: #0f2027;
+  color: var(--text-white, #ffffff);
   margin-bottom: 0.5rem;
   z-index: 1;
   position: relative;
@@ -73,7 +58,7 @@
 .menu-item-price {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #2c5364;
+  color: var(--blue-500, #3b82f6);
   margin-bottom: 0.5rem;
   z-index: 1;
   position: relative;
@@ -81,12 +66,12 @@
 
 .menu-item-toppings {
   font-size: 0.9rem;
-  color: #666;
+  color: var(--text-muted, #a3a3a3);
   text-transform: uppercase;
   letter-spacing: 1px;
   padding: 0.4rem 1rem;
-  background: rgba(44, 83, 100, 0.1);
-  border-radius: 20px;
+  background: rgba(59, 130, 246, 0.15);
+  border-radius: 12px;
   z-index: 1;
   position: relative;
   font-weight: 500;
