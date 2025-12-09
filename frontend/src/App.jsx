@@ -5,6 +5,7 @@ import Cashier from './Views/Cashier/Cashier'
 import Login from './Views/Customer/Login'
 import Manager from './Views/Manager/Manager'
 import StaffLogin from './Views/Staff/StaffLogin'
+import GoogleTranslateWidget from './Views/Customer/components/GoogleTranslateWidget';
 
 function App() {
   const [currentView, setCurrentView] = useState('main')

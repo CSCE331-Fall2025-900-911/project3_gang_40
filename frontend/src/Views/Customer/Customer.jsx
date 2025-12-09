@@ -177,8 +177,6 @@ function Customer({ onBack, onOrderComplete, email, language = 'en', largeMode }
   return (
     
     <>
-    
-      <div id="google_translate_element"></div>
 
       {currentView === 'cart' && (
         <Cart
