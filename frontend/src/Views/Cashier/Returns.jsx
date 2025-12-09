@@ -99,13 +99,20 @@ function Returns({ onBack, currentEmployee }) {
         {orderDetails.length === 0 && <p>Select a sale to see details</p>}
         {orderDetails.map(order => (
           <div key={order.order_id} style={{ marginBottom: '10px' }}>
-            <p>Order {order.order_id}:<br/> {order.quantity} x {order.drink_name} - ${order.price}</p>
+            <p>Order {order.order_id}:<br/> 
+              {order.quantity} x <strong>{order.drink_name}</strong> - ${order.price}
+            </p>
             <p style={{ marginLeft: '10px' }}>
-              ({order.size}, {order.sweetness}, {order.ice_level}, {order.topping_name || 'No topping'})
+              (<strong>Size:{' '}</strong>{order.size}, <strong>Sweetness:{' '}</strong>{order.sweetness}, <strong>Ice:{' '}</strong>{order.ice_level},{' '}<br/>
+              <strong>Toppings:{' '}</strong>
+              <span>
+                {order.toppings || 'No toppings'}
+              </span>
+            )
             </p>
           </div>
         ))}
-        {/* Only show confirm button if order details exist and an employee is logged in */}
+        {/* Confirm button unchanged */}
         {orderDetails.length > 0 && currentEmployee && (
           <button 
             className='make-return-btn'
@@ -115,6 +122,7 @@ function Returns({ onBack, currentEmployee }) {
           </button>
         )}
       </div>
+
 
 
       {/* Modal for entering a sales ID manually */}
