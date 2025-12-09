@@ -1,4 +1,37 @@
-/* Display.css - Menu Stylesheet */
+/* Display.css - Menu Stylesheet with Cashier Theme */
+
+/* ===============================
+   CSS Variables / Theme Tokens
+=============================== */
+:root {
+  /* Core colors - Black/Blue/White theme */
+  --bg-black: #000000;
+  --bg-darkest: #0a0a0a;
+  --bg-dark: #1a1a1a;
+  --border-base: rgba(59, 130, 246, 0.2);
+  --border-blue: rgba(59, 130, 246, 0.3);
+
+  /* Blue palette */
+  --blue-400: #60a5fa;
+  --blue-500: #3b82f6;
+  --blue-600: #2563eb;
+  --blue-700: #1d4ed8;
+  --blue-800: #1e40af;
+  --blue-900: #1e3a8a;
+
+  /* Cyan accent */
+  --cyan-500: #06b6d4;
+  --cyan-600: #0891b2;
+
+  /* Text colors */
+  --text-white: #ffffff;
+  --text-light: #e5e5e5;
+  --text-muted: #a3a3a3;
+
+  /* Shadows */
+  --shadow-card: 0 10px 15px -3px rgba(0, 0, 0, 0.6);
+  --shadow-glow-blue: 0 20px 25px -5px rgba(59, 130, 246, 0.3);
+}
 
 * {
   margin: 0;
@@ -8,12 +41,10 @@
 
 .menu-board {
   min-height: 100vh;
-  background: linear-gradient(135deg, #232526 0%, #414345 50%, #536976 100%);
-
-
+  background: var(--bg-black);
   padding: 2rem;
   padding-top: 5rem;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
   position: relative;
 }
 
@@ -36,16 +67,16 @@
 
 .menu-board button,
 .nav-button {
-  background: rgba(255, 255, 255, 0.95);
-  color: #0f2027;
+  background: linear-gradient(135deg, var(--blue-500), var(--blue-600));
+  color: var(--text-white);
   border: none;
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
   font-weight: 600;
-  border-radius: 50px;
+  border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--shadow-card);
   text-transform: uppercase;
   letter-spacing: 1px;
   white-space: nowrap;
@@ -53,9 +84,9 @@
 
 .menu-board button:hover,
 .nav-button:hover {
-  background: white;
+  background: linear-gradient(135deg, var(--blue-400), var(--blue-500));
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--shadow-glow-blue);
 }
 
 .menu-board button:active,
@@ -66,7 +97,7 @@
 /* Main Title Styling */
 .menu-board > h1.menu-title {
   text-align: center;
-  color: white;
+  color: var(--text-white);
   font-size: 5.0rem;
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
   margin-bottom: 0.5rem;
@@ -79,7 +110,7 @@
 /* Subtitle Styling */
 .menu-board > p {
   text-align: center;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--text-muted);
   font-size: 1.2rem;
   margin-bottom: 3rem;
   font-style: italic;
@@ -88,7 +119,7 @@
 
 /* Section Title Styling */
 .menu-board > h2.menu-title {
-  color: white;
+  color: var(--text-white);
   font-size: 2.5rem;
   margin: 3rem 0 1.5rem;
   text-align: center;
@@ -104,12 +135,12 @@
   display: block;
   width: 100px;
   height: 4px;
-  background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+  background: linear-gradient(90deg, var(--blue-400), var(--cyan-500));
   margin: 1rem auto 0;
   border-radius: 2px;
 }
 
-/* Menu Items Grid  */
+/* Menu Items Grid */
 .menu-items {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 280px));
@@ -133,11 +164,12 @@
 }
 
 .topping-item {
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 20px;
+  background: linear-gradient(135deg, var(--bg-dark), var(--bg-darkest));
+  border-radius: 16px;
+  border: 1px solid var(--border-base);
   padding: 2rem 1.5rem;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: var(--shadow-card);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
   display: flex;
   flex-direction: column;
@@ -149,46 +181,153 @@
   justify-content: center;
 }
 
-.topping-item::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, rgba(79, 172, 254, 0.1), rgba(0, 242, 254, 0.1));
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  z-index: 0;
-}
-
 .topping-item:hover {
-  transform: translateY(-10px) scale(1.05);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-}
-
-.topping-item:hover::before {
-  opacity: 1;
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-glow-blue);
+  border-color: var(--blue-500);
 }
 
 .topping-name {
   font-size: 1.5rem;
   font-weight: 600;
-  color: #0f2027;
+  color: var(--text-white);
   margin-bottom: 0.75rem;
   z-index: 1;
   position: relative;
 }
 
+.topping-item .topping-name {
+  color: white !important;
+}
+
 .topping-price {
   font-size: 1.8rem;
   font-weight: 700;
-  color: #2c5364;
+  color: var(--blue-500);
   z-index: 1;
   position: relative;
   margin: 0;
 }
 
+/* Subsection Title Styling */
+.subsection-title {
+  color: var(--text-light);
+  font-size: 1.8rem;
+  margin: 2rem 0 1rem;
+  text-align: center;
+  font-weight: 400;
+  letter-spacing: 2px;
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+/* Options Grid for Sizes, Ice, Sweetness */
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 200px));
+  gap: 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto 2rem;
+  padding: 1rem;
+  justify-content: center;
+}
+
+.option-item {
+  background: linear-gradient(135deg, var(--bg-dark), var(--bg-darkest));
+  border: 1px solid var(--border-base);
+  border-radius: 12px;
+  padding: 1.5rem 1rem;
+  box-shadow: var(--shadow-card);
+  transition: all 0.3s ease;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.option-item:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-glow-blue);
+  border-color: var(--blue-500);
+}
+
+.option-name {
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: var(--text-white);
+  margin-bottom: 0.5rem;
+  z-index: 1;
+  position: relative;
+}
+
+.option-price {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--blue-400);
+  z-index: 1;
+  position: relative;
+  margin: 0;
+}
+
+/* Custom Scrollbar */
+.menu-board::-webkit-scrollbar {
+  width: 12px;
+}
+
+.menu-board::-webkit-scrollbar-track {
+  background: var(--bg-darkest);
+}
+
+.menu-board::-webkit-scrollbar-thumb {
+  background: var(--blue-800);
+  border-radius: 6px;
+}
+
+.menu-board::-webkit-scrollbar-thumb:hover {
+  background: var(--blue-600);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
   .menu-board {
     padding: 1.5rem;
@@ -251,6 +390,28 @@
   .nav-buttons-right {
     right: 1rem;
   }
+
+  .subsection-title {
+    font-size: 1.5rem;
+  }
+
+  .options-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 180px));
+    gap: 1rem;
+  }
+
+  .option-item {
+    height: 110px;
+    padding: 1rem;
+  }
+
+  .option-name {
+    font-size: 1.1rem;
+  }
+
+  .option-price {
+    font-size: 1rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -290,168 +451,7 @@
     padding: 0.5rem 1rem;
     font-size: 0.85rem;
   }
-}
 
-/* Animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes fadeInDown {
-  from {
-    opacity: 0;
-    transform: translateY(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Smooth Scrolling */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Custom Scrollbar */
-.menu-board::-webkit-scrollbar {
-  width: 12px;
-}
-
-.menu-board::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.menu-board::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 6px;
-}
-
-.menu-board::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.4);
-}
-
-/* Subsection Title Styling */
-.subsection-title {
-  color: white;
-  font-size: 1.8rem;
-  margin: 2rem 0 1rem;
-  text-align: center;
-  font-weight: 400;
-  letter-spacing: 2px;
-  font-family: 'Raleway', 'Montserrat', 'Poppins', 'Segoe UI', sans-serif;
-}
-
-/* Options Grid for Sizes, Ice, Sweetness */
-.options-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 200px));
-  gap: 1.5rem;
-  max-width: 1400px;
-  margin: 0 auto 2rem;
-  padding: 1rem;
-  justify-content: center;
-}
-
-.option-item {
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 15px;
-  padding: 1.5rem 1rem;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s ease;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-  height: 120px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.option-item::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, rgba(79, 172, 254, 0.1), rgba(0, 242, 254, 0.1));
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: 0;
-}
-
-.option-item:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-}
-
-.option-item:hover::before {
-  opacity: 1;
-}
-
-.option-name {
-  font-size: 1.3rem;
-  font-weight: 500;
-  color: #0f2027;
-  margin-bottom: 0.5rem;
-  z-index: 1;
-  position: relative;
-  font-family: 'Raleway', 'Montserrat', 'Poppins', 'Segoe UI', sans-serif;
-}
-
-.option-price {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #2c5364;
-  z-index: 1;
-  position: relative;
-  margin: 0;
-}
-
-/* Responsive adjustments for options */
-@media (max-width: 768px) {
-  .subsection-title {
-    font-size: 1.5rem;
-  }
-
-  .options-grid {
-    grid-template-columns: repeat(auto-fit, minmax(180px, 180px));
-    gap: 1rem;
-  }
-
-  .option-item {
-    height: 110px;
-    padding: 1rem;
-  }
-
-  .option-name {
-    font-size: 1.1rem;
-  }
-
-  .option-price {
-    font-size: 1rem;
-  }
-}
-
-@media (max-width: 480px) {
   .options-grid {
     grid-template-columns: 1fr;
   }
