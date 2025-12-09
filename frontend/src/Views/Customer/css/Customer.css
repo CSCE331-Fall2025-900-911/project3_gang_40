@@ -650,9 +650,9 @@ body {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background: linear-gradient(90deg, #2c3e50 0%, #34495e 100%);
+  background: linear-gradient(90deg, #1e3a8a 0%, #0a0a0a 100%);
   padding: 18px 30px;
-  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.4);
   position: fixed;
   bottom: 0;
   width: 100vw;
@@ -685,8 +685,8 @@ body {
 }
 
 .navbar-step.active {
-  background-color: #007bff;
-  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.4);
+  background-color: #3b82f6;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
   transform: scale(1.08);
 }
 
@@ -704,7 +704,7 @@ body {
 
 .navbar-step.active .step-number {
   background-color: white;
-  color: #007bff;
+  color: #3b82f6;
 }
 
 .step-label {
@@ -736,25 +736,25 @@ body {
 }
 
 .navbar-cart-btn {
-  background-color: #52b788;
+  background-color: #10b981;
   color: white;
 }
 
 .navbar-cart-btn:hover {
-  background-color: #40916c;
+  background-color: #059669;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(82, 183, 136, 0.4);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
 }
 
 .navbar-exit-btn {
-  background-color: #dc3545;
+  background-color: #ef4444;
   color: white;
 }
 
 .navbar-exit-btn:hover {
-  background-color: #c82333;
+  background-color: #dc2626;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
 }
 
 /* ========== PAGE WRAPPERS ========== */
@@ -766,7 +766,7 @@ body {
   flex-direction: column;
   height: 100vh;
   width: 100vw;
-  background: linear-gradient(135deg, #232526 0%, #414345 50%, #536976 100%);
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f1419 100%);
   position: relative;
   padding-bottom: 100px;
 }
@@ -845,9 +845,9 @@ body {
 }
 
 .active-drink-btn {
-  background-color: #5dade2;
+  background-color: #3b82f6;
   color: black !important;
-  box-shadow: 0 6px 20px rgba(93, 173, 226, 0.4) !important;
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4) !important;
   transform: scale(1.05) !important;
 }
 
@@ -873,7 +873,7 @@ body {
   display: block;
   width: 80px;
   height: 3px;
-  background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+  background: linear-gradient(90deg, #3b82f6 0%, #06b6d4 100%);
   margin: 0.8rem auto 0;
   border-radius: 2px;
 }
@@ -937,7 +937,7 @@ body {
 .drink-price {
   font-size: 1.3rem;
   font-weight: 700;
-  color: #5dade2;
+  color: #3b82f6;
 }
 
 /* drink button image styles */
