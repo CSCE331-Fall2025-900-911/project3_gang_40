@@ -1,20 +1,51 @@
 // main container for the drink selection section
-function DrinkSection({ drinks, openModal }) {
+function DrinkSection({ drinks, openModal, activeCategory, setActiveCategory }) {
+
+  const allCategories = Array.from(
+    new Set(drinks.map(d => d.drink_type || 'Other'))
+  );
+
+  // Define category order for consistent display
+  const categoryOrder = ['Classic', 'Fruity', 'Milky', 'Blended', 'Special'];
+
+  const sortedCategories = categoryOrder
+    .filter(c => allCategories.includes(c))
+    .concat(allCategories.filter(c => !categoryOrder.includes(c)));
+
+  const visibleDrinks = activeCategory === 'All'
+  ? drinks
+  : drinks.filter(d => (d.drink_type || 'Other') === activeCategory);
+
   // Group drinks by their drink_type
-  const groupedDrinks = drinks.reduce((acc, drink) => {
+  const groupedDrinks = visibleDrinks.reduce((acc, drink) => {
     const category = drink.drink_type || 'Other';
-    if (!acc[category]) {
-      acc[category] = [];
-    }
+    if (!acc[category]) acc[category] = [];
     acc[category].push(drink);
     return acc;
   }, {});
 
-  // Define category order for consistent display
-  const categoryOrder = ['Classic', 'Fruity', 'Milky', 'Special', 'Blended'];
-
   return (
     <div className='drink-section'>
+
+      {/* category filter bar */}
+      <div className="category-bar">
+        <button
+          className={`category-btn ${activeCategory === 'All' ? 'active' : ''}`}
+          onClick={() => setActiveCategory('All')}
+        >
+          All
+        </button>
+        {sortedCategories.map(category => (
+          <button
+            key={category}
+            className={`category-btn ${activeCategory === category ? 'active' : ''}`}
+            onClick={() => setActiveCategory(category)}
+          >
+            {category}
+          </button>
+        ))}
+      </div>
+
       {/* If drinks array is empty, show loading message */}
       {drinks.length === 0 ? (
         <p>Loading drinks...</p>

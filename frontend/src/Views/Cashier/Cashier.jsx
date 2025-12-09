@@ -38,6 +38,7 @@ function Cashier({ onBack }) {
   const [showEmployeeModal, setShowEmployeeModal] = useState(false)
   // payment option selector
   const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [activeCategory, setActiveCategory] = useState('All');
 
   // for switching views 
   const handleReturnClick = () => setCurrentView('returns');
@@ -195,7 +196,12 @@ function Cashier({ onBack }) {
           />
 
           {/* drink menu */}
-          <DrinkSection drinks={drinks} openModal={openModal} />
+          <DrinkSection 
+            drinks={drinks} 
+            openModal={openModal} 
+            activeCategory={activeCategory}
+            setActiveCategory={setActiveCategory}
+          />
 
           {/* cart */}
           <CartSection
