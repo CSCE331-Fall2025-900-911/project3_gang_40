@@ -98,7 +98,8 @@ function DrinksCustomization({ drink, modifications, setModifications, onNext, o
                 'Light (30%)',
                 'Half (50%)',
                 'Less (80%)',
-                'Normal (100%)'
+                'Normal (100%)',
+                'Extra (150%)'
               ].map(level => (
                 <button
                   key={level}
@@ -115,7 +116,7 @@ function DrinksCustomization({ drink, modifications, setModifications, onNext, o
           <div className="customization-section">
             <label htmlFor="ice">{translatedTexts.iceLevel || textKeys.iceLevel}:</label>
             <div className="ice-options">
-              {['No Ice', 'Less', 'Regular'].map(level => (
+              {['No Ice', 'Less', 'Regular', 'Hot'].map(level => (
                 <button
                   key={level}
                   className={`ice-btn ${modifications.ice === level ? 'active' : ''}`}

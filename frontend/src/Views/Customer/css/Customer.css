@@ -1829,6 +1829,7 @@ body {
 /* Thank You Screen After Submitting Order */
 .thank-you-page {
   background: linear-gradient(135deg, #232526 0%, #414345 50%, #536976 100%);
+  width: 100%;
 }
 
 .thank-you-container {

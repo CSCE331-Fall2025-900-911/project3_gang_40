@@ -111,7 +111,6 @@ function Cashier({ onBack }) {
 
   // sumits order to database
   const submitOrder = async (paymentMethod = null, isVoid = false) => {
-    console.log('🚀 SUBMITTING ORDER - full cart:', JSON.stringify(cart, null, 2));
     if (!currentEmployee) {
       alert('Employee not selected');
       return;

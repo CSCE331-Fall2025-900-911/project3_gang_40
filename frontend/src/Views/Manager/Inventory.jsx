@@ -182,7 +182,8 @@ function Inventory({ onBack }) {
             <option value="Classic">Classic</option>
             <option value="Milky">Milky</option>
             <option value="Fruity">Fruity</option>
-            <option value="Seasonal">Seasonal</option>
+            <option value="Blended">Blended</option>
+            <option value="Special">Special</option>
           </select>
           <button className="add-button" onClick={handleAddDrink}>Save Drink</button>
         </div>

@@ -25,7 +25,13 @@ import peachTeaWHoneyJelly from "/assets/images/peach_tea_w_honey_jelly-removebg
 import taroPearlMilkTea from "/assets/images/taro_pearl_milk_tea-removebg-preview.png"
 import thaiPearlMilkTea from "/assets/images/thai_pearl_milk_tea-removebg-preview.png"
 import tigerBoba from "/assets/images/tiger_boba-removebg-preview.png"
+import oreoIceBlended from "/assets/images/oreo_ice_blended.png"
+import taroIceBlended from "/assets/images/taro_ice_blended.png"
+import coffeeIceBlended from "/assets/images/coffee_ice_blended.png"
+import matchaPearlMilkTea from "/assets/images/matcha_pearl_milk_tea.png"
+import strawberryMatchaFreshMilk from "/assets/images/strawberry_matcha_fresh_milk.png"
 import defaultDrink from "/assets/images/bubble-tea-clipart.png"
+
 import ThankYouScreen from './ThankYouScreen';
 
 function Customer({ onLogout, onOrderComplete, email, language = 'en', largeMode, customerEmail }) {
@@ -74,6 +80,15 @@ function Customer({ onLogout, onOrderComplete, email, language = 'en', largeMode
     47: berryLychee,
     48: peachTeaWHoneyJelly,
     49: mangoPassionFruitTea,
+
+    // blended drinks
+    58: oreoIceBlended,
+    59: coffeeIceBlended,
+    60: taroIceBlended,
+
+    // special drinks
+    61: strawberryMatchaFreshMilk,
+    62: matchaPearlMilkTea,
 
     // Note: If a drink_id is missing, the fallback logic will ensure it still displays the defaultDrink image.
   };
@@ -287,6 +302,10 @@ function Customer({ onLogout, onOrderComplete, email, language = 'en', largeMode
               <button onClick={() => setSelectedCategory('Classic')}
                 className={selectedCategory === 'Classic' ? 'active-drink-btn' : ''}>
                 {translatedTexts.classic || textKeys.classic}
+              </button>
+              <button onClick={() => setSelectedCategory('Blended')}
+                className={selectedCategory === 'Blended' ? 'active-drink-btn' : ''}>
+                {translatedTexts.blended || textKeys.blended}
               </button>
               <button onClick={() => setSelectedCategory('Special')}
                 className={selectedCategory === 'Special' ? 'active-drink-btn' : ''}>

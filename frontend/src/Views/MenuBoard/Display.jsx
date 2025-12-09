@@ -21,6 +21,11 @@ import peachTeaWHoneyJelly from "/assets/images/peach_tea_w_honey_jelly-removebg
 import taroPearlMilkTea from "/assets/images/taro_pearl_milk_tea-removebg-preview.png"
 import thaiPearlMilkTea from "/assets/images/thai_pearl_milk_tea-removebg-preview.png"
 import tigerBoba from "/assets/images/tiger_boba-removebg-preview.png"
+import oreoIceBlended from "/assets/images/oreo_ice_blended.png"
+import taroIceBlended from "/assets/images/taro_ice_blended.png"
+import coffeeIceBlended from "/assets/images/coffee_ice_blended.png"
+import matchaPearlMilkTea from "/assets/images/matcha_pearl_milk_tea.png"
+import strawberryMatchaFreshMilk from "/assets/images/strawberry_matcha_fresh_milk.png"
 
 function Display({ onBack }) {
   // Sizes from database
@@ -34,7 +39,8 @@ function Display({ onBack }) {
   const iceLevels = [
     'No Ice',
     'Less',
-    'Regular'
+    'Regular',
+    'Hot'
   ];
 
   // Sweetness levels from database
@@ -43,7 +49,8 @@ function Display({ onBack }) {
     'Light (30%)',
     'Half (50%)',
     'Less (80%)',
-    'Normal (100%)'
+    'Normal (100%)',
+    'Extra (150%)'
   ];
 
   // Toppings from database
@@ -191,6 +198,44 @@ function Display({ onBack }) {
           image={peachTeaWHoneyJelly}
           name="Peach Tea w/ Honey Jelly"
           price="6.50"
+          toppings="toppings"
+        />
+      </div>
+
+      <h2 className="menu-title">Blended Drinks</h2>
+      <div className="menu-items">
+        <MenuItem 
+          image={oreoIceBlended}
+          name="Oreo Ice Blended"
+          price="6.50"
+          toppings="toppings"
+        />
+        <MenuItem 
+          image={taroIceBlended}
+          name="Taro Ice Blended"
+          price="6.50"
+          toppings="toppings"
+        />
+        <MenuItem 
+          image={coffeeIceBlended}
+          name="Cofee Ice Blended"
+          price="6.50"
+          toppings="toppings"
+        />
+      </div>
+
+      <h2 className="menu-title">Special Drinks</h2>
+      <div className="menu-items">
+        <MenuItem 
+          image={matchaPearlMilkTea}
+          name="Matcha Pearl Milk Tea"
+          price="6.75"
+          toppings="toppings"
+        />
+        <MenuItem 
+          image={strawberryMatchaFreshMilk}
+          name="Strawberry Matcha Fresh Milk"
+          price="6.75"
           toppings="toppings"
         />
       </div>
