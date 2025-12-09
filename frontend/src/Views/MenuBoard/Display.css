@@ -100,7 +100,7 @@
   color: var(--text-white);
   font-size: 5.0rem;
   font-family: 'Helvetica Neue', 'Arial', sans-serif; /* CHANGED: Sleek thin font */
-  font-weight: 200; /* CHANGED: Thin weight instead of 700 */
+  font-weight: 200;
   margin-bottom: 0.5rem;
   text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.5);
   letter-spacing: 4px; 
