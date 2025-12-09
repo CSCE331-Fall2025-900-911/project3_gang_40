@@ -82,13 +82,11 @@ function Display({ onBack }) {
           image={classicTea}
           name="Classic Tea"
           price="4.65"
-          toppings="toppings"
         />
         <MenuItem 
           image={honeyTea}
           name="Honey Tea"
           price="4.85"
-          toppings="toppings"
         />
       </div>
 
@@ -98,67 +96,56 @@ function Display({ onBack }) {
           image={classicPearl}
           name="Classic Pearl Milk Tea"
           price="6.50"
-          toppings="toppings"
         />
         <MenuItem 
           image={coconutPearlMilkTea}
           name="Coconut Pearl Milk Tea"
           price="6.75"
-          toppings="toppings"
         />
         <MenuItem 
           image={coffeeCreama}
           name="Coffee Crema"
           price="6.50"
-          toppings="toppings"
         />
         <MenuItem 
           image={coffeeMilkTeaWCoffeeJelly}
           name="Coffee Milk Tea w/ Coffee Jelly"
           price="6.25"
-          toppings="toppings"
         />
         <MenuItem 
           image={goldenRetriever}
           name="Golden Retriever"
           price="6.75"
-          toppings="toppings"
         />
         <MenuItem 
           image={HokkaidoPearlMilkTea}
           name="Hokkaido Pearl Milk Tea"
           price="6.25"
-          toppings="toppings"
         />
         <MenuItem 
           image={honeyPearlMilkTea}
           name="Honey Pearl Milk Tea"
           price="6.00"
-          toppings="toppings"
         />
         <MenuItem 
           image={mangoGreenMilkTea}
           name="Mango Green Milk Tea"
           price="6.50"
-          toppings="toppings"
         />
         <MenuItem 
           image={taroPearlMilkTea}
           name="Taro Pearl Milk Tea"
           price="6.25"
-          toppings="toppings"
         />
         <MenuItem 
           image={thaiPearlMilkTea}
           name="Thai Pearl Milk Tea"
           price="6.25"
-          toppings="toppings"
         />
         <MenuItem 
           image={tigerBoba}
           name="Tiger Boba"
           price="6.50"
-          toppings="toppings"
         />
       </div>
 
@@ -168,37 +155,31 @@ function Display({ onBack }) {
           image={berryLychee}
           name="Berry Lychee"
           price="6.50"
-          toppings="toppings"
         />
         <MenuItem 
           image={honeyLemonade}
           name="Honey Lemonade"
           price="5.20"
-          toppings="toppings"
         />
         <MenuItem 
           image={mangoPassionFruitTea}
           name="Mango & Passion Fruit Tea"
           price="6.50"
-          toppings="toppings"
         />
         <MenuItem 
           image={mangoGreenTea}
           name="Mango Green Tea"
           price="5.80"
-          toppings="toppings"
         />
         <MenuItem 
           image={passionChess}
           name="Passion Chess"
           price="6.50"
-          toppings="toppings"
         />
         <MenuItem 
           image={peachTeaWHoneyJelly}
           name="Peach Tea w/ Honey Jelly"
           price="6.50"
-          toppings="toppings"
         />
       </div>
 
@@ -208,19 +189,16 @@ function Display({ onBack }) {
           image={oreoIceBlended}
           name="Oreo Ice Blended"
           price="6.50"
-          toppings="toppings"
         />
         <MenuItem 
           image={taroIceBlended}
           name="Taro Ice Blended"
           price="6.50"
-          toppings="toppings"
         />
         <MenuItem 
           image={coffeeIceBlended}
           name="Cofee Ice Blended"
           price="6.50"
-          toppings="toppings"
         />
       </div>
 
@@ -230,13 +208,11 @@ function Display({ onBack }) {
           image={matchaPearlMilkTea}
           name="Matcha Pearl Milk Tea"
           price="6.75"
-          toppings="toppings"
         />
         <MenuItem 
           image={strawberryMatchaFreshMilk}
           name="Strawberry Matcha Fresh Milk"
           price="6.75"
-          toppings="toppings"
         />
       </div>
 

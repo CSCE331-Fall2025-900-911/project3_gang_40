@@ -495,7 +495,7 @@
 /* ========== THANK YOU LARGE MODE ========== */
 .thank-you-container h1 { 
   font-size: 4rem;  /* Normal */
-  color: #52b788 !important;  
+  color: var(--blue-500) !important;  
   text-shadow: 3px 3px 8px rgba(0,0,0,0.7) !important;
   margin-bottom: 2rem !important;
 }
@@ -509,7 +509,7 @@
 
 .thank-you-container p strong { 
   font-size: 2.2rem; 
-  color: #5dade2 !important;  
+  color: var(--blue-400) !important;  
 }
 
 .back-to-login-btn {
@@ -517,16 +517,16 @@
   font-size: 1.5rem !important;
   font-weight: 700 !important;
   border-radius: 30px !important;
-  box-shadow: 0 8px 30px rgba(82, 183, 136, 0.4) !important;
-  background: linear-gradient(45deg, #52b788, #4dab76) !important;
-  color: white !important;
+  box-shadow: 0 8px 30px rgba(62, 87, 212, 0.4) !important;
+  background: linear-gradient(135deg, var(--blue-500), var(--blue-600)) !important;
+  color: var(--text-white) !important;
   border: none !important;
   transition: all 0.3s ease !important;
 }
 
 .back-to-login-btn:hover {
   transform: translateY(-3px) scale(1.03) !important;
-  box-shadow: 0 12px 40px rgba(82, 183, 136, 0.6) !important;
+  box-shadow: 0 12px 40px rgba(62, 87, 212, 0.4) !important;
 }
 
 /* LARGE MODE still scales SIZE only */
@@ -1828,7 +1828,7 @@ body {
 
 /* Thank You Screen After Submitting Order */
 .thank-you-page {
-  background: linear-gradient(135deg, #232526 0%, #414345 50%, #536976 100%);
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f1419 100%);
   width: 100%;
 }
 

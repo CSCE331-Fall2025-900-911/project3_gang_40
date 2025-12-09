@@ -87,30 +87,6 @@ function LoginModal({ onClose, onLoginSuccess, translatedTexts, largeMode }) {
 
           {error && <p className="error-message">{error}</p>}
 
-          <p className="divider">or</p>
-
-          <input
-            type="email"
-            placeholder="Email (coming soon)"
-            className="input-field"
-            disabled
-          />
-          <input
-            type="password"
-            placeholder="Password (coming soon)"
-            className="input-field"
-            disabled
-          />
-
-          <button
-            className="btn btn-secondary submit-btn disabled full-width"
-            disabled
-            onClick={() => setError("Only Google login is supported.")}
-          >
-            {translatedTexts?.loginButton || "Login"}
-          </button>
-
-          <p className="info-text">Email login coming soon.</p>
         </div>
       </div>
     </GoogleOAuthProvider>

@@ -4,6 +4,7 @@ const textKeys = {
   milky: 'Milky',
   fruity: 'Fruity',
   classic: 'Classic',
+  blended: 'Blended',
   special: 'Special',
   showAll: 'Show All',
   noDrinks: 'No drinks found',
