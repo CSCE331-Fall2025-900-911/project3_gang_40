@@ -99,11 +99,11 @@
   text-align: center;
   color: var(--text-white);
   font-size: 5.0rem;
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-family: 'Helvetica Neue', 'Arial', sans-serif; /* CHANGED: Sleek thin font */
+  font-weight: 200; /* CHANGED: Thin weight instead of 700 */
   margin-bottom: 0.5rem;
   text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.5);
-  font-weight: 700;
-  letter-spacing: 2px;
+  letter-spacing: 4px; /* CHANGED: Increased spacing for sleek look */
   animation: fadeInDown 0.8s ease;
 }
 
