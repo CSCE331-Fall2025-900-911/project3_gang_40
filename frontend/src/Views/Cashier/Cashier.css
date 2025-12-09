@@ -82,6 +82,52 @@ body > #root {
   box-sizing: border-box;
 }
 
+.category-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px 32px;
+  margin: 0;
+  background: var(--bg-black);
+  border-bottom: 1px solid var(--border-blue);
+  z-index: 10;
+}
+
+.category-btn {
+  border: 1px solid var(--border-blue);
+  background: var(--bg-darkest);
+  color: var(--text-light);
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  flex-shrink: 0;
+  min-width: 80px;
+  text-align: center;
+  transition: background 0.2s ease, color 0.2s ease,
+              box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.category-btn:hover {
+  background: rgba(59, 130, 246, 0.2);
+  color: var(--text-white);
+  transform: translateY(-1px);
+}
+
+.category-btn.active {
+  background: var(--blue-500);
+  color: var(--text-white);
+  box-shadow: var(--shadow-active);
+  border-color: var(--blue-500);
+}
+
+
 /* ===============================
    Main Layout (3 columns)
 =============================== */
@@ -229,7 +275,8 @@ body > #root {
 =============================== */
 .drink-section {
   background-color: var(--bg-dark);
-  padding: 32px;
+  padding: 80px 32px 32px 32px; 
+  position: relative;        
   overflow-y: auto;
   text-align: center;
 }

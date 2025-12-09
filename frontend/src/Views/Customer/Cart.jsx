@@ -122,7 +122,7 @@ function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem, tra
                     <p><strong>{translatedTexts.sweetness || textKeys.sweetness}:</strong> {item.modifications.sweetness}</p>
                     <p><strong>{translatedTexts.ice || textKeys.ice}:</strong> {item.modifications.ice}</p>
                     <p>
-                      <strong>{translatedTexts.topping || textKeys.topping}:</strong> 
+                      <strong>{translatedTexts.topping || textKeys.topping}:{" "}</strong> 
                       {(item.modifications.selected_toppings || []).length > 0 
                         ? (item.modifications.selected_toppings || []).map(t => t.topping_name).join(', ')
                         : 'None'
