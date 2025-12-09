@@ -28,14 +28,18 @@ export const getSalesDetails = async (req, res, next) => {
         ds.size_name AS size,
         dv.sweetness,
         dv.ice_level,
-        t.topping_name
+        STRING_AGG(t.topping_name, ', ') AS toppings
       FROM orders o
       JOIN drink_variation dv ON o.variation_id = dv.variation_id
       JOIN drinks d ON dv.drink_id = d.drink_id
       JOIN drink_sizes ds ON dv.size_id = ds.size_id
-      LEFT JOIN toppings t ON dv.topping_id = t.topping_id
+      LEFT JOIN drink_variation_toppings dvt ON dv.topping_config_id = dvt.topping_config_id
+      LEFT JOIN toppings t ON dvt.topping_id = t.topping_id
       WHERE o.sales_id = $1
-      ORDER BY o.order_id
+      GROUP BY 
+        o.order_id, o.sales_id, o.quantity, o.price, 
+        d.drink_name, ds.size_name, dv.sweetness, dv.ice_level
+      ORDER BY o.order_id;
     `, [sales_id]);
 
     res.json(result.rows);

@@ -14,7 +14,6 @@ function Login({ onBack }) {
   const [customerEmail, setCustomerEmail] = useState(null);
   const [selectedLanguage, setSelectedLanguage] = useState('en');
   const [largeMode, setLargeMode] = useState(false);
-  const [customerDiscount, setCustomerDiscount] = useState(false);
   const [widgetKey, setWidgetKey] = useState(0);
   const [showQR, setShowQR] = useState(false);
 
@@ -24,7 +23,6 @@ function Login({ onBack }) {
         email={customerEmail}
         language={selectedLanguage}
         largeMode={largeMode}
-        customerDiscount={customerDiscount}
         onBack={() => {
           setCustomerEmail(null);
           setCurrentView('login');
@@ -33,7 +31,6 @@ function Login({ onBack }) {
         onOrderComplete={() => {
           setCustomerEmail(null);
           setLargeMode(false);
-          setCustomerDiscount(false);
         }}
       />
     );
@@ -83,12 +80,6 @@ function Login({ onBack }) {
               </button>
             </div>
             <div className="secondary-actions">
-              <button
-                className="btn btn-secondary points"
-                onClick={() => setCustomerDiscount(prev => !prev)}
-              >
-                {customerDiscount ? '10% Off!' : 'Earn Points'}
-              </button>
               <button
                 className="btn btn-outline qr-toggle-btn"
                 onClick={() => setShowQR(prev => !prev)}
