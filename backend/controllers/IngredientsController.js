@@ -4,7 +4,7 @@ import { pool } from '../db.js';
 export const getAllIngredients = async (req, res, next) => {
   try {
     const result = await pool.query(
-      'SELECT ingredient_id, ingredient_name, unit, stock_quantity FROM ingredients ORDER BY ingredient_name ASC'
+      'SELECT ingredient_id, ingredient_name, unit, stock_quantity FROM ingredients ORDER BY ingredient_id ASC'
     );
     res.json(result.rows);
   } catch (err) {

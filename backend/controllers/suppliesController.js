@@ -4,7 +4,7 @@ import { pool } from '../db.js';
 export const getAllSupplies = async (req, res, next) => {
   try {
     const result = await pool.query(
-      'SELECT supply_id, supply_name, stock FROM supplies ORDER BY supply_name ASC'
+      'SELECT supply_id, supply_name, stock FROM supplies ORDER BY supply_id ASC'
     );
     res.json(result.rows);
   } catch (err) {
