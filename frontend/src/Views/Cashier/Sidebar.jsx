@@ -19,7 +19,7 @@ function Sidebar({ buttons = [], currentEmployee }) {
           <strong>{currentEmployee.first_name} {currentEmployee.last_name}</strong>
           <br />({currentEmployee.role})
         </div>
-      ) : <div>No employee signed in</div>}
+      ) : <div></div>}
     </nav>
   );
 }

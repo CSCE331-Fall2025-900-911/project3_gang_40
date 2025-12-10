@@ -1,4 +1,89 @@
+/* Manager.css */
+
 .manager-main-page {
-  flex: justify;
+  display: grid;
+  grid-template-columns: var(--sidebar-width) 1fr;
+  height: 100vh;
+  width: 100vw;
+  background: var(--bg-darkest);
+  color: var(--text-white);
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  overflow: hidden;
+}
+
+/* Main content area */
+.manager-main-page > div {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+/* Title styling */
+.manager-main-page h1 {
+  color: var(--blue-400);
+  text-align: left;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+/* Charts & Reports layout */
+.manager-main-page .charts-section,
+.manager-main-page .reports-section {
+  background: var(--bg-dark);
+  border: 1px solid var(--border-blue);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-card);
+}
+
+.manager-main-page .manager-page-title {
+  color: var(--blue-500);
+  font-size: 2.5rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
   text-align: center;
+}
+
+/* Section titles */
+.manager-main-page .section-title {
+  color: var(--blue-500);
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-blue);
+  padding-bottom: 0.5rem;
+}
+
+/* Chart grid */
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Report grid */
+.reports-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Card hover effect */
+.charts-grid > div,
+.reports-grid > div {
+  background: var(--bg-darkest);
+  border: 1px solid var(--border-blue);
+  border-radius: 8px;
+  box-shadow: var(--shadow-glow-blue);
+  padding: 1rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.charts-grid > div:hover,
+.reports-grid > div:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-active);
 }

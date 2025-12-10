@@ -14,8 +14,8 @@ function TopSellingDrinks() {
       const response = await fetch(`https://project3-gang-40-sjzu.onrender.com/api/top-selling-drinks?timeFrame=${encodeURIComponent(selectedTimeFrame)}`);
       if (!response.ok) throw new Error('Failed to fetch sales data');
       const data = await response.json();
-      setTopSellers(data.topDrinks);
-      setTotals(data.totals);
+      setTopSellers(data.topDrinks || []);
+      setTotals(data.totals || { total_quantity_sold: 0, total_sales_revenue: 0 });
     } catch (err) {
       setError('Failed to load sales data: ' + err.message);
       setTopSellers([]);
@@ -30,14 +30,14 @@ function TopSellingDrinks() {
     setTimeFrame(selected);
   };
 
-  // Fetch data when timeFrame changes
   useEffect(() => {
     fetchTopSellers(timeFrame);
   }, [timeFrame]);
 
+  // ✅ FIXED: Safe number parsing functions
   const formatCurrency = (value) => {
     const num = Number(value || 0);
-    return isNaN(num) ? '$0.00' : num.toFixed(2);
+    return isNaN(num) ? '$0.00' : `$${num.toFixed(2)}`;
   };
 
   const formatQuantity = (value) => {
@@ -45,78 +45,95 @@ function TopSellingDrinks() {
   };
 
   return (
-    <div style={{ padding: '20px', maxWidth: '500px' }}>
-      <h2>Top 5 Best Selling Drinks</h2>
+    <div className="widget-card">
+      <h3 className="widget-title">Top 5 Best Selling Drinks</h3>
       
-      <div style={{ marginBottom: '20px' }}>
-        <label htmlFor="timeFrame">Select Time Period: </label>
+      <div style={{ marginBottom: '1rem', display: 'flex', gap: '1rem', alignItems: 'center' }}>
+        <label htmlFor="timeFrame" style={{ color: 'var(--text-light)' }}>Time Period: </label>
         <select 
           id="timeFrame"
           value={timeFrame} 
           onChange={onPickTimeFrame}
-          style={{ padding: '5px 10px', fontSize: '16px' }}
+          style={{ flex: 1, maxWidth: '200px' }}
         >
           <option>Last Day</option>
           <option>Last Week</option>
           <option>Last Month</option>
           <option>Last Year</option>
         </select>
+        <button className="btn" onClick={() => fetchTopSellers(timeFrame)}>
+          Refresh
+        </button>
       </div>
 
-      {loading && <p>Loading sales data...</p>}
+      {loading && <div className="loading">Loading sales data...</div>}
       
-      {error && (
-        <div style={{ color: 'red', background: '#fee', padding: '10px', borderRadius: '4px' }}>
-          {error}
-        </div>
+      {error && <div className="error">{error}</div>}
+
+      {!loading && !error && topSellers.length === 0 && (
+        <div className="error">No sales data available for this period.</div>
       )}
 
       {!loading && !error && topSellers.length > 0 && (
         <div>
-          <div style={{ 
-            background: '#f5f5f5', 
-            padding: '15px', 
-            borderRadius: '8px', 
-            marginBottom: '20px' 
-          }}>
+          {/* Top Sellers List */}
+          <div className="report-table" style={{ marginBottom: '1rem' }}>
+            <div style={{ 
+              display: 'grid', 
+              gridTemplateColumns: '2fr 1fr 1fr', 
+              gap: '1rem',
+              padding: '1rem',
+              background: 'var(--blue-800)',
+              color: 'var(--text-white)',
+              fontWeight: '600'
+            }}>
+              <div>Drink</div>
+              <div>Quantity Sold</div>
+              <div>Revenue</div>
+            </div>
             {topSellers.map((drink, index) => {
-              const revenue = Number(drink.total_revenue || 0);
-              const quantity = Number(drink.quantity_sold || 0);
+              const revenue = Number(drink.total_revenue || 0);  // ✅ SAFE PARSE
+              const quantity = Number(drink.quantity_sold || 0);  // ✅ SAFE PARSE
               
               return (
                 <div key={drink.drink_name || index} style={{ 
-                padding: '8px 0', 
-                borderBottom: '1px solid #ddd',
-                display: 'flex',
-                justifyContent: 'space-between'
+                  display: 'grid',
+                  gridTemplateColumns: '2fr 1fr 1fr',
+                  gap: '1rem',
+                  padding: '1rem',
+                  borderBottom: '1px solid var(--border-blue)',
+                  alignItems: 'center'
                 }}>
-                <span><strong>{index + 1}.</strong> {drink.drink_name}</span>
-                <span>
-                  {formatQuantity(drink.quantity_sold)} sold 
-                  <br />
-                  <small style={{ color: '#666' }}>${formatCurrency(drink.total_revenue)}</small>
-                </span>
+                  <div style={{ fontWeight: '500' }}>
+                    <span style={{ color: 'var(--blue-400)' }}>{index + 1}.</span> {drink.drink_name}
+                  </div>
+                  <div style={{ textAlign: 'right', fontWeight: '600', color: 'var(--cyan-500)' }}>
+                    {formatQuantity(quantity)}
+                  </div>
+                  <div style={{ textAlign: 'right', fontWeight: '600', color: 'var(--green-400)' }}>
+                    {formatCurrency(revenue)}
+                  </div>
                 </div>
               );
             })}
           </div>
 
+          {/* Summary */}
           <div style={{ 
-            background: '#e8f4f8', 
-            padding: '15px', 
+            background: 'var(--blue-900)', 
+            padding: '1.5rem', 
             borderRadius: '8px',
             textAlign: 'center',
-            fontSize: '18px',
-            fontWeight: 'bold'
+            color: 'var(--text-white)'
           }}>
-            <div>Total Period Summary:</div>
-            <div>{formatQuantity(totals.total_quantity_sold)} drinks sold for ${formatCurrency(totals.total_sales_revenue)}</div>
+            <div style={{ fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>
+              Total Period Summary:
+            </div>
+            <div>
+              {formatQuantity(totals.total_quantity_sold)} drinks sold for {formatCurrency(totals.total_sales_revenue)}
+            </div>
           </div>
         </div>
-      )}
-
-      {!loading && !error && topSellers.length === 0 && (
-        <p>No sales data available for this period.</p>
       )}
     </div>
   );

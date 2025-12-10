@@ -1,0 +1,142 @@
+
+.widget-card {
+  background: var(--bg-darkest);
+  border: 1px solid var(--border-blue);
+  box-shadow: var(--shadow-card);
+  border-radius: 10px;
+  padding: 1.5rem;
+  color: var(--text-light);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.widget-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-active);
+}
+
+.widget-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--blue-400);
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--border-blue);
+  padding-bottom: 0.5rem;
+  text-align: left;
+}
+
+/* Chart containers */
+.chart-container {
+  position: relative;
+  width: 100%;
+  height: 320px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.pie-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 320px;
+  height: 320px;
+  margin: 0 auto;
+}
+
+/* Tables inside reports */
+.report-table {
+  background: var(--bg-dark);
+  color: var(--text-light);
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 8px;
+  overflow: hidden;
+  font-size: 0.9rem;
+}
+
+.report-table th {
+  background: var(--blue-800);
+  color: var(--text-white);
+  text-transform: uppercase;
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--border-blue);
+}
+
+.report-table td {
+  padding: 0.6rem;
+  border-bottom: 1px solid var(--border-blue);
+  text-align: center;
+}
+
+.report-table tr:nth-child(even) {
+  background: var(--bg-darkest);
+}
+
+.report-table tr:hover {
+  background: var(--blue-900);
+}
+
+/* Buttons with theme styling */
+.btn {
+  background: var(--blue-600);
+  border: none;
+  padding: 0.6rem 1.2rem;
+  color: var(--text-white);
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.btn:hover {
+  background: var(--blue-500);
+  box-shadow: var(--shadow-glow-blue);
+}
+
+/* Input fields */
+input, select {
+  background: var(--bg-dark);
+  color: var(--text-light);
+  border: 1px solid var(--border-blue);
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+}
+
+input:focus, select:focus {
+  outline: none;
+  border-color: var(--blue-500);
+  box-shadow: 0 0 4px var(--blue-600);
+}
+
+/* Status states */
+.loading, .error, .success {
+  text-align: center;
+  padding: 1rem;
+  border-radius: 6px;
+}
+
+.loading {
+  color: var(--cyan-500);
+}
+
+.error {
+  color: var(--red-500);
+  background: rgba(220, 38, 38, 0.1);
+  border: 1px solid var(--red-600);
+}
+
+.success {
+  color: var(--green-400);
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid var(--green-500);
+}
+
+.btn:disabled {
+  background: var(--text-muted) !important;
+  cursor: not-allowed !important;
+  opacity: 0.6;
+  transform: none !important;
+}
+
+.btn:disabled:hover {
+  box-shadow: none !important;
+}

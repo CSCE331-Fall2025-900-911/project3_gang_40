@@ -47,31 +47,42 @@ const SalesByDayChart = () => {
       });
   }, []);
 
-  if (loading) return <div>Loading chart...</div>;
+  if (loading) return <div className="loading">Loading chart...</div>;
 
   return (
-    <div style={{ width: '800px', height: '400px' }}>
-      <Bar
-        data={chartData}
-        options={{
-          responsive: true,
-          plugins: {
-            legend: { position: 'top' },
-            title: {
-              display: true,
-              text: 'Sales by Hour (Peak at 14:00)'
+    <div className="widget-card">
+      <h3 className="widget-title">Sales by Day</h3>
+      <div className="chart-container">
+        <Bar
+          data={chartData}
+          options={{
+            responsive: true,
+            maintainAspectRatio: false,  // Allow full height usage
+            plugins: {
+              legend: { position: 'top' },
+              title: {
+                display: true,
+                text: 'Sales by Day of Week',
+                color: '#e5e5e5'  // Theme text
+              }
+            },
+            scales: {
+              x: {
+                grid: { color: 'rgba(59, 130, 246, 0.2)' },
+                ticks: { color: '#a3a3a3' }
+              },
+              y: {
+                type: 'linear',
+                display: true,
+                position: 'left',
+                title: { display: true, text: 'Orders', color: '#a3a3a3' },
+                grid: { color: 'rgba(59, 130, 246, 0.1)' },
+                ticks: { color: '#a3a3a3' }
+              }
             }
-          },
-          scales: {
-            y: {
-              type: 'linear',
-              display: true,
-              position: 'left',
-              title: { display: true, text: 'Orders' }
-            }
-          }
-        }}
-      />
+          }}
+        />
+      </div>
     </div>
   );
 };
