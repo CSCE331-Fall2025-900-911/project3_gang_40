@@ -18,6 +18,7 @@ import emailRoutes from "./routes/email.js";
 import salesChartsRoutes from './routes/salesCharts.js'
 import reportsRoutes from './routes/reports.js';
 
+
 // Error 
 import errorHandler from './errorHandler.js';
 
@@ -36,6 +37,7 @@ app.use('/api/inventory', inventoryRoutes);
 app.use('/api/checkout', checkoutRoutes);
 app.use('/api/returns', returnsRoutes);
 app.use('/translation', translationRouter);
+
 
 app.use("/api", emailRoutes);
 app.use("/api", salesChartsRoutes)
