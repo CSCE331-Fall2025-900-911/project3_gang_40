@@ -48,25 +48,35 @@ const DrinkTypePieChart = () => {
       });
   }, []);
 
-  if (loading) return <div>Loading pie chart...</div>;
+  if (loading) return <div className="loading">Loading pie chart...</div>;
 
   return (
-    <div style={{ width: '500px', height: '500px', margin: '0 auto' }}>
-      <Pie
-        data={chartData}
-        options={{
-          responsive: true,
-          plugins: {
-            legend: {
-              position: 'bottom'
-            },
-            title: {
-              display: true,
-              text: 'Orders by Drink Type'
+    <div className="widget-card">  
+      <h3 className="widget-title">Orders by Drink Type</h3>  
+      <div className="pie-container">
+        <Pie
+          data={chartData}
+          options={{
+            responsive: true,
+            maintainAspectRatio: false,  
+            plugins: {
+              legend: {
+                position: 'bottom',
+                labels: {
+                  color: '#e5e5e5',
+                  padding: 20,
+                  usePointStyle: true
+                }
+              },
+              title: {
+                display: true,
+                text: 'Orders by Drink Type',
+                color: '#e5e5e5'
+              }
             }
-          }
-        }}
-      />
+          }}
+        />
+      </div>
     </div>
   );
 };

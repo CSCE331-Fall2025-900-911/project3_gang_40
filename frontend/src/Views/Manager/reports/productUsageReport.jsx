@@ -12,7 +12,6 @@ function ProductUsageReport() {
       setError("Please select both start and end dates.");
       return;
     }
-
     setLoading(true);
     setError(null);
     try {
@@ -30,72 +29,40 @@ function ProductUsageReport() {
     }
   };
 
+  const formatNumber = (value) => parseFloat(value || 0).toFixed(2);
+
   return (
-    <div style={{ padding: '20px', maxWidth: '900px' }}>
-      <h2>Product Usage Report</h2>
+    <div className="widget-card">
+      <h3 className="widget-title">Product Usage Report</h3>
       
-      <div style={{ marginBottom: '20px', display: 'flex', gap: '10px', alignItems: 'end' }}>
+      <div style={{ display: 'flex', gap: '1rem', alignItems: 'end', marginBottom: '1.5rem' }}>
         <div>
-          <label>Start Date: </label>
-          <input
-            type="date"
-            value={startDate}
-            onChange={(e) => setStartDate(e.target.value)}
-            style={{ padding: '5px', fontSize: '16px' }}
-          />
+          <label style={{ display: 'block', color: 'var(--text-light)', marginBottom: '0.5rem' }}>Start Date:</label>
+          <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
         </div>
         <div>
-          <label>End Date: </label>
-          <input
-            type="date"
-            value={endDate}
-            onChange={(e) => setEndDate(e.target.value)}
-            style={{ padding: '5px', fontSize: '16px' }}
-          />
+          <label style={{ display: 'block', color: 'var(--text-light)', marginBottom: '0.5rem' }}>End Date:</label>
+          <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
         </div>
-        <button 
-          onClick={fetchProductUsage}
-          disabled={loading || !startDate || !endDate}
-          style={{ 
-            padding: '8px 16px', 
-            fontSize: '16px',
-            background: '#007bff',
-            color: 'white',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: 'pointer'
-          }}
-        >
+        <button className="btn" onClick={fetchProductUsage} disabled={loading || !startDate || !endDate}>
           {loading ? 'Generating...' : 'Generate Report'}
         </button>
       </div>
 
-      {error && (
-        <div style={{ 
-          color: 'red', 
-          background: '#fee', 
-          padding: '15px', 
-          borderRadius: '8px',
-          borderLeft: '4px solid #dc3545'
-        }}>
-          {error}
-        </div>
-      )}
+      {error && <div className="error">{error}</div>}
 
       {ingredients.length > 0 && (
-        <div style={{ background: '#f8f9fa', borderRadius: '8px', overflow: 'hidden' }}>
+        <div style={{ background: 'var(--bg-dark)', borderRadius: '8px', overflow: 'hidden' }}>
           {/* Header */}
           <div style={{ 
-            background: '#343a40', 
-            color: 'white', 
-            padding: '15px 20px',
+            background: 'var(--blue-800)', 
+            color: 'var(--text-white)', 
+            padding: '1.5rem', 
             fontWeight: 'bold'
           }}>
-            <div style={{ display: 'flex', gap: '10px' }}>
+            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'space-between' }}>
               <div style={{ flex: 3 }}>PRODUCT USAGE REPORT</div>
-              <div style={{ flex: 2, textAlign: 'right' }}>
-                Period: {startDate} to {endDate}
-              </div>
+              <div style={{ flex: 2, textAlign: 'right' }}>Period: {startDate} to {endDate}</div>
             </div>
           </div>
 
@@ -103,11 +70,11 @@ function ProductUsageReport() {
           <div style={{ 
             display: 'grid', 
             gridTemplateColumns: '3fr 0.8fr 1fr 1fr', 
-            gap: '10px',
-            padding: '15px 20px',
-            background: '#e9ecef',
-            fontWeight: '600',
-            borderBottom: '2px solid #dee2e6'
+            gap: '1rem',
+            padding: '1rem 1.5rem',
+            background: 'var(--blue-900)',
+            color: 'var(--text-white)',
+            fontWeight: '600'
           }}>
             <div>Ingredient Name</div>
             <div>Unit</div>
@@ -118,43 +85,35 @@ function ProductUsageReport() {
           {/* Table Rows */}
           <div style={{ maxHeight: '400px', overflowY: 'auto' }}>
             {ingredients.map((ingredient, index) => (
-              <div 
-                key={ingredient.ingredient_name || index}
-                style={{ 
-                  display: 'grid',
-                  gridTemplateColumns: '3fr 0.8fr 1fr 1fr',
-                  gap: '10px',
-                  padding: '12px 20px',
-                  borderBottom: '1px solid #dee2e6',
-                  alignItems: 'center'
-                }}
-              >
-                <div style={{ 
-                  fontWeight: 500,
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  whiteSpace: 'nowrap'
-                }}>
+              <div key={ingredient.ingredient_name || index} style={{ 
+                display: 'grid',
+                gridTemplateColumns: '3fr 0.8fr 1fr 1fr',
+                gap: '1rem',
+                padding: '1rem 1.5rem',
+                borderBottom: '1px solid var(--border-blue)',
+                alignItems: 'center',
+                background: index % 2 === 0 ? 'var(--bg-darkest)' : 'var(--bg-dark)'
+              }}>
+                <div style={{ fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                   {ingredient.ingredient_name}
                 </div>
                 <div>{ingredient.unit}</div>
-                <div style={{ textAlign: 'right', fontWeight: '600' }}>
-                  {parseFloat(ingredient.total_used || 0).toFixed(2)}
+                <div style={{ textAlign: 'right', color: 'var(--cyan-500)', fontWeight: '600' }}>
+                  {formatNumber(ingredient.total_used)}
                 </div>
-                <div style={{ textAlign: 'right', color: '#28a745', fontWeight: '600' }}>
-                  {parseFloat(ingredient.current_stock || 0).toFixed(2)}
+                <div style={{ textAlign: 'right', color: 'var(--green-400)', fontWeight: '600' }}>
+                  {formatNumber(ingredient.current_stock)}
                 </div>
               </div>
             ))}
           </div>
 
-          {/* Footer */}
           <div style={{ 
-            background: '#f1f3f4', 
-            padding: '15px 20px',
+            background: 'var(--blue-900)', 
+            padding: '1.5rem', 
             textAlign: 'center',
-            fontStyle: 'italic',
-            borderTop: '2px solid #dee2e6'
+            color: 'var(--text-light)',
+            fontStyle: 'italic'
           }}>
             Report generated successfully.
           </div>
@@ -164,4 +123,4 @@ function ProductUsageReport() {
   );
 }
 
-export default ProductUsageReport
+export default ProductUsageReport;
