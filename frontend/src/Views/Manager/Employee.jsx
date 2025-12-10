@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import './Employee.css'
+import './css/Employee.css'
 
 function Employee({ onBack }) {
     const [employees, setEmployees] = useState([]);

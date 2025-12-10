@@ -24,6 +24,7 @@
     "react-chartjs-2": "^5.3.1",
     "react-dom": "^19.1.1",
     "react-qr-code": "^2.0.18",
+    "react-router-dom": "^7.10.1",
     "twilio": "^5.10.7"
   },
   "devDependencies": {

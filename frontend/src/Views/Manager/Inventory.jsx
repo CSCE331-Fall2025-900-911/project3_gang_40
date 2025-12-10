@@ -1,7 +1,14 @@
+// src/pages/Inventory.jsx
 import { useEffect, useState } from "react";
-import "./Inventory.css";
+import "./css/Inventory.css";
+import InventoryNavbar from "./components/InventoryNavBar.jsx"
+import Menu from "./Menu.jsx";
+import Ingredients from "./Ingredients.jsx";
+import Other from "./Other.jsx";
 
 function Inventory({ onBack }) {
+  const [currentPage, setCurrentPage] = useState("all"); 
+
   const [drinks, setDrinks] = useState([]);
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
@@ -102,12 +109,12 @@ function Inventory({ onBack }) {
     setEditPrice(drink.base_price);
     setEditDrinkType(drink.drink_type);
     setEditIngredients(
-      drink.ingredients.map(i => ({
+      (drink.ingredients || []).map(i => ({
         ingredient_id: i.ingredient_id,
         name: i.name,
         quantity: i.quantity,
         unit: i.unit
-      })) 
+      }))
     );
   };
 
@@ -172,57 +179,88 @@ function Inventory({ onBack }) {
         <h1>Inventory Management</h1>
         <button onClick={onBack} className="exit-button">Exit</button>
       </div>
-      <div className="add-drink-section">
-        <h3>Add New Drink</h3>
-        <div className="add-drink-form">
-          <input className="form-input" placeholder="Drink Name" value={name} onChange={(e) => setName(e.target.value)} />
-          <input className="form-input" type="number" placeholder="Price" value={price} onChange={(e) => setPrice(e.target.value)} />
-          <select className="form-select" value={drinkType} onChange={(e) => setDrinkType(e.target.value)}>
-            <option value="">Select Type</option>
-            <option value="Classic">Classic</option>
-            <option value="Milky">Milky</option>
-            <option value="Fruity">Fruity</option>
-            <option value="Blended">Blended</option>
-            <option value="Special">Special</option>
-          </select>
-          <button className="add-button" onClick={handleAddDrink}>Save Drink</button>
-        </div>
-        <h4>Ingredients</h4>
-        {ingredients.map((ing, idx) => (
-          <div key={idx} className="ingredient-row">
-            <input className="form-input" placeholder="Name" value={ing.name} onChange={(e) => handleIngredientChange(idx, "name", e.target.value)} />
-            <input className="form-input" type="number" placeholder="Qty" value={ing.quantity} onChange={(e) => handleIngredientChange(idx, "quantity", e.target.value)} />
-            <input className="form-input" placeholder="Unit" value={ing.unit} onChange={(e) => handleIngredientChange(idx, "unit", e.target.value)} />
-            <button className="remove-btn" onClick={() => removeIngredientRow(idx)}>-</button>
+
+      {/* NAVBAR */}
+      <InventoryNavbar setCurrentPage={setCurrentPage} />
+
+      {/* ALL VIEW - Complete Inventory Overview */}
+      {currentPage === "all" && (
+        <>
+          <div className="add-drink-section">
+            <h3 className="heading">Add New Drink</h3>
+            <div className="add-drink-form">
+              <input className="form-input" placeholder="Drink Name" value={name} onChange={(e) => setName(e.target.value)} />
+              <input className="form-input" type="number" placeholder="Price" value={price} onChange={(e) => setPrice(e.target.value)} />
+              <select className="form-select" value={drinkType} onChange={(e) => setDrinkType(e.target.value)}>
+                <option value="">Select Type</option>
+                <option value="Classic">Classic</option>
+                <option value="Milky">Milky</option>
+                <option value="Fruity">Fruity</option>
+                <option value="Blended">Blended</option>
+                <option value="Special">Special</option>
+              </select>
+              <button className="add-button" onClick={handleAddDrink}>Save Drink</button>
+            </div>
+            <h4>Ingredients</h4>
+            {ingredients.map((ing, idx) => (
+              <div key={idx} className="ingredient-row">
+                <input className="form-input" placeholder="Name" value={ing.name} onChange={(e) => handleIngredientChange(idx, "name", e.target.value)} />
+                <input className="form-input" type="number" placeholder="Qty" value={ing.quantity} onChange={(e) => handleIngredientChange(idx, "quantity", e.target.value)} />
+                <input className="form-input" placeholder="Unit" value={ing.unit} onChange={(e) => handleIngredientChange(idx, "unit", e.target.value)} />
+                <button className="remove-btn" onClick={() => removeIngredientRow(idx)}>-</button>
+              </div>
+            ))}
+            <button className="add-button" onClick={addIngredientRow}>+ Add Ingredient</button>
           </div>
-        ))}
-        <button className="add-button" onClick={addIngredientRow}>+ Add Ingredient</button>
-      </div>
-      <table className="inventory-table">
-        <thead>
-          <tr>
-            <th>ID</th><th>Name</th><th>Price</th><th>Type</th><th>Ingredients</th><th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {drinks.map((drink) => (
-            <tr key={drink.drink_id} onClick={() => setSelectedDrinkId(drink.drink_id)} style={{ backgroundColor: selectedDrinkId === drink.drink_id ? "#d6ebff" : "white" }}>
-              <td>{drink.drink_id}</td>
-              <td>{drink.drink_name}</td>
-              <td>${Number(drink.base_price).toFixed(2)}</td>
-              <td>{drink.drink_type}</td>
-              <td>{drink.ingredients?.map((i, idx) => <div key={idx}>{i.name} — {i.quantity} {i.unit}</div>)}</td>
-              <td>
-                <div className="action-buttons">
-                  <button className="inventory-edit-btn" onClick={(e) => { e.stopPropagation(); openEditModal(drink); }}>Edit</button>
-                  <button className="delete-btn" onClick={(e) => { e.stopPropagation(); handleDeleteDrink(drink.drink_id); }}>Delete</button>
-                </div>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      {editingDrink && (
+
+          <table className="inventory-table">
+            <thead>
+              <tr>
+                <th>ID</th><th>Name</th><th>Price</th><th>Type</th><th>Ingredients</th><th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {drinks.map((drink) => (
+                <tr
+                  key={drink.drink_id}
+                  onClick={() => setSelectedDrinkId(drink.drink_id)}
+                  className={selectedDrinkId === drink.drink_id ? "selected" : ""}
+                >
+                  <td>{drink.drink_id}</td>
+                  <td>{drink.drink_name}</td>
+                  <td>${Number(drink.base_price).toFixed(2)}</td>
+                  <td>{drink.drink_type}</td>
+                  <td>{drink.ingredients?.map((i, idx) => <div key={idx}>{i.name} — {i.quantity} {i.unit}</div>)}</td>
+                  <td>
+                    <div className="action-buttons">
+                      <button className="inventory-edit-btn" onClick={(e) => { e.stopPropagation(); openEditModal(drink); }}>Edit</button>
+                      <button className="delete-btn" onClick={(e) => { e.stopPropagation(); handleDeleteDrink(drink.drink_id); }}>Delete</button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </>
+      )}
+
+      {/* MENU VIEW */}
+      {currentPage === "menu" && (
+        <Menu />
+      )}
+
+      {/* INGREDIENTS VIEW */}
+      {currentPage === "ingredients" && (
+        <Ingredients />
+      )}
+
+      {/* OTHER VIEW */}
+      {currentPage === "other" && (
+        <Other />
+      )}
+
+      {/* EDIT MODAL - Only shows on "all" page */}
+      {editingDrink && currentPage === "all" && (
         <div className="modal-overlay" onClick={() => setEditingDrink(null)}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
             <h2>Edit Drink</h2>
