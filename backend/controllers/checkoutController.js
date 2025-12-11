@@ -145,22 +145,22 @@ export const checkout = async (req, res, next) => {
     await client.query('COMMIT');
 
     // Email logic
-    // if (isCustomerOrder && customerEmail) {
-    //   try {
-    //     await sendOrderConfirmationEmailBackend(customerEmail, salesId, cart);
-    //     console.log(`Order confirmation email sent to ${customerEmail}`);
-    //     setTimeout(async () => {
-    //       try {
-    //         await sendOrderReadyEmailBackend(customerEmail, salesId);
-    //         console.log(`Order ready email sent to ${customerEmail}`);
-    //       } catch (err) {
-    //         console.error('Failed to send order ready email:', err);
-    //       }
-    //     }, 2 * 60 * 1000);
-    //   } catch (err) {
-    //     console.error('Failed to send confirmation email:', err);
-    //   }
-    // }
+    if (isCustomerOrder && customerEmail) {
+      try {
+        await sendOrderConfirmationEmailBackend(customerEmail, salesId, cart);
+        console.log(`Order confirmation email sent to ${customerEmail}`);
+        setTimeout(async () => {
+          try {
+            await sendOrderReadyEmailBackend(customerEmail, salesId);
+            console.log(`Order ready email sent to ${customerEmail}`);
+          } catch (err) {
+            console.error('Failed to send order ready email:', err);
+          }
+        }, 2 * 60 * 1000);
+      } catch (err) {
+        console.error('Failed to send confirmation email:', err);
+      }
+    }
 
     // console.log(`SUCCESS! Sales ID: ${salesId}`);
     res.status(201).json({ message: 'Order successfully added', salesId, totalPrice });
