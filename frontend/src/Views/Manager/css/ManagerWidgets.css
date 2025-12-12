@@ -140,3 +140,68 @@ input:focus, select:focus {
 .btn:disabled:hover {
   box-shadow: none !important;
 }
+
+/* Add to ManagerWidgets.css */
+
+/* Scrollable table container for TopSellingDrinks */
+.scrollable-table-container {
+  max-height: 350px;
+  overflow-y: auto;
+  background: var(--bg-darkest);
+  border-radius: 8px;
+  border: 1px solid var(--border-blue);
+  margin-top: 1rem;
+}
+
+/* Custom scrollbar styling for dark theme */
+.scrollable-table-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollable-table-container::-webkit-scrollbar-track {
+  background: var(--bg-dark);
+  border-radius: 4px;
+}
+
+.scrollable-table-container::-webkit-scrollbar-thumb {
+  background: var(--blue-600);
+  border-radius: 4px;
+}
+
+.scrollable-table-container::-webkit-scrollbar-thumb:hover {
+  background: var(--blue-500);
+}
+
+/* Table row styling for scrollable container */
+.scrollable-table-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--border-blue);
+  align-items: center;
+  transition: background-color 0.2s ease;
+}
+
+.scrollable-table-row:nth-child(even) {
+  background: var(--bg-dark);
+}
+
+.scrollable-table-row:hover {
+  background: var(--blue-900);
+}
+
+/* Header for scrollable table */
+.scrollable-table-header {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  background: var(--blue-800);
+  color: var(--text-white);
+  font-weight: 600;
+  border-radius: 8px 8px 0 0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}

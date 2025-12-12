@@ -107,16 +107,6 @@ function ProductUsageReport() {
               </div>
             ))}
           </div>
-
-          <div style={{ 
-            background: 'var(--blue-900)', 
-            padding: '1.5rem', 
-            textAlign: 'center',
-            color: 'var(--text-light)',
-            fontStyle: 'italic'
-          }}>
-            Report generated successfully.
-          </div>
         </div>
       )}
     </div>
