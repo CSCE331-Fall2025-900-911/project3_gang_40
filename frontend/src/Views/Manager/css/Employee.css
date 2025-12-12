@@ -1,7 +1,7 @@
 /* Employee Management Page Styles */
 
 .employee-page {
-  padding: 2rem;
+  padding: 30px;
 }
 
 .employee-header {
@@ -11,11 +11,7 @@
   margin-bottom: 2rem;
 }
 
-.employee-header h1 {
-  margin: 0;
-  color: #333;
-  font-size: 2rem;
-}
+
 
 .exit-button {
   padding: 0.5rem 1rem;
@@ -103,21 +99,17 @@
   width: 100%;
   border-collapse: collapse;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  background-color: white;
-  border-radius: 8px;
-  overflow: hidden;
 }
 
-.employee-table thead {
-  background-color: #f5f5f5;
+.employee-table th,
+.employee-table td {
+  border: 1px solid #ccc;
+  padding: 10px;
 }
 
 .employee-table th {
-  padding: 1rem;
-  text-align: left;
-  border-bottom: 2px solid #ddd;
-  font-weight: 600;
-  color: #333;
+  background-color: #343a40;
+  color: white;
 }
 
 .employee-table tbody tr {
@@ -131,7 +123,7 @@
 
 .employee-table td {
   padding: 1rem;
-  color: #555;
+  color: white;
 }
 
 .empty-state {

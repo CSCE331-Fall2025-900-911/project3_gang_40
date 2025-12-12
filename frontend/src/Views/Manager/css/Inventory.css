@@ -99,7 +99,8 @@
 }
 
 .inventory-edit-btn {
-  background-color: #ffc107;
+  background-color: #007bff;
+  color: white;
   border: none;
   padding: 6px 12px;
   border-radius: 6px;
@@ -107,7 +108,7 @@
 }
 
 .inventory-edit-btn:hover {
-  background-color: #d39e00;
+  background-color: #0056b3;
 }
 
 .delete-btn {

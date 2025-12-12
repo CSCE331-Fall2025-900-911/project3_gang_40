@@ -90,34 +90,18 @@ function TopSellingDrinks() {
 
       {!loading && !error && topSellers.length > 0 && (
         <div>
-          {/* Top Sellers List */}
-          <div className="report-table" style={{ marginBottom: '1rem' }}>
-            <div style={{ 
-              display: 'grid', 
-              gridTemplateColumns: '2fr 1fr 1fr', 
-              gap: '1rem',
-              padding: '1rem',
-              background: 'var(--blue-800)',
-              color: 'var(--text-white)',
-              fontWeight: '600'
-            }}>
+          <div className="scrollable-table-container">
+            <div className="scrollable-table-header">
               <div>Drink</div>
               <div>Quantity Sold</div>
               <div>Revenue</div>
             </div>
             {topSellers.map((drink, index) => {
-              const revenue = Number(drink.total_revenue || 0); 
-              const quantity = Number(drink.quantity_sold || 0);  
+              const revenue = Number(drink.total_revenue || 0);
+              const quantity = Number(drink.quantity_sold || 0);
               
               return (
-                <div key={drink.drink_name || index} style={{ 
-                  display: 'grid',
-                  gridTemplateColumns: '2fr 1fr 1fr',
-                  gap: '1rem',
-                  padding: '1rem',
-                  borderBottom: '1px solid var(--border-blue)',
-                  alignItems: 'center'
-                }}>
+                <div key={drink.drink_name || index} className="scrollable-table-row">
                   <div style={{ fontWeight: '500' }}>
                     <span style={{ color: 'var(--blue-400)' }}>{index + 1}.</span> {drink.drink_name}
                   </div>
@@ -132,13 +116,14 @@ function TopSellingDrinks() {
             })}
           </div>
 
-          {/* Summary */}
+          {/* Summary stays outside scrollable area */}
           <div style={{ 
             background: 'var(--blue-900)', 
             padding: '1.5rem', 
             borderRadius: '8px',
             textAlign: 'center',
-            color: 'var(--text-white)'
+            color: 'var(--text-white)',
+            marginTop: '1rem'
           }}>
             <div style={{ fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>
               Total Period Summary:
@@ -149,6 +134,7 @@ function TopSellingDrinks() {
           </div>
         </div>
       )}
+
     </div>
   );
 }

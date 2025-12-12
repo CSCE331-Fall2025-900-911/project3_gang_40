@@ -269,7 +269,7 @@ function Employee({ onBack }) {
                 key={employee.employee_id}
                 onClick={() => setSelectedEmployeeId(employee.employee_id)}
                 style={{
-                  backgroundColor: selectedEmployeeId === employee.employee_id ? '#d6ebff' : 'white',
+                  backgroundColor: selectedEmployeeId === employee.employee_id ? '#27333eff' : 'black',
                   cursor: 'pointer'
                 }}
               >

@@ -50,6 +50,13 @@ function XReport() {
       >
         {loading ? 'Generating...' : 'Generate X-Report'}
       </button>
+      
+      <div style={{ textAlign: 'center' }}>
+        <p style={{ marginTop: '1rem', color: 'var(--text-muted)', fontSize: '0.95rem' }}>
+          This will mark today's sales as reported
+        </p>
+      </div>
+      
 
       {error && <div className="error">{error}</div>}
 

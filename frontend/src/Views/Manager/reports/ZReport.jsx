@@ -64,10 +64,6 @@ function ZReport() {
             </div>
           </div>
         </div>
-        
-        <div style={{ marginTop: '1.5rem', textAlign: 'center' }}>
-          <button className="btn" onClick={() => window.location.reload()}>Generate New Z-Report</button>
-        </div>
       </div>
     );
   }
@@ -75,7 +71,7 @@ function ZReport() {
   return (
     <div className="widget-card">
       <h3 className="widget-title">Z-Report (End of Day Summary)</h3>
-      <div style={{ textAlign: 'center', margin: '3rem 0' }}>
+      <div style={{ textAlign: 'center' }}>
         <button className="btn" onClick={generateZReport} disabled={loading} style={{ 
           padding: '1.2rem 3rem', fontSize: '1.3rem', fontWeight: 'bold',
           background: 'var(--red-500)', minWidth: '250px'
