@@ -718,3 +718,66 @@
     -webkit-overflow-scrolling: touch;
   }
 }
+
+/* Tablet */
+@media (max-width: 768px) {
+  .login-card--large {
+    max-width: 100%;
+    padding: 3rem 2rem;
+    gap: 2rem;
+  }
+
+  .login-card--large .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .login-card--large .hero-subtitle {
+    font-size: 1.2rem;
+  }
+
+  .login-card--large .btn {
+    font-size: 1.2rem;
+    padding: 1rem 2rem;
+    min-height: 56px;
+  }
+
+  .login-card--large .boba-image {
+    width: 7rem;
+    height: 7rem;
+  }
+
+  .login-card--large .logo {
+    width: 4rem;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .login-card--large {
+    padding: 2.5rem 1.5rem;
+    gap: 1.5rem;
+  }
+
+  .login-card--large .hero-title {
+    font-size: 2rem;
+  }
+
+  .login-card--large .hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .login-card--large .btn {
+    font-size: 1rem;
+    padding: 0.85rem 1.5rem;
+    min-height: 50px;
+  }
+
+  .login-card--large .boba-image {
+    width: 5.5rem;
+    height: 5.5rem;
+  }
+
+  .login-card--large .logo {
+    width: 3rem;
+  }
+}
