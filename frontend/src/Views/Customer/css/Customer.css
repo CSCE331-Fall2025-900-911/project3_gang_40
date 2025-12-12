@@ -1559,6 +1559,81 @@ body {
   box-shadow: 0 6px 20px rgba(93, 173, 226, 0.3);
 }
 
+.card-form {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  border-radius: 15px;
+  background: rgba(248, 249, 250, 0.95);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  text-align: left;
+  animation: fadeInUp 0.3s ease;
+}
+
+.card-form h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.3rem;
+  color: #0f2027;
+  font-weight: 700;
+}
+
+.card-form-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.9rem;
+}
+
+.card-form-field label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 0.35rem;
+}
+
+.card-form-field input {
+  padding: 0.6rem 0.75rem;
+  border-radius: 10px;
+  border: 1px solid #d0d7de;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-form-field input:focus {
+  border-color: #5dade2;
+  box-shadow: 0 0 0 3px rgba(93, 173, 226, 0.2);
+}
+
+.card-form-row {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.card-form-row .card-form-field {
+  flex: 1;
+}
+
+.card-form .payment-btn.payment-card {
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.9rem 1.2rem;
+  font-size: 0.95rem;
+}
+
+.card-input {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .card-form {
+    padding: 1.2rem;
+  }
+
+  .card-form-row {
+    flex-direction: column;
+  }
+}
+
+
 /* ========== ANIMATIONS ========== */
 @keyframes fadeInDown {
   from {

@@ -64,7 +64,9 @@ const textKeys = {
   edit: 'Edit',
   delete: 'Delete',
   qty: 'Qty',
-  back: 'Back'
+  back: 'Back',
+  subTotal: 'Sub Total',
+  tax: 'Tax'
 };
 
 export default textKeys;
