@@ -190,8 +190,9 @@ function Cashier({ onBack }) {
             currentEmployee={currentEmployee}
             buttons={[
               { label: 'Exit', onClick: onBack },
+              { label: 'Cashier', onClick: () => setCurrentView('cashier') },
+              { label: 'Returns', onClick: () => setCurrentView('returns') },
               { label: 'Change Employee', onClick: () => setShowEmployeeModal(true) },
-              { label: 'Returns', onClick: handleReturnClick },
             ]}
           />
 
@@ -230,14 +231,7 @@ function Cashier({ onBack }) {
             />
           )}
 
-          {/* employee switcher modal */}
-          {showEmployeeModal && (
-            <EmployeeModal
-              employees={employees}
-              selectEmployee={(emp) => { setCurrentEmployee(emp); setShowEmployeeModal(false); }}
-              closeModal={() => setShowEmployeeModal(false)}
-            />
-          )}
+          
 
           {/* paymendt method modal */}
           {showPaymentModal && (
@@ -252,7 +246,24 @@ function Cashier({ onBack }) {
 
       {/* set to returns view */}
       {currentView === 'returns' && (
-        <Returns onBack={handleBack} currentEmployee={currentEmployee} />
+        <Returns
+          goTo={(view) => setCurrentView(view)}
+          onBack={onBack}
+          currentEmployee={currentEmployee}
+          setCurrentEmployee={setCurrentEmployee}
+          employees={employees}
+          showEmployeeModal={showEmployeeModal}
+          setShowEmployeeModal={setShowEmployeeModal}
+        />
+      )}
+
+      {/* employee switcher modal */}
+      {showEmployeeModal && (
+        <EmployeeModal
+          employees={employees}
+          selectEmployee={(emp) => { setCurrentEmployee(emp); setShowEmployeeModal(false); }}
+          closeModal={() => setShowEmployeeModal(false)}
+        />
       )}
     </>
   )

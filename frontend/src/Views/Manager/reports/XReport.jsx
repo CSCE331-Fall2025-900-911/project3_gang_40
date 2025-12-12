@@ -35,7 +35,7 @@ function XReport() {
 
   return (
     <div className="widget-card">
-      <h3 className="widget-title">X-Report (Today)</h3>
+      <h3 className="widget-title">X-Report</h3>
       
        <button 
         className="btn"

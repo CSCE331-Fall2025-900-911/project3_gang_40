@@ -3,7 +3,7 @@ import './Returns.css';
 import ReturnModal from './Modals/ReturnModal';
 import Sidebar from './Sidebar';
 
-function Returns({ onBack, currentEmployee }) {
+function Returns({ onBack, currentEmployee, goTo, setCurrentEmployee, employees, showEmployeeModal, setShowEmployeeModal  }) {
   // states to store sales details
   const [salesList, setSalesList] = useState([]);
   const [orderDetails, setOrderDetails] = useState([]);
@@ -69,7 +69,12 @@ function Returns({ onBack, currentEmployee }) {
       {/* Sidebar Navigation */}
       <Sidebar
         currentEmployee={currentEmployee}
-        buttons={[{ label: 'Cashier', onClick: onBack }]}
+        buttons={[
+          { label: 'Exit', onClick: onBack },
+          { label: 'Cashier', onClick: () => goTo('cashier') },
+          { label: 'Returns', onClick: () => goTo('returns') },
+          { label: 'Change Employee', onClick: () => setShowEmployeeModal(true) },
+        ]}
       />
 
 

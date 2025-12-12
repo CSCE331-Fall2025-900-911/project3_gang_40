@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import './css/Employee.css'
+import Sidebar from '../Cashier/Sidebar'
 
-function Employee({ onBack }) {
+function Employee({ onBack, goTo  }) {
     const [employees, setEmployees] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -198,159 +199,172 @@ function Employee({ onBack }) {
   return (
     <>
       <div className="employee-page">
-        <div className="employee-header">
-          <h1>Employee Management</h1>
-          <button onClick={onBack} className="exit-button">Exit</button>
-        </div>
 
-        {/* Add Employee inputs */}
-        <div className="add-employee-section">
-          <h3>Add Employee</h3>
-          <div className="add-employee-form">
-            <input
-              type="text"
-              placeholder="First Name"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-              className="form-input"
-            />
-            <input
-              type="text"
-              placeholder="Last Name"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-              className="form-input"
-            />
-            <select
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-              className="form-select"
-            >
-              <option value="Manager">Manager</option>
-              <option value="Cashier">Cashier</option>
-              <option value="Barista">Barista</option>
-            </select>
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="form-input"
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="form-input"
-            />
-            {/* Add Employee Button action */}
-            <button onClick={handleAddEmployee} className="add-button">
-              Add Employee
-            </button>
+        <Sidebar
+            currentEmployee={''}
+            buttons={[
+              { label: 'Exit', onClick: onBack },
+              { label: 'Main', onClick: () => goTo('manager') },
+              { label: 'Employee', onClick: () => goTo('employee') },
+              { label: 'Inventory', onClick: () => goTo('inventory') },
+            ]}
+          />
+        
+        <div>
+          <div className="employee-header">
+            <h1>Employee Management</h1>
           </div>
-        </div>
 
-        <table className="employee-table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Role</th>
-              <th>Email</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {employees.map((employee) => (
-              // employee row selection: stores selected employee ID
-              <tr 
-                key={employee.employee_id}
-                onClick={() => setSelectedEmployeeId(employee.employee_id)}
-                style={{
-                  backgroundColor: selectedEmployeeId === employee.employee_id ? '#27333eff' : 'black',
-                  cursor: 'pointer'
-                }}
+          {/* Add Employee inputs */}
+          <div className="add-employee-section">
+            <h3>Add Employee</h3>
+            <div className="add-employee-form">
+              <input
+                type="text"
+                placeholder="First Name"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                className="form-input"
+              />
+              <input
+                type="text"
+                placeholder="Last Name"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                className="form-input"
+              />
+              <select
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+                className="form-select"
               >
-                <td>{employee.employee_id}</td>
-                <td>{employee.first_name}</td>
-                <td>{employee.last_name}</td>
-                <td>{employee.role}</td>
-                <td>{employee.email}</td>
-                <td>
-                  <div className="action-buttons">
-                    {/* Edit button action: opens edit modal */}
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        openEditModal(employee);
-                      }}
-                      className="edit-btn"
-                    >
-                      Edit
-                    </button>
-                    {/* Delete button action: deletes employee with confirmation */}
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        deleteEmployee(employee);
-                      }}
-                      className="delete-btn"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-
-        {/* Edit Employee Modal */}
-        {editingEmployee && (
-          <div className="modal-overlay" onClick={() => setEditingEmployee(null)}>
-            <div className="modal" onClick={(e) => e.stopPropagation()}>
-              <h2>Edit Employee</h2>
-              <div className="modal-form">
-                <input
-                  type="text"
-                  placeholder="First Name"
-                  value={editFirstName}
-                  onChange={(e) => setEditFirstName(e.target.value)}
-                  className="form-input"
-                />
-                <input
-                  type="text"
-                  placeholder="Last Name"
-                  value={editLastName}
-                  onChange={(e) => setEditLastName(e.target.value)}
-                  className="form-input"
-                />
-                <select
-                  value={editRole}
-                  onChange={(e) => setEditRole(e.target.value)}
-                  className="form-select"
-                >
-                  <option value="Manager">Manager</option>
-                  <option value="Cashier">Cashier</option>
-                  <option value="Barista">Barista</option>
-                </select>
-                <input
-                  type="email"
-                  placeholder="Email"
-                  value={editEmail}
-                  onChange={(e) => setEditEmail(e.target.value)}
-                  className="form-input"
-                />
-              </div>
-              <div className="modal-actions">
-                <button onClick={saveEdit} className="save-btn">Save</button>
-                <button onClick={() => setEditingEmployee(null)} className="cancel-btn">Cancel</button>
-              </div>
+                <option value="Manager">Manager</option>
+                <option value="Cashier">Cashier</option>
+                <option value="Barista">Barista</option>
+              </select>
+              <input
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="form-input"
+              />
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="form-input"
+              />
+              {/* Add Employee Button action */}
+              <button onClick={handleAddEmployee} className="add-button">
+                Add Employee
+              </button>
             </div>
           </div>
-        )}
+
+          <table className="employee-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Role</th>
+                <th>Email</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {employees.map((employee) => (
+                // employee row selection: stores selected employee ID
+                <tr 
+                  key={employee.employee_id}
+                  onClick={() => setSelectedEmployeeId(employee.employee_id)}
+                  style={{
+                    backgroundColor: selectedEmployeeId === employee.employee_id ? '#27333eff' : 'black',
+                    cursor: 'pointer'
+                  }}
+                >
+                  <td>{employee.employee_id}</td>
+                  <td>{employee.first_name}</td>
+                  <td>{employee.last_name}</td>
+                  <td>{employee.role}</td>
+                  <td>{employee.email}</td>
+                  <td>
+                    <div className="action-buttons">
+                      {/* Edit button action: opens edit modal */}
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          openEditModal(employee);
+                        }}
+                        className="edit-btn"
+                      >
+                        Edit
+                      </button>
+                      {/* Delete button action: deletes employee with confirmation */}
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          deleteEmployee(employee);
+                        }}
+                        className="delete-btn"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          {/* Edit Employee Modal */}
+          {editingEmployee && (
+            <div className="modal-overlay" onClick={() => setEditingEmployee(null)}>
+              <div className="modal" onClick={(e) => e.stopPropagation()}>
+                <h2>Edit Employee</h2>
+                <div className="modal-form">
+                  <input
+                    type="text"
+                    placeholder="First Name"
+                    value={editFirstName}
+                    onChange={(e) => setEditFirstName(e.target.value)}
+                    className="form-input"
+                  />
+                  <input
+                    type="text"
+                    placeholder="Last Name"
+                    value={editLastName}
+                    onChange={(e) => setEditLastName(e.target.value)}
+                    className="form-input"
+                  />
+                  <select
+                    value={editRole}
+                    onChange={(e) => setEditRole(e.target.value)}
+                    className="form-select"
+                  >
+                    <option value="Manager">Manager</option>
+                    <option value="Cashier">Cashier</option>
+                    <option value="Barista">Barista</option>
+                  </select>
+                  <input
+                    type="email"
+                    placeholder="Email"
+                    value={editEmail}
+                    onChange={(e) => setEditEmail(e.target.value)}
+                    className="form-input"
+                  />
+                </div>
+                <div className="modal-actions">
+                  <button onClick={saveEdit} className="save-btn">Save</button>
+                  <button onClick={() => setEditingEmployee(null)} className="cancel-btn">Cancel</button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+        
       </div>
     </>
   )

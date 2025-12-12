@@ -118,7 +118,6 @@ body > #root {
    Sidebar (Left Column) - Enhanced
 =============================== */
 .sidebar {
-  flex: 1;
   min-width: 256px;
   background: linear-gradient(to bottom, var(--blue-900), var(--bg-darkest));
   border-right: 1px solid var(--border-blue);
