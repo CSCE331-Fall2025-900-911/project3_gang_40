@@ -6,6 +6,12 @@ import textKeys from './components/text';
 
 function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem, translatedTexts, onOrderComplete, email, largeMode, }) {
   const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [selectedPayment, setSelectedPayment] = useState(null);
+  const [showCardForm, setShowCardForm] = useState(false);
+  const [cardNumber, setCardNumber] = useState("");
+  const [cardName, setCardName] = useState("");
+  const [cardExpiry, setCardExpiry] = useState("");
+  const [cardCvv, setCardCvv] = useState("");
 
   const calculateItemTotal = (item) => {
   let total = Number(item.drink.base_price);
@@ -143,6 +149,8 @@ function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem, tra
             </div>
 
             <div className="cart-total">
+              <h3>{translatedTexts.subTotal || textKeys.subTotal}: ${(calculateCartTotal() / 1.0825).toFixed(2)}</h3>
+              <h3>{translatedTexts.tax || textKeys.tax}: ${(calculateCartTotal() - calculateCartTotal() / 1.0825).toFixed(2)}</h3>
               <h3>{translatedTexts.total || textKeys.total}: ${calculateCartTotal()}</h3>
             </div>
 
@@ -169,20 +177,90 @@ function Cart({ cart, setCart, onBack, currentStep, onStepClick, onEditItem, tra
               <button
                 className="payment-btn payment-cash"
                 onClick={() => {
-                  handleCheckout('Cash')
-                 }}
+                  setSelectedPayment("Cash");
+                  setShowCardForm(false);
+                  handleCheckout("Cash");
+                }}
               >
                 {translatedTexts.cash || textKeys.cash}
               </button>
+
               <button
                 className="payment-btn payment-card"
                 onClick={() => {
-                  handleCheckout('Card')
-                 }}
+                  setSelectedPayment("Card");
+                  setShowCardForm(true);  // show fake card inputs
+                }}
               >
                 {translatedTexts.card || textKeys.card}
               </button>
             </div>
+
+            {showCardForm && selectedPayment === "Card" && (
+              <div className="card-form">
+                <h3>Enter Card Details</h3>
+
+                <div className="card-form-field">
+                  <label>Card Number</label>
+                  <input
+                    type="text"
+                    className="card-input"
+                    value={cardNumber}
+                    onChange={(e) => setCardNumber(e.target.value)}
+                    placeholder="1234 5678 9012 3456"
+                  />
+                </div>
+
+                <div className="card-form-field">
+                  <label>Name on Card</label>
+                  <input
+                    type="text"
+                    className="card-input"
+                    value={cardName}
+                    onChange={(e) => setCardName(e.target.value)}
+                    placeholder="Customer Name"
+                  />
+                </div>
+
+                <div className="card-form-row">
+                  <div className="card-form-field">
+                    <label>Expiry</label>
+                    <input
+                      type="text"
+                      className="card-input"
+                      value={cardExpiry}
+                      onChange={(e) => setCardExpiry(e.target.value)}
+                      placeholder="MM/YY"
+                    />
+                  </div>
+                  <div className="card-form-field">
+                    <label>CVV</label>
+                    <input
+                      type="password"
+                      className="card-input"
+                      value={cardCvv}
+                      onChange={(e) => setCardCvv(e.target.value)}
+                      placeholder="123"
+                    />
+                  </div>
+                </div>
+
+                <button
+                  className="payment-btn payment-card"
+                  onClick={() => {
+                    // Optionally add simple fake validation here
+                    if (!cardNumber || !cardName || !cardExpiry || !cardCvv) {
+                      alert("Please fill in all card fields.");
+                      return;
+                    }
+                    handleCheckout("Card");
+                  }}
+                >
+                  Pay with Card
+                </button>
+              </div>
+            )}
+
 
             <button
               className="payment-cancel-btn"
