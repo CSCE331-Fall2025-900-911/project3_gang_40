@@ -655,9 +655,9 @@
   }
 
   .bottom-left-buttons {
-    bottom: 12px;
-    left: 12px;
-    gap: 8px;
+    bottom: 130px;
+    left: 6px;
+    gap: 200px;
   }
 
   .translate-widget-container .gt-btn {
