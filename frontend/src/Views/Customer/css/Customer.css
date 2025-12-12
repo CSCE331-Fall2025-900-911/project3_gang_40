@@ -3,7 +3,7 @@
 .customer-container {
   font-size: 16px;
   transition: all 0.3s ease;
-  
+
   /* Scaling variables */
   --font-h1: 3.5rem;
   --font-h2: 2.2rem;
@@ -30,16 +30,18 @@
 
 /* FORCE SCALING - Higher Specificity */
 .customer-page--large .drinks-header h1,
-.customer-container--large .drinks-header h1 { 
-  font-size: var(--font-h1) !important; 
+.customer-container--large .drinks-header h1 {
+  font-size: var(--font-h1) !important;
 }
+
 .customer-page--large .drink-container h2,
-.customer-container--large .drink-container h2 { 
-  font-size: var(--font-h2) !important; 
+.customer-container--large .drink-container h2 {
+  font-size: var(--font-h2) !important;
 }
+
 .customer-page--large .drinks-header p,
-.customer-container--large .drinks-header p { 
-  font-size: var(--font-body) !important; 
+.customer-container--large .drinks-header p {
+  font-size: var(--font-body) !important;
 }
 
 .customer-page--large .drinks-bar button,
@@ -65,12 +67,13 @@
 }
 
 .customer-page--large .drink-name,
-.customer-container--large .drink-name { 
-  font-size: 1.6rem !important; 
+.customer-container--large .drink-name {
+  font-size: 1.6rem !important;
 }
+
 .customer-page--large .drink-price,
-.customer-container--large .drink-price { 
-  font-size: 1.9rem !important; 
+.customer-container--large .drink-price {
+  font-size: 1.9rem !important;
 }
 
 .customer-page--large .customer-navbar,
@@ -79,16 +82,17 @@
 }
 
 .customer-page--large .navbar-step,
-.customer-container--large .navbar-step { 
-  font-size: 1.25rem !important; 
-  padding: 1.2rem 2rem !important; 
+.customer-container--large .navbar-step {
+  font-size: 1.25rem !important;
+  padding: 1.2rem 2rem !important;
 }
+
 .customer-page--large .navbar-cart-btn,
 .customer-container--large .navbar-cart-btn,
 .customer-page--large .navbar-exit-btn,
-.customer-container--large .navbar-exit-btn { 
-  padding: 1.4rem 2.4rem !important; 
-  font-size: 1.3rem !important; 
+.customer-container--large .navbar-exit-btn {
+  padding: 1.4rem 2.4rem !important;
+  font-size: 1.3rem !important;
 }
 
 /* ========== CUSTOMIZATION LARGE MODE ========== */
@@ -105,12 +109,13 @@
 
 /* FORCE CUSTOMIZATION SCALING */
 .customization-page--large .customization-header h2,
-.customization-container--large .customization-header h2 { 
-  font-size: 3.5rem !important; 
+.customization-container--large .customization-header h2 {
+  font-size: 3.5rem !important;
 }
+
 .customization-page--large .customization-header p,
-.customization-container--large .customization-header p { 
-  font-size: 2rem !important; 
+.customization-container--large .customization-header p {
+  font-size: 2rem !important;
 }
 
 .customization-page--large .size-btn,
@@ -172,16 +177,18 @@
 
 /* FORCE TOPPING SCALING */
 .topping-page--large .topping-header h2,
-.topping-container--large .topping-header h2 { 
-  font-size: 3.5rem !important; 
+.topping-container--large .topping-header h2 {
+  font-size: 3.5rem !important;
 }
+
 .topping-page--large .topping-header p,
-.topping-container--large .topping-header p { 
-  font-size: 2.2rem !important; 
+.topping-container--large .topping-header p {
+  font-size: 2.2rem !important;
 }
+
 .topping-page--large .topping-summary,
-.topping-container--large .topping-summary { 
-  font-size: 1.8rem !important; 
+.topping-container--large .topping-summary {
+  font-size: 1.8rem !important;
 }
 
 .topping-page--large .topping-option,
@@ -197,12 +204,13 @@
 }
 
 .topping-page--large .topping-name,
-.topping-container--large .topping-name { 
-  font-size: 2rem !important; 
+.topping-container--large .topping-name {
+  font-size: 2rem !important;
 }
+
 .topping-page--large .topping-price,
-.topping-container--large .topping-price { 
-  font-size: 2rem !important; 
+.topping-container--large .topping-price {
+  font-size: 2rem !important;
   min-width: 120px !important;
 }
 
@@ -241,11 +249,12 @@
 
 /* FORCE CART SCALING */
 .cart-page--large .cart-header h2,
-.cart-view--large .cart-header h2 { 
-  font-size: 3.5rem !important; 
+.cart-view--large .cart-header h2 {
+  font-size: 3.5rem !important;
 }
+
 .cart-page--large .cart-back-btn,
-.cart-view--large .cart-back-btn { 
+.cart-view--large .cart-back-btn {
   padding: 1.5rem 2.5rem !important;
   font-size: 1.8rem !important;
 }
@@ -257,22 +266,24 @@
 }
 
 .cart-page--large .cart-item h3,
-.cart-view--large .cart-item h3 { 
-  font-size: 2.2rem !important; 
+.cart-view--large .cart-item h3 {
+  font-size: 2.2rem !important;
 }
+
 .cart-page--large .cart-item-customization p,
-.cart-view--large .cart-item-customization p { 
-  font-size: 1.8rem !important; 
+.cart-view--large .cart-item-customization p {
+  font-size: 1.8rem !important;
 }
+
 .cart-page--large .cart-item-quantity,
-.cart-view--large .cart-item-quantity { 
+.cart-view--large .cart-item-quantity {
   font-size: 1.8rem !important;
   padding: 1rem 1.5rem !important;
 }
 
 .cart-page--large .cart-item-price,
-.cart-view--large .cart-item-price { 
-  font-size: 2.5rem !important; 
+.cart-view--large .cart-item-price {
+  font-size: 2.5rem !important;
 }
 
 .cart-page--large .edit-btn,
@@ -286,9 +297,10 @@
 }
 
 .cart-page--large .cart-total h3,
-.cart-view--large .cart-total h3 { 
-  font-size: 3rem !important; 
+.cart-view--large .cart-total h3 {
+  font-size: 3rem !important;
 }
+
 .cart-page--large .cart-total,
 .cart-view--large .cart-total {
   padding: 2rem 3rem !important;
@@ -309,26 +321,31 @@
 .cart-page--large .payment-modal-overlay--large {
   font-size: 24px !important;
 }
+
 .cart-page--large .payment-modal,
 .cart-page--large .payment-modal--large {
   padding: 4rem !important;
   min-width: 500px !important;
   max-width: 700px !important;
 }
+
 .cart-page--large .payment-modal h2,
-.cart-page--large .payment-modal--large h2 { 
-  font-size: 3rem !important; 
+.cart-page--large .payment-modal--large h2 {
+  font-size: 3rem !important;
 }
+
 .cart-page--large .payment-modal p,
-.cart-page--large .payment-modal--large p { 
-  font-size: 2.5rem !important; 
+.cart-page--large .payment-modal--large p {
+  font-size: 2.5rem !important;
 }
+
 .cart-page--large .payment-btn,
 .cart-page--large .payment-modal--large .payment-btn {
   padding: 2.5rem 3rem !important;
   font-size: 2.2rem !important;
   min-height: 6rem !important;
 }
+
 .cart-page--large .payment-cancel-btn,
 .cart-page--large .payment-modal--large .payment-cancel-btn {
   padding: 2rem !important;
@@ -418,14 +435,14 @@
 .customization-page,
 .topping-page,
 .cart-page {
-  padding-bottom: 110px !important; 
+  padding-bottom: 110px !important;
 }
 
 .customer-page--large,
 .customization-page--large,
 .topping-page--large,
 .cart-page--large {
-  padding-bottom: 180px !important; 
+  padding-bottom: 180px !important;
 }
 
 .customization-actions,
@@ -440,7 +457,7 @@
 .topping-container--large .topping-actions,
 .cart-page--large .cart-actions,
 .cart-view--large .cart-actions {
-  margin-bottom: 4rem !important; 
+  margin-bottom: 4rem !important;
 }
 
 .back-btn,
@@ -458,7 +475,7 @@
 .topping-page--large .add-to-cart-btn,
 .customization-page--large .back-btn,
 .customization-page--large .next-btn {
-  margin-bottom: 2.5rem !important;  
+  margin-bottom: 2.5rem !important;
 }
 
 /* ========== WEATHER LARGE MODE ========== */
@@ -475,13 +492,13 @@
 .weather-display--large {
   font-size: 2.8rem !important;
   font-weight: 800 !important;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.5) !important;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5) !important;
   letter-spacing: 1px !important;
 }
 
 .weather-error,
 .weather-loading {
-  color: rgba(255,255,255,0.8);
+  color: rgba(255, 255, 255, 0.8);
   font-size: 1rem;
 }
 
@@ -489,31 +506,32 @@
 .weather-loading--large {
   font-size: 2rem !important;
   font-weight: 600 !important;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.5) !important;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5) !important;
 }
 
 /* ========== THANK YOU LARGE MODE ========== */
-.thank-you-container h1 { 
-  font-size: 4rem;  /* Normal */
-  color: var(--blue-500) !important;  
-  text-shadow: 3px 3px 8px rgba(0,0,0,0.7) !important;
+.thank-you-container h1 {
+  font-size: 4rem;
+  /* Normal */
+  color: var(--blue-500) !important;
+  text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.7) !important;
   margin-bottom: 2rem !important;
 }
 
-.thank-you-container p { 
-  font-size: 1.8rem;  
+.thank-you-container p {
+  font-size: 1.8rem;
   line-height: 1.4 !important;
   margin-bottom: 1.5rem !important;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.5) !important;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5) !important;
 }
 
-.thank-you-container p strong { 
-  font-size: 2.2rem; 
-  color: var(--blue-400) !important;  
+.thank-you-container p strong {
+  font-size: 2.2rem;
+  color: var(--blue-400) !important;
 }
 
 .back-to-login-btn {
-  padding: 1.5rem 3rem !important; 
+  padding: 1.5rem 3rem !important;
   font-size: 1.5rem !important;
   font-weight: 700 !important;
   border-radius: 30px !important;
@@ -531,31 +549,32 @@
 
 /* LARGE MODE still scales SIZE only */
 .thank-you-page--large .thank-you-container h1,
-.thank-you-container--large h1 { 
-  font-size: 6rem !important;  
+.thank-you-container--large h1 {
+  font-size: 6rem !important;
 }
 
 .thank-you-page--large .thank-you-container p,
-.thank-you-container--large p { 
+.thank-you-container--large p {
   font-size: 2.5rem !important;
 }
 
 .thank-you-page--large .thank-you-container p strong,
-.thank-you-container--large p strong { 
-  font-size: 3rem !important;  
+.thank-you-container--large p strong {
+  font-size: 3rem !important;
 }
 
 .thank-you-page--large .back-to-login-btn,
 .thank-you-container--large .back-to-login-btn {
-  padding: 2.5rem 5rem !important;  
-  font-size: 2.5rem !important;   
+  padding: 2.5rem 5rem !important;
+  font-size: 2.5rem !important;
   min-height: 6rem !important;
   min-width: 400px !important;
 }
 
 /* ========== PAYMENT MODAL - FIX Z-INDEX ========== */
 .payment-modal-overlay {
-  z-index: 1000 !important;  /* HIGHER than navbar (100) */
+  z-index: 1000 !important;
+  /* HIGHER than navbar (100) */
   position: fixed !important;
 }
 
@@ -564,7 +583,8 @@
 }
 
 .payment-modal {
-  z-index: 1001 !important;  /* Even higher */
+  z-index: 1001 !important;
+  /* Even higher */
   position: relative !important;
 }
 
@@ -578,8 +598,10 @@
 .cart-page,
 .cart-view {
   height: 100vh !important;
-  overflow-y: auto !important;  /* FULL PAGE SCROLLS */
-  padding-bottom: 150px !important;  /* Space for navbar */
+  overflow-y: auto !important;
+  /* FULL PAGE SCROLLS */
+  padding-bottom: 150px !important;
+  /* Space for navbar */
 }
 
 /* LARGE MODE: Extra padding for tall navbar */
@@ -591,13 +613,16 @@
 /* REMOVE scroll from cart-items container */
 .cart-page--large .cart-items,
 .cart-view--large .cart-items {
-  overflow-y: visible !important;  /* NO INTERNAL SCROLL */
-  max-height: none !important;    /* Full height available */
+  overflow-y: visible !important;
+  /* NO INTERNAL SCROLL */
+  max-height: none !important;
+  /* Full height available */
 }
 
 /* Ensure cart-items don't force internal scroll */
 .cart-items {
-  flex: none !important;  /* Don't flex-grow into scroll */
+  flex: none !important;
+  /* Don't flex-grow into scroll */
   max-height: none !important;
 }
 
@@ -605,22 +630,27 @@
 .topping-page,
 .topping-container {
   height: 100vh !important;
-  overflow-y: auto !important;  /* FULL PAGE SCROLLS */
-  padding-bottom: 120px !important;  /* Space for navbar */
+  overflow-y: auto !important;
+  /* FULL PAGE SCROLLS */
+  padding-bottom: 120px !important;
+  /* Space for navbar */
 }
 
 /* REMOVE scroll from toppings-list container */
 .topping-page--large .toppings-list,
 .topping-container--large .toppings-list {
-  overflow-y: visible !important;  /* NO INTERNAL SCROLL */
-  max-height: none !important;    /* Full height */
+  overflow-y: visible !important;
+  /* NO INTERNAL SCROLL */
+  max-height: none !important;
+  /* Full height */
   gap: 1.5rem !important;
   padding: 2.5rem !important;
 }
 
 /* Ensure toppings take available space but don't scroll internally */
 .toppings-list {
-  flex: none !important;  /* Don't flex-grow */
+  flex: none !important;
+  /* Don't flex-grow */
   max-height: none !important;
 }
 
@@ -628,7 +658,8 @@
 .topping-page--large .topping-option,
 .topping-container--large .topping-option {
   padding: 2rem 2.5rem !important;
-  min-height: 4rem !important;  /* Slightly smaller for more visible */
+  min-height: 4rem !important;
+  /* Slightly smaller for more visible */
   margin-bottom: 1rem !important;
 }
 
@@ -944,7 +975,8 @@ body {
 /* drink button image styles */
 .drink-image-wrapper {
   width: 100%;
-  height: 150px; /* Adjust as needed */
+  height: 150px;
+  /* Adjust as needed */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -952,13 +984,14 @@ body {
   border-radius: 12px;
   margin-bottom: 1rem;
   background: rgba(255, 255, 255, 0.7);
-  border: 1px solid rgba(0,0,0,0.05);
+  border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .drink-btn-image {
   width: 100%;
   height: 100%;
-  object-fit: contain; /* keeps full image visible */
+  object-fit: contain;
+  /* keeps full image visible */
   transition: transform 0.3s ease;
 }
 
@@ -1251,7 +1284,7 @@ body {
   font-weight: 600;
 }
 
-.topping-option input[type="radio"]:checked + .topping-name {
+.topping-option input[type="radio"]:checked+.topping-name {
   color: #007bff;
   font-weight: 700;
 }
@@ -1565,6 +1598,7 @@ body {
     opacity: 0;
     transform: translateY(-30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -1576,6 +1610,7 @@ body {
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -1586,6 +1621,7 @@ body {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -1774,7 +1810,8 @@ body {
   transform: translateX(-50%);
   z-index: 300;
   pointer-events: none;
-  animation: slideUpFade 3.5s ease forwards; /* increased duration */
+  animation: slideUpFade 3.5s ease forwards;
+  /* increased duration */
   width: 70%;
   max-width: 90%;
   display: flex;
@@ -1802,14 +1839,17 @@ body {
     opacity: 0;
     transform: translate(-50%, 3%) scale(0.96);
   }
+
   25% {
     opacity: 1;
     transform: translate(-50%, -2.5%) scale(1.03);
   }
+
   80% {
     opacity: 1;
     transform: translate(-50%, -8%) scale(1);
   }
+
   100% {
     opacity: 0;
     transform: translate(-50%, -12%) scale(0.98);
@@ -1867,6 +1907,115 @@ body {
   margin: 10px;
 }
 
-.login-page{
+.login-page {
   padding: 0;
+}
+
+
+/* ========== MOBILE LARGE MODE CAPS ========== */
+@media (max-width: 480px) {
+
+  .customer-page--large,
+  .customer-container--large,
+  .customization-page--large,
+  .customization-container--large,
+  .topping-page--large,
+  .topping-container--large,
+  .cart-page--large,
+  .cart-view--large,
+  .thank-you-page--large,
+  .thank-you-container--large {
+    font-size: 18px !important;
+
+    --font-h1: 2.5rem !important;
+    --font-h2: 1.8rem !important;
+    --font-body: 1rem !important;
+    --btn-padding: 0.8rem 1.5rem !important;
+    --drink-grid-min: 150px !important;
+    --drink-height: 120px !important;
+    --navbar-padding: 15px 20px !important;
+  }
+
+  /* Adjust buttons in large mode */
+  .customer-page--large .back-btn,
+  .customer-page--large .next-btn,
+  .customer-page--large .add-to-cart-btn,
+  .customization-page--large .back-btn,
+  .customization-page--large .next-btn,
+  .customization-page--large .add-to-cart-btn,
+  .topping-page--large .back-btn,
+  .topping-page--large .add-to-cart-btn,
+  .cart-page--large .checkout-btn,
+  .cart-view--large .checkout-btn {
+    padding: 1rem 2rem !important;
+    font-size: 1rem !important;
+    min-height: 45px !important;
+    min-width: auto !important;
+  }
+
+  /* Limit hero and header text */
+  .customer-page--large .drinks-header h1,
+  .customization-page--large .customization-header h2,
+  .topping-page--large .topping-header h2,
+  .cart-page--large .cart-header h2,
+  .thank-you-page--large .thank-you-container h1 {
+    font-size: 2rem !important;
+  }
+
+  .customer-page--large .drinks-header p,
+  .customization-page--large .customization-header p,
+  .topping-page--large .topping-header p,
+  .cart-page--large .cart-header p,
+  .thank-you-page--large .thank-you-container p {
+    font-size: 1rem !important;
+  }
+
+  /* Reduce image/button sizes */
+  .customer-page--large .drink-image-wrapper,
+  .customer-page--large .drink-item-btn,
+  .customization-page--large .size-btn,
+  .customization-page--large .sweetness-btn,
+  .customization-page--large .ice-btn,
+  .topping-page--large .topping-option {
+    min-height: auto !important;
+    height: auto !important;
+    padding: 1rem !important;
+  }
+
+
+  @media (max-width: 480px) {
+    .customer-navbar.customer-navbar--large {
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      justify-content: center !important;
+      text-align: center !important;
+      gap: 0.5rem !important;
+      padding: 0.5rem 0.5rem !important;
+      font-size: 1rem !important;
+      height: auto !important;
+    }
+
+    .customer-navbar.customer-navbar--large>* {
+      width: 100% !important;
+      display: flex !important;
+      justify-content: center !important;
+      padding-right: 2em;
+    }
+
+    .customer-navbar.customer-navbar--large button {
+      font-size: 0.9rem !important;
+      padding: 0.5rem 1rem !important;
+      min-width: auto !important;
+      min-height: auto !important;
+    }
+
+    .customer-navbar.customer-navbar--large .navbar-actions {
+      display: flex;
+      gap: 0.5rem;
+      margin-right: 1.5em;
+    }
+
+
+  }
 }
