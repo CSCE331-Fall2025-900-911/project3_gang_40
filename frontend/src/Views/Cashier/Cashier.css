@@ -647,6 +647,8 @@ button:focus-visible {
   max-height: 85vh;
   overflow-y: auto;
   box-shadow: var(--shadow-modal);
+  align-items: center; 
+  text-align: center;   
 }
 
 .cashier-modal h2,

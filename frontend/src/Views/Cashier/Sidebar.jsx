@@ -14,7 +14,7 @@ function Sidebar({ buttons = [], currentEmployee }) {
       </div>
       {/* shows current employee if one is signed in */}
       {currentEmployee ? (
-        <div>
+        <div style={{ textAlign: 'center', marginBottom: '1em' }}>
           Signed in as: <br />
           <strong>{currentEmployee.first_name} {currentEmployee.last_name}</strong>
           <br />({currentEmployee.role})

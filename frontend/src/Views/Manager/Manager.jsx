@@ -24,6 +24,7 @@ function Manager({ onBack }) {
             currentEmployee={''}
             buttons={[
               { label: 'Exit', onClick: onBack },
+              { label: 'Main', onClick: () => setCurrentView('manager') },
               { label: 'Employee', onClick: () => setCurrentView('employee') },
               { label: 'Inventory', onClick: () => setCurrentView('inventory') },
             ]}
@@ -59,8 +60,18 @@ function Manager({ onBack }) {
 
       )}
       
-      {currentView === 'employee' && <Employee onBack={() => setCurrentView('manager')}/>}
-      {currentView === 'inventory' && <Inventory onBack={() => setCurrentView('manager')}/>}
+      {currentView === 'employee' && (
+        <Employee
+          goTo={(view) => setCurrentView(view)}
+          onBack={onBack}
+        />
+      )}
+      {currentView === 'inventory' && (
+        <Inventory
+          goTo={(view) => setCurrentView(view)}
+          onBack={onBack}
+        />
+      )}
     </>
   )
 }

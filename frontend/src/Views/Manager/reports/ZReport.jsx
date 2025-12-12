@@ -70,7 +70,7 @@ function ZReport() {
 
   return (
     <div className="widget-card">
-      <h3 className="widget-title">Z-Report (End of Day Summary)</h3>
+      <h3 className="widget-title">Z-Report</h3>
       <div style={{ textAlign: 'center' }}>
         <button className="btn" onClick={generateZReport} disabled={loading} style={{ 
           padding: '1.2rem 3rem', fontSize: '1.3rem', fontWeight: 'bold',

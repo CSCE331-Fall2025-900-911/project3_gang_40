@@ -1,7 +1,21 @@
 /* Employee Management Page Styles */
 
 .employee-page {
-  padding: 30px;
+  display: grid;
+  grid-template-columns: var(--sidebar-width) 2fr;
+  height: 100vh;
+  width: 100vw;
+  background: var(--bg-darkest);
+  color: var(--text-white);
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  overflow: hidden;
+}
+
+.employee-page > div {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  overflow-y: auto;
 }
 
 .employee-header {
@@ -10,8 +24,6 @@
   align-items: center;
   margin-bottom: 2rem;
 }
-
-
 
 .exit-button {
   padding: 0.5rem 1rem;
