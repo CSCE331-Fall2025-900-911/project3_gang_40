@@ -63,7 +63,7 @@ export const getSalesByDrinkType = async (req, res, next) => {
 export const getTopSellingDrinks = async (req, res, next) => {
     try {
         
-        const { timeFrame } = req.query;
+        const { timeFrame, showAll } = req.query;
         if (!timeFrame) {
             return res.status(400).json({ error: 'Missing timeFrame parameter' });
         }
@@ -86,7 +86,6 @@ export const getTopSellingDrinks = async (req, res, next) => {
                 return res.status(400).json({ error: `Invalid timeFrame: ${timeFrame}` });
         }
 
-        // FIXED: Use sales_history.total_price instead of dv.price
         const result = await pool.query(`
             SELECT 
                 d.drink_name,
@@ -99,7 +98,7 @@ export const getTopSellingDrinks = async (req, res, next) => {
             WHERE sh.sales_time >= NOW() - ${interval}
             GROUP BY d.drink_name
             ORDER BY quantity_sold DESC
-            LIMIT 5
+            ${showAll ? '' : 'LIMIT 5'}
         `);
 
         const totalResult = await pool.query(`

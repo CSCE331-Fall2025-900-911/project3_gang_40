@@ -6,12 +6,15 @@ function TopSellingDrinks() {
   const [totals, setTotals] = useState({ total_quantity_sold: 0, total_sales_revenue: 0 });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [showAllDrinks, setShowAllDrinks] = useState(false);
 
-  const fetchTopSellers = async (selectedTimeFrame) => {
+
+  const fetchTopSellers = async (selectedTimeFrame, expand = false) => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(`https://project3-gang-40-sjzu.onrender.com/api/top-selling-drinks?timeFrame=${encodeURIComponent(selectedTimeFrame)}`);
+      const url = `https://project3-gang-40-sjzu.onrender.com/api/top-selling-drinks?timeFrame=${encodeURIComponent(selectedTimeFrame)}${showAllDrinks ? '&showAll=true' : ''}`;
+      const response = await fetch(url);
       if (!response.ok) throw new Error('Failed to fetch sales data');
       const data = await response.json();
       setTopSellers(data.topDrinks || []);
@@ -28,13 +31,14 @@ function TopSellingDrinks() {
   const onPickTimeFrame = (event) => {
     const selected = event.target.value;
     setTimeFrame(selected);
+    setShowAllDrinks(false);
+    setShowAllDrinks(false);
   };
 
   useEffect(() => {
-    fetchTopSellers(timeFrame);
-  }, [timeFrame]);
+    fetchTopSellers(timeFrame, showAllDrinks);
+  }, [timeFrame, showAllDrinks]);
 
-  // ✅ FIXED: Safe number parsing functions
   const formatCurrency = (value) => {
     const num = Number(value || 0);
     return isNaN(num) ? '$0.00' : `$${num.toFixed(2)}`;
@@ -46,7 +50,9 @@ function TopSellingDrinks() {
 
   return (
     <div className="widget-card">
-      <h3 className="widget-title">Top 5 Best Selling Drinks</h3>
+      <h3 className="widget-title">
+        {showAllDrinks ? 'All Drinks Sales Data' : 'Top 5 Best Selling Drinks'}
+      </h3>
       
       <div style={{ marginBottom: '1rem', display: 'flex', gap: '1rem', alignItems: 'center' }}>
         <label htmlFor="timeFrame" style={{ color: 'var(--text-light)' }}>Time Period: </label>
@@ -61,10 +67,18 @@ function TopSellingDrinks() {
           <option>Last Month</option>
           <option>Last Year</option>
         </select>
-        <button className="btn" onClick={() => fetchTopSellers(timeFrame)}>
-          Refresh
+        <button 
+          className="btn" 
+          onClick={() => setShowAllDrinks(!showAllDrinks)}
+          style={{ 
+            background: showAllDrinks ? 'var(--green-600)' : 'var(--blue-600)',
+            color: 'white'
+          }}
+        >
+          {showAllDrinks ? 'Show Top 5 Only' : 'Expand to All Drinks'}
         </button>
       </div>
+
 
       {loading && <div className="loading">Loading sales data...</div>}
       
@@ -92,8 +106,8 @@ function TopSellingDrinks() {
               <div>Revenue</div>
             </div>
             {topSellers.map((drink, index) => {
-              const revenue = Number(drink.total_revenue || 0);  // ✅ SAFE PARSE
-              const quantity = Number(drink.quantity_sold || 0);  // ✅ SAFE PARSE
+              const revenue = Number(drink.total_revenue || 0); 
+              const quantity = Number(drink.quantity_sold || 0);  
               
               return (
                 <div key={drink.drink_name || index} style={{ 
